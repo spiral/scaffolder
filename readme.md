@@ -16,7 +16,7 @@ Usage Example (outside of console)
 ----------------
 
 ```php
-$file = new FileDeclaration('App\Controllers');
+$file = new FileDeclaration('App\Controllers', 'My project');
 
 $controller = new ControllerDeclaration('SampleController');
 $controller->action('index')->setSource([
@@ -27,3 +27,23 @@ $file->addElement($controller);
 
 dump($file->render());
 ```     
+
+Output:
+
+```php
+<?php
+/**
+ * My project
+ */
+namespace App\Controllers;
+
+use Spiral\Core\Controller;
+
+class SampleController extends Controller
+{
+    protected function indexAction()
+    {
+        return "hello world";
+    }
+}
+```
