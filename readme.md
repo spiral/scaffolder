@@ -20,8 +20,11 @@ $file = new FileDeclaration('App\Controllers', 'My project');
 
 $controller = new ControllerDeclaration('SampleController');
 $controller->action('index')->setSource([
-   'return "hello world";'
+    'return "hello world";'
 ]);
+
+$controller->method('internal')->setAccess(MethodDeclaration::ACCESS_PRIVATE);
+$controller->method('internal')->setComment('This is internal method');
 
 $file->addElement($controller);
 
@@ -44,6 +47,13 @@ class SampleController extends Controller
     protected function indexAction()
     {
         return "hello world";
+    }
+
+    /**
+     * This is internal method
+     */
+    private function internal()
+    {
     }
 }
 ```
