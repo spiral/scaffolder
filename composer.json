@@ -1,0 +1,18 @@
+{
+  "name": "spiral/scaffolder",
+  "description": "Set of class declarations and command used to scaffold inside skeleton application",
+  "authors": [
+    {
+      "name": "Anton Titov / Wolfy-J",
+      "email": "wolfy.jd@gmail.com"
+    }
+  ],
+  "require": {
+    "spiral/framework": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spiral\\": "source/"
+    }
+  }
+}
