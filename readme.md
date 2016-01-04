@@ -23,8 +23,8 @@ $controller->action('index')->setSource([
     'return "hello world";'
 ]);
 
-$controller->method('internal')->setAccess(MethodDeclaration::ACCESS_PRIVATE);
-$controller->method('internal')->setComment('This is internal method');
+$method = $controller->method('internal);
+$method->setAccess(MethodDeclaration::ACCESS_PRIVATE)->setComment('This is internal method');
 
 $file->addElement($controller);
 
