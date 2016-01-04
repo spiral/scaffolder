@@ -58,7 +58,7 @@ class SampleController extends Controller
 
 Installation
 ------------
-Scaffolder is installed by default in skeleton application, to install this module in case if it was erased previously execute:
+Scaffolder should be installed by default in skeleton application, to install this module in case if it was erased previously execute:
 
 ```
 composer require spiral/scaffolder
