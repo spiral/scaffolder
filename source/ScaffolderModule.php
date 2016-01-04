@@ -12,7 +12,7 @@ use Spiral\Modules\ModuleInterface;
 use Spiral\Modules\PublisherInterface;
 use Spiral\Modules\RegistratorInterface;
 
-class ScaffoldModule implements ModuleInterface
+class ScaffolderModule implements ModuleInterface
 {
     /**
      * {@inheritdoc}
