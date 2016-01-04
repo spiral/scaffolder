@@ -4,9 +4,7 @@ Scaffolder
 Available scaffolding declarations:
 * ControllerDeclaration
 * EntityDeclaration
-    * RequestDeclaration
     * RecordDeclaration
-    * DocumentDeclaration
 * SourceDeclaration
 * ServiceDeclaration (model)
 * MiddlewareDeclaration
