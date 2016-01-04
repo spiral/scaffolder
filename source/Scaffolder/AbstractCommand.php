@@ -78,8 +78,8 @@ class AbstractCommand extends Command
 
         if ($this->files->exists($filename)) {
             $this->writeln(
-                "<fg=red>Unable to write '<comment>{$declaration->getName()}</comment>' declaration to file, "
-                . "'<comment>{$filename}</comment>' already exists.</fg=red>"
+                "<fg=red>Unable to write '<comment>{$declaration->getName()}</comment>' declaration, "
+                . "file '<comment>{$filename}</comment>' already exists.</fg=red>"
             );
 
             return;
