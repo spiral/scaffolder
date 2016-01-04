@@ -16,7 +16,7 @@ Usage Example (outside of console)
 ----------------
 
 ```php
-$file = new FileDeclaration('namespace');
+$file = new FileDeclaration('App\Controllers');
 
 $controller = new ControllerDeclaration('SampleController');
 $controller->action('index')->setSource([
