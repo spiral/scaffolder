@@ -9,12 +9,12 @@ namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Core\Controller;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\UseRequesterInterface;
+use Spiral\Reactor\DependedInterface;
 
 /**
  * Declares controller.
  */
-class ControllerDeclaration extends ClassDeclaration implements UseRequesterInterface
+class ControllerDeclaration extends ClassDeclaration implements DependedInterface
 {
     /**
      * @var string
@@ -33,7 +33,7 @@ class ControllerDeclaration extends ClassDeclaration implements UseRequesterInte
     /**
      * {@inheritdoc}
      */
-    public function requestsUses()
+    public function getDependencies()
     {
         return [
             Controller::class => null

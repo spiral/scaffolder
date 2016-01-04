@@ -13,8 +13,6 @@ use Spiral\Scaffolder\Exceptions\ScaffolderException;
 
 /**
  * Configuration for default scaffolder namespaces and other rendering options.
- *
- * @todo namespaces and names
  */
 class ScaffolderConfig extends InjectableConfig
 {

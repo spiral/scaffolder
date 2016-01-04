@@ -12,12 +12,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Spiral\Http\MiddlewareInterface;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
-use Spiral\Reactor\UseRequesterInterface;
 
 /**
  * Middleware declaration.
  */
-class MiddlewareDeclaration extends ClassDeclaration implements UseRequesterInterface
+class MiddlewareDeclaration extends ClassDeclaration implements DependencyRequesterInterface
 {
     /**
      * @param string $name
@@ -32,7 +31,7 @@ class MiddlewareDeclaration extends ClassDeclaration implements UseRequesterInte
     /**
      * {@inheritdoc}
      */
-    public function requestsUses()
+    public function getDependencies()
     {
         return [
             MiddlewareInterface::class    => null,

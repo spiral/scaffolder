@@ -1,6 +1,6 @@
 {
   "name": "spiral/scaffolder",
-  "description": "Set of class declarations and command used to scaffold inside skeleton application",
+  "description": "Set of class declarations and command used to scaffold parts of skeleton application",
   "authors": [
     {
       "name": "Anton Titov / Wolfy-J",

@@ -9,9 +9,9 @@ namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Core\Service;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\UseRequesterInterface;
+use Spiral\Reactor\DependedInterface;
 
-class ServiceDeclaration extends ClassDeclaration implements UseRequesterInterface
+class ServiceDeclaration extends ClassDeclaration implements DependedInterface
 {
     /**
      * @param string $name
@@ -25,7 +25,7 @@ class ServiceDeclaration extends ClassDeclaration implements UseRequesterInterfa
     /**
      * {@inheritdoc}
      */
-    public function requestsUses()
+    public function getDependencies()
     {
         return [
             Service::class => null

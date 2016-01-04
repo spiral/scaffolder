@@ -10,9 +10,9 @@ namespace Spiral\Scaffolder\Declarations;
 use Spiral\Console\Command;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
-use Spiral\Reactor\UseRequesterInterface;
+use Spiral\Reactor\DependedInterface;
 
-class CommandDeclaration extends ClassDeclaration implements UseRequesterInterface
+class CommandDeclaration extends ClassDeclaration implements DependedInterface
 {
     /**
      * @param string $name
@@ -30,7 +30,7 @@ class CommandDeclaration extends ClassDeclaration implements UseRequesterInterfa
     /**
      * {@inheritdoc}
      */
-    public function requestsUses()
+    public function getDependencies()
     {
         return [
             Command::class => null
@@ -51,7 +51,7 @@ class CommandDeclaration extends ClassDeclaration implements UseRequesterInterfa
      */
     public function getAlias()
     {
-        return $this->property('name')->getDefaultValue();
+        return $this->property('name')->getDefault();
     }
 
     /**
@@ -68,7 +68,7 @@ class CommandDeclaration extends ClassDeclaration implements UseRequesterInterfa
      */
     public function getDescription()
     {
-        return $this->property('description')->getDefaultValue();
+        return $this->property('description')->getDefault();
     }
 
     /**
