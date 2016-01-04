@@ -82,7 +82,7 @@ class AbstractCommand extends Command
                 . "'<comment>{$filename}</comment>' already exists.</fg=red>"
             );
 
-            //return;
+            return;
         }
 
         $file = new FileDeclaration($this->elementNamespace(), $this->config->headerLines());
