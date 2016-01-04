@@ -55,3 +55,19 @@ class SampleController extends Controller
     }
 }
 ```
+
+Installation
+------------
+Scaffolder is installed by default in skeleton application, to install this module in case if it was erased previously execute:
+
+```
+composer require spiral/scaffolder
+```
+
+Once downloaded you can register module configuration:
+
+```
+spiral register spiral/scaffolder
+```
+
+Do not forget to add `app/config/modules/scaffolder.md` to your git repository.
