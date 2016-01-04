@@ -70,4 +70,4 @@ Once downloaded you can register module configuration:
 spiral register spiral/scaffolder
 ```
 
-Do not forget to add `app/config/modules/scaffolder.md` to your git repository.
+Do not forget to add `app/config/modules/scaffolder.md` into your git repository.
