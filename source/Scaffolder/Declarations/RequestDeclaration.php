@@ -5,7 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
-namespace Spiral\Scaffolder\Declarations\Database;
+namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Scaffolder\Declarations\EntityDeclaration;
 
