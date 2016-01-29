@@ -95,8 +95,8 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
         $this->property('description')->setAccess($protected);
         $this->property('description')->setComment('@var string')->setDefault('');
 
-        $this->property('attributes')->setAccess($protected);
-        $this->property('attributes')->setComment('@var array')->setDefault([]);
+        $this->property('arguments')->setAccess($protected);
+        $this->property('arguments')->setComment('@var array')->setDefault([]);
 
         $this->property('options')->setAccess($protected);
         $this->property('options')->setComment('@var array')->setDefault([]);
