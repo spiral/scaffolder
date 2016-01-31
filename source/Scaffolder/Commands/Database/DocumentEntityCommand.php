@@ -59,7 +59,7 @@ class DocumentEntityCommand extends AbstractCommand
             $declaration->declareField($name, $type);
         }
 
-        $this->writeDeclaration($declaration->normalize());
+        $this->writeDeclaration($declaration);
     }
 
     /**
