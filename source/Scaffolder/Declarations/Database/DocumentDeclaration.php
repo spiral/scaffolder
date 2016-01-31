@@ -53,7 +53,7 @@ class DocumentDeclaration extends DocumentEntityDeclaration
     public function normalize()
     {
         if (empty($this->getCollection())) {
-            $this->properties()->remove('table');
+            $this->properties()->remove('collection');
         }
 
         if (empty($this->getDatabase())) {
