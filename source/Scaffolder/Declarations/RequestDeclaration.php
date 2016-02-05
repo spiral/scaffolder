@@ -85,6 +85,7 @@ class RequestDeclaration extends EntityDeclaration
     public function normalize()
     {
         $this->properties()->remove('hidden');
+        $this->properties()->remove('fillable');
 
         return $this;
     }
@@ -94,8 +95,11 @@ class RequestDeclaration extends EntityDeclaration
      */
     protected function declareStructure()
     {
-        $this->property('indexes')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
-        $this->property('indexes')->setComment('@var array')->setDefault([]);
+        $this->property('schema')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
+        $this->property('schema')->setComment('@var array')->setDefault([]);
+
+        $this->property('setters')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
+        $this->property('setters')->setComment('@var array')->setDefault([]);
 
         parent::declareStructure();
     }
