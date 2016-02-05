@@ -46,12 +46,30 @@ class DocumentDeclaration extends DocumentEntityDeclaration
     }
 
     /**
+     * Drop non required properties and methods
+     *
+     * @return $this
+     */
+    public function normalize()
+    {
+        if (empty($this->getCollection())) {
+            $this->properties()->remove('collection');
+        }
+
+        if (empty($this->getDatabase())) {
+            $this->properties()->remove('database');
+        }
+
+        return $this;
+    }
+
+    /**
      * Declare record entity structure.
      */
     protected function declareStructure()
     {
-        $this->property('table')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
-        $this->property('table')->setComment('@var string');
+        $this->property('collection')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
+        $this->property('collection')->setComment('@var string');
 
         $this->property('database')->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PROTECTED);
         $this->property('database')->setComment('@var string');

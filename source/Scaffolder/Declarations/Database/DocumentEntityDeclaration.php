@@ -28,23 +28,6 @@ class DocumentEntityDeclaration extends EntityDeclaration
         return $this;
     }
 
-    /**
-     * Drop non required properties and methods
-     *
-     * @return $this
-     */
-    public function normalize()
-    {
-        if (empty($this->getCollection())) {
-            $this->properties()->remove('table');
-        }
-
-        if (empty($this->getDatabase())) {
-            $this->properties()->remove('database');
-        }
-
-        return $this;
-    }
 
     /**
      * Declare record entity structure.
