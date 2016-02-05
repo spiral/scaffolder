@@ -25,10 +25,11 @@ class ScaffolderConfig extends InjectableConfig
      * @var array
      */
     protected $config = [
-        'header'    => [],
-        'directory' => '',
-        'namespace' => '',
-        'elements'  => []
+        'header'      => [],
+        'directory'   => '',
+        'namespace'   => '',
+        'elements'    => [],
+        'validations' => []
     ];
 
     /**
@@ -117,6 +118,17 @@ class ScaffolderConfig extends InjectableConfig
         }
 
         return $class;
+    }
+
+    /**
+     * Get element mapping options (if any).
+     *
+     * @param string $element
+     * @return array
+     */
+    public function getMapping($element)
+    {
+        return $this->config['elements'][$element]['mapping'];
     }
 
     /**
