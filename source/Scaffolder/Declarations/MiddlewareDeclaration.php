@@ -12,11 +12,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Spiral\Http\MiddlewareInterface;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
+use Spiral\Reactor\DependedInterface;
 
 /**
  * Middleware declaration.
  */
-class MiddlewareDeclaration extends ClassDeclaration implements DependencyRequesterInterface
+class MiddlewareDeclaration extends ClassDeclaration implements DependedInterface
 {
     /**
      * @param string $name

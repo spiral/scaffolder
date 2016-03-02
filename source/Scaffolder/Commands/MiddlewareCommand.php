@@ -37,7 +37,7 @@ class MiddlewareCommand extends AbstractCommand
     ];
 
     /**
-     * Create controller declaration.
+     * Create middleware declaration.
      */
     public function perform()
     {
