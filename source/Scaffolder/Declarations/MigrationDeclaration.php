@@ -48,7 +48,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
     {
         $source = $this->method('up')->source();
 
-        $source->addLine("\$this->schema('{$table}')");
+        $source->addLine("\$this->table('{$table}')");
         foreach ($columns as $name => $type) {
             $source->addLine("    ->addColumn('{$name}', '{$type}')");
         }
