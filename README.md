@@ -62,11 +62,6 @@ Scaffolder should be installed by default in skeleton application, to install th
 
 ```
 composer require spiral/scaffolder
-```
-
-Once downloaded you can register module configuration:
-
-```
 spiral register spiral/scaffolder
 ```
 
