@@ -107,4 +107,13 @@ abstract class BaseTest extends TestCase
     {
         return $this->app->container;
     }
+
+    /**
+     * @param string $class
+     */
+    protected function deleteClass(string $class)
+    {
+        $reflection = new \ReflectionClass($class);
+        $this->files->delete($reflection->getFileName());
+    }
 }

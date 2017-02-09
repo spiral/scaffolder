@@ -30,7 +30,7 @@ return [
      * Example: 'namespace' => 'MyApplication'
      * Controllers: MyApplication\Controllers\SampleController
      */
-    'namespace'    => '',
+    'namespace'    => 'TestApplication',
 
     /*
      * This is set of default settings to be used for your scaffolding commands.
