@@ -5,12 +5,14 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral;
 
 use Spiral\Core\DirectoriesInterface;
 use Spiral\Modules\ModuleInterface;
 use Spiral\Modules\PublisherInterface;
 use Spiral\Modules\RegistratorInterface;
+use Spiral\Scaffolder\Configs\ScaffolderConfig;
 
 class ScaffolderModule implements ModuleInterface
 {
@@ -21,7 +23,7 @@ class ScaffolderModule implements ModuleInterface
     {
         //To ensure that our commands can be located
         $registrator->configure('tokenizer', 'directories', 'spiral/scaffolder', [
-            "directory('libraries') . 'spiral/scaffolder'"
+            "directory('libraries') . 'spiral/scaffolder/source/'"
         ]);
     }
 
@@ -31,9 +33,8 @@ class ScaffolderModule implements ModuleInterface
     public function publish(PublisherInterface $publisher, DirectoriesInterface $directories)
     {
         $publisher->publish(
-            __DIR__ . '/config/scaffolder.php',
-            $directories->directory('config') . 'modules/scaffolder.php',
-            PublisherInterface::FOLLOW
+            __DIR__ . '/../resources/config.php',
+            $directories->directory('config') . ScaffolderConfig::CONFIG . '.php'
         );
     }
 }

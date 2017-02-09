@@ -36,27 +36,27 @@ return [
      * This is set of default settings to be used for your scaffolding commands.
      */
     'elements'  => [
-        'controller'     => [
+        'controller'      => [
             'namespace' => 'Controllers',
             'postfix'   => 'Controller',
             'class'     => Declarations\ControllerDeclaration::class
         ],
-        'middleware'     => [
+        'middleware'      => [
             'namespace' => 'Middlewares',
             'postfix'   => '',
             'class'     => Declarations\MiddlewareDeclaration::class
         ],
-        'command'        => [
+        'command'         => [
             'namespace' => 'Commands',
             'postfix'   => 'Command',
             'class'     => Declarations\CommandDeclaration::class
         ],
-        'service'        => [
+        'service'         => [
             'namespace' => 'Models',
             'postfix'   => 'Service',
             'class'     => Declarations\ServiceDeclaration::class
         ],
-        'request'        => [
+        'request'         => [
             'namespace' => 'Requests',
             'postfix'   => 'Request',
             'class'     => Declarations\RequestDeclaration::class,
@@ -121,20 +121,20 @@ return [
                 /*{{request.mapping}}*/
             ]
         ],
-        'record'         => [
+        'record'          => [
             'namespace' => 'Database',
             'postfix'   => '',
             'class'     => Declarations\Database\RecordDeclaration::class
         ],
-        'document'       => [
+        'document'        => [
             'namespace' => 'Database',
             'postfix'   => '',
             'class'     => Declarations\Database\DocumentDeclaration::class
         ],
-        'documentEntity' => [
+        'document-entity' => [
             'namespace' => 'Database',
             'postfix'   => '',
-            'class'     => Declarations\Database\DocumentEntityDeclaration::class
+            'class'     => Declarations\Database\DocumentEntityDeclaration::class,
         ],
         /*{{elements}}*/
     ],

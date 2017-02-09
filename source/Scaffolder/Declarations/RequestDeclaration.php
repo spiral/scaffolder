@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Reactor\ClassDeclaration;

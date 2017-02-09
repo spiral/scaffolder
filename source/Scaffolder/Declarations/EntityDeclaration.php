@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Reactor\ClassDeclaration;
@@ -50,6 +51,7 @@ abstract class EntityDeclaration extends ClassDeclaration implements DependedInt
      * Make field fillable (mass assigment)
      *
      * @param string $field
+     *
      * @return $this
      */
     public function openField($field)
@@ -65,6 +67,7 @@ abstract class EntityDeclaration extends ClassDeclaration implements DependedInt
      * Hide field from publicFields method and json serialization
      *
      * @param string $field
+     *
      * @return $this
      */
     public function hideField($field)
@@ -81,6 +84,7 @@ abstract class EntityDeclaration extends ClassDeclaration implements DependedInt
      *
      * @param string $field
      * @param array  $rules
+     *
      * @return $this
      */
     public function validateField($field, array $rules)
