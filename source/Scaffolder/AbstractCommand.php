@@ -57,7 +57,7 @@ class AbstractCommand extends Command
      */
     protected function elementClass()
     {
-        return $this->config->elementName(static::ELEMENT, $this->argument('name'));
+        return $this->config->className(static::ELEMENT, $this->argument('name'));
     }
 
     /**
@@ -65,7 +65,7 @@ class AbstractCommand extends Command
      */
     protected function elementNamespace()
     {
-        return $this->config->elementNamespace(static::ELEMENT, $this->argument('name'));
+        return $this->config->classNamespace(static::ELEMENT, $this->argument('name'));
     }
 
     /**
@@ -73,7 +73,7 @@ class AbstractCommand extends Command
      */
     protected function writeDeclaration(ClassDeclaration $declaration)
     {
-        $filename = $this->config->elementFilename(static::ELEMENT, $this->argument('name'));
+        $filename = $this->config->classFilename(static::ELEMENT, $this->argument('name'));
         $filename = $this->files->normalizePath($filename);
 
         if ($this->files->exists($filename)) {

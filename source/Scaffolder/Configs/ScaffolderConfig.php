@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Configs;
 
 use Doctrine\Common\Inflector\Inflector;
@@ -25,17 +26,16 @@ class ScaffolderConfig extends InjectableConfig
      * @var array
      */
     protected $config = [
-        'header'      => [],
-        'directory'   => '',
-        'namespace'   => '',
-        'elements'    => [],
-        'validations' => []
+        'header'       => [],
+        'directory'    => '',
+        'namespace'    => '',
+        'declarations' => [],
     ];
 
     /**
      * @return array
      */
-    public function headerLines()
+    public function headerLines(): array
     {
         return $this->config['header'];
     }
@@ -43,7 +43,7 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function baseDirectory()
+    public function baseDirectory(): string
     {
         return $this->config['directory'];
     }
@@ -51,7 +51,7 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function baseNamespace()
+    public function baseNamespace(): string
     {
         return trim($this->config['namespace'], '\\');
     }
@@ -59,11 +59,12 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
+     *
      * @return string
      */
-    public function elementName($element, $name)
+    public function className(string $element, string $name): string
     {
-        list($namespace, $name) = $this->splitName($name);
+        list($namespace, $name) = $this->parseName($name);
 
         return Inflector::classify($name) . $this->elementPostfix($element);
     }
@@ -71,12 +72,13 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
+     *
      * @return string
      */
-    public function elementNamespace($element, $name = '')
+    public function classNamespace(string $element, string $name = ''): string
     {
-        $localNamespace = trim($this->elementOption($element, 'namespace', ''), '\\');
-        list($namespace, $name) = $this->splitName($name);
+        $localNamespace = trim($this->getOption($element, 'namespace', ''), '\\');
+        list($namespace, $name) = $this->parseName($name);
 
         if (!empty($namespace)) {
             $localNamespace .= '\\' . Inflector::classify($namespace);
@@ -92,24 +94,27 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
+     *
      * @return string
      */
-    public function elementFilename($element, $name)
+    public function classFilename(string $element, string $name): string
     {
-        $namespace = $this->elementNamespace($element, $name);
+        $namespace = $this->classNamespace($element, $name);
         $directory = $this->baseDirectory() . '/' . str_replace('\\', '/', $namespace);
 
-        return rtrim($directory, '/') . '/' . $this->elementName($element, $name) . '.php';
+        return rtrim($directory, '/') . '/' . $this->className($element, $name) . '.php';
     }
 
     /**
      * @param string $element
+     *
      * @return string
-     * $@throws ScaffolderException
+     *
+     * @throws ScaffolderException
      */
-    public function declarationClass($element)
+    public function declarationClass(string $element): string
     {
-        $class = $this->elementOption($element, 'class');
+        $class = $this->getOption($element, 'class');
 
         if (empty($class)) {
             throw new ScaffolderException(
@@ -121,39 +126,42 @@ class ScaffolderConfig extends InjectableConfig
     }
 
     /**
-     * Get element mapping options (if any).
+     * Declaration options.
      *
      * @param string $element
+     *
      * @return array
      */
-    public function getMapping($element)
+    public function declarationOptions(string $element): array
     {
-        return $this->config['elements'][$element]['mapping'];
+        return $this->getOption($element, 'options', []);
     }
 
     /**
      * @param string $element
+     *
      * @return string
      */
-    private function elementPostfix($element)
+    private function elementPostfix(string $element): string
     {
-        return $this->elementOption($element, 'postfix', '');
+        return $this->getOption($element, 'postfix', '');
     }
 
     /**
      * @param string $element
      * @param string $section
-     * @param null   $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
-    private function elementOption($element, $section, $default = null)
+    private function getOption(string $element, string $section, $default = null)
     {
-        if (!isset($this->config['elements'][$element])) {
-            throw new ScaffolderException("Undefined element '{$element}'.");
+        if (!isset($this->config['declarations'][$element])) {
+            throw new ScaffolderException("Undefined declaration '{$element}'.");
         }
 
         if (array_key_exists($section, $this->config['elements'][$element])) {
-            return $this->config['elements'][$element][$section];
+            return $this->config['declarations'][$element][$section];
         }
 
         return $default;
@@ -163,15 +171,15 @@ class ScaffolderConfig extends InjectableConfig
      * Split user name into namespace and class name.
      *
      * @param string $name
+     *
      * @return array [namespace, name]
      */
-    private function splitName($name)
+    private function parseName(string $name): array
     {
         $name = str_replace('/', '\\', $name);
 
         if (strpos($name, '\\') !== false) {
             $names = explode('\\', $name);
-
             $class = array_pop($names);
 
             return [join('\\', $names), $class];
