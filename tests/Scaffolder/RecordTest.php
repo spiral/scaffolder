@@ -10,7 +10,7 @@ namespace Spiral\Tests\Scaffolder;
 use Spiral\Tests\BaseTest;
 use TestApplication\Database\SampleRecord;
 
-class DocumentTest extends BaseTest
+class RecordTest extends BaseTest
 {
     public function tearDown()
     {
