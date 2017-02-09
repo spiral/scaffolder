@@ -111,9 +111,11 @@ abstract class BaseTest extends TestCase
     /**
      * @param string $class
      */
-    protected function deleteClass(string $class)
+    protected function deleteDeclaration(string $class)
     {
-        $reflection = new \ReflectionClass($class);
-        $this->files->delete($reflection->getFileName());
+        if (class_exists($class)) {
+            $reflection = new \ReflectionClass($class);
+            $this->files->delete($reflection->getFileName());
+        }
     }
 }
