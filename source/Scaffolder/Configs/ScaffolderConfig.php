@@ -160,7 +160,7 @@ class ScaffolderConfig extends InjectableConfig
             throw new ScaffolderException("Undefined declaration '{$element}'.");
         }
 
-        if (array_key_exists($section, $this->config['elements'][$element])) {
+        if (array_key_exists($section, $this->config['declarations'][$element])) {
             return $this->config['declarations'][$element][$section];
         }
 

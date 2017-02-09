@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Core\Service;
@@ -17,18 +18,16 @@ class ServiceDeclaration extends ClassDeclaration implements DependedInterface
      * @param string $name
      * @param string $comment
      */
-    public function __construct($name, $comment = '')
+    public function __construct(string $name, string $comment = null)
     {
-        parent::__construct($name, 'Service', [], $comment);
+        parent::__construct($name, 'Service', [], (string)$comment);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
-        return [
-            Service::class => null
-        ];
+        return [Service::class => null];
     }
 }

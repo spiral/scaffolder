@@ -23,7 +23,7 @@ class ScaffolderModule implements ModuleInterface
     {
         //To ensure that our commands can be located
         $registrator->configure('tokenizer', 'directories', 'spiral/scaffolder', [
-            "directory('libraries') . 'spiral/scaffolder/source/'"
+            "directory('libraries') . 'spiral/scaffolder/source/',"
         ]);
     }
 

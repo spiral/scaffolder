@@ -113,7 +113,9 @@ abstract class AbstractCommand extends Command
             return;
         }
 
-        $file = new FileDeclaration($this->getNamespace(), $this->config->headerLines());
+        //File declaration
+        $file = new FileDeclaration($this->getNamespace());
+        $file->setComment($this->config->headerLines());
         $file->addElement($declaration);
 
         $this->files->write(
