@@ -69,14 +69,6 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     }
 
     /**
-     * @return MethodDeclaration
-     */
-    public function performMethod(): MethodDeclaration
-    {
-        return $this->method('perform');
-    }
-
-    /**
      * Declare default __invoke method body.
      */
     private function declareStructure()

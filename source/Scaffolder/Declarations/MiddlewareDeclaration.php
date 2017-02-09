@@ -44,16 +44,6 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
     }
 
     /**
-     * Invoke method source.
-     *
-     * @return MethodDeclaration
-     */
-    public function invokeMethod()
-    {
-        return $this->method('__invoke');
-    }
-
-    /**
      * Declare default __invoke method body.
      */
     private function declareStructure()
