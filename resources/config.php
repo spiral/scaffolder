@@ -36,27 +36,27 @@ return [
      * This is set of default settings to be used for your scaffolding commands.
      */
     'declarations' => [
-        'controller'      => [
+        'controller' => [
             'namespace' => 'Controllers',
             'postfix'   => 'Controller',
             'class'     => Declarations\ControllerDeclaration::class
         ],
-        'service'         => [
+        'service'    => [
             'namespace' => 'Services',
             'postfix'   => 'Service',
             'class'     => Declarations\ServiceDeclaration::class
         ],
-        'middleware'      => [
+        'middleware' => [
             'namespace' => 'Middlewares',
             'postfix'   => '',
             'class'     => Declarations\MiddlewareDeclaration::class
         ],
-        'command'         => [
+        'command'    => [
             'namespace' => 'Commands',
             'postfix'   => 'Command',
             'class'     => Declarations\CommandDeclaration::class
         ],
-        'request'         => [
+        'request'    => [
             'namespace' => 'Requests',
             'postfix'   => 'Request',
             'class'     => Declarations\RequestDeclaration::class,
@@ -100,27 +100,17 @@ return [
                 ]
             ]
         ],
-        'record'          => [
+        'record'     => [
             'namespace' => 'Database',
             'postfix'   => '',
             'class'     => Declarations\Database\RecordDeclaration::class
         ],
-        'record-entity'   => [
-            'namespace' => 'Database',
-            'postfix'   => '',
-            'class'     => Declarations\Database\RecordEntityDeclaration::class
-        ],
-        'document'        => [
+        'document'   => [
             'namespace' => 'Database',
             'postfix'   => '',
             'class'     => Declarations\Database\DocumentDeclaration::class
         ],
-        'document-entity' => [
-            'namespace' => 'Database',
-            'postfix'   => '',
-            'class'     => Declarations\Database\DocumentEntityDeclaration::class,
-        ],
-        'source'          => [
+        'source'     => [
             'namespace' => 'Database\Sources',
             'postfix'   => 'Source',
             'class'     => Declarations\Database\SourceDeclaration::class,

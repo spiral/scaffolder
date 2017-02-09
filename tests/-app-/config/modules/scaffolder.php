@@ -110,20 +110,10 @@ return [
             'postfix'   => '',
             'class'     => Declarations\Database\RecordDeclaration::class
         ],
-        'record-entity'   => [
-            'namespace' => 'Database',
-            'postfix'   => '',
-            'class'     => Declarations\Database\RecordEntityDeclaration::class
-        ],
         'document'        => [
             'namespace' => 'Database',
             'postfix'   => '',
             'class'     => Declarations\Database\DocumentDeclaration::class
-        ],
-        'document-entity' => [
-            'namespace' => 'Database',
-            'postfix'   => '',
-            'class'     => Declarations\Database\DocumentEntityDeclaration::class,
         ],
         'source'          => [
             'namespace' => 'Database\Sources',
