@@ -8,23 +8,21 @@
 namespace Spiral\Tests\Scaffolder;
 
 use Spiral\Tests\BaseTest;
+use TestApplication\Services\SampleService;
 
 class ServiceTest extends BaseTest
 {
     public function testService()
     {
-        $this->assertFalse(
-            class_exists(\TestApplication\Models\SampleService::class)
-        );
+        $this->assertFalse(class_exists(SampleService::class));
 
         $this->console->run('create:service', [
-            'name' => 'sample'
+            'name'      => 'sample',
+            '--comment' => 'Sample Service'
         ]);
 
-        $this->assertTrue(
-            class_exists(\TestApplication\Models\SampleService::class)
-        );
-
-        $this->deleteClass(\TestApplication\Models\SampleService::class);
+        clearstatcache();
+        $this->assertTrue(class_exists(SampleService::class));
+        $this->deleteClass(SampleService::class);
     }
 }

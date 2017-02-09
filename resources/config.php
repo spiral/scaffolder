@@ -42,7 +42,7 @@ return [
             'class'     => Declarations\ControllerDeclaration::class
         ],
         'service'         => [
-            'namespace' => 'Models',
+            'namespace' => 'Services',
             'postfix'   => 'Service',
             'class'     => Declarations\ServiceDeclaration::class
         ],
