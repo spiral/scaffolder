@@ -100,6 +100,11 @@ return [
                 ]
             ]
         ],
+        'migration'       => [
+            'namespace' => 'Migrations',
+            'postfix'   => 'Migration',
+            'class'     => Declarations\MigrationDeclaration::class
+        ],
         'record'          => [
             'namespace' => 'Database',
             'postfix'   => '',

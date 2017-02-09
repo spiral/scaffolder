@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Migrations\Migrator;
@@ -17,30 +18,24 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MigrationCommand extends AbstractCommand
 {
+
     /**
      * Element to be managed.
      */
     const ELEMENT = 'migration';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:migration';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create migration declaration';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
-        ['name', InputArgument::REQUIRED, 'Migration name']
+    const NAME        = 'create:migration';
+    const DESCRIPTION = 'Create migration declaration';
+    const ARGUMENTS   = [
+        ['name', InputArgument::REQUIRED, 'Migration name'],
     ];
 
     /**
      * @param Migrator $migrator
+     *
      * @throws ScaffolderException
      */
     public function perform(Migrator $migrator)
@@ -55,7 +50,7 @@ class MigrationCommand extends AbstractCommand
             $columns = [];
             foreach ($this->option('column') as $field) {
                 if (strpos($field, ':') === false) {
-                    throw new ScaffolderException("Column definition must in 'name:type' form.");
+                    throw new ScaffolderException("Column definition must in 'name:type' form");
                 }
 
                 list($name, $type) = explode(':', $field);
@@ -65,7 +60,9 @@ class MigrationCommand extends AbstractCommand
             $declaration->declareCreation($this->option('table'), $columns);
         }
 
-        $file = new FileDeclaration($this->getNamespace(), $this->config->headerLines());
+        $file = new FileDeclaration($this->getNamespace());
+        $file->setComment($this->config->headerLines());
+
         $file->addElement($declaration);
 
         $filename = $migrator->getRepository()->registerMigration(
@@ -83,7 +80,7 @@ class MigrationCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
             [

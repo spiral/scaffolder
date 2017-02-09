@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Migrations\Migration;
@@ -21,7 +22,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
      * @param string $name
      * @param string $comment
      */
-    public function __construct($name, $comment = '')
+    public function __construct(string $name, string $comment = '')
     {
         parent::__construct($name, 'Migration', [], $comment);
 
@@ -31,11 +32,9 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
-        return [
-            Migration::class => null
-        ];
+        return [Migration::class => null];
     }
 
     /**
@@ -44,9 +43,9 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
      * @param string $table
      * @param array  $columns
      */
-    public function declareCreation($table, array $columns)
+    public function declareCreation(string $table, array $columns)
     {
-        $source = $this->method('up')->source();
+        $source = $this->method('up')->getSource();
 
         $source->addLine("\$this->table('{$table}')");
         foreach ($columns as $name => $type) {
@@ -55,7 +54,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
 
         $source->addLine("    ->create();");
 
-        $this->method('down')->source()->addString("\$this->schema('{$table}')->drop();");
+        $this->method('down')->getSource()->addString("\$this->schema('{$table}')->drop();");
     }
 
     /**
