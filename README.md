@@ -1,68 +1,9 @@
-Scaffolder
-==========
+Spiral, scaffolder module
+=========================
+[![Latest Stable Version](https://poser.pugx.org/spiral/scaffolder/v/stable)](https://packagist.org/packages/spiral/scaffolder) 
+[![License](https://poser.pugx.org/spiral/scaffolder/license)](https://packagist.org/packages/spiral/scaffolder)
+[![Build Status](https://travis-ci.org/spiral-modules/scaffolder.svg?branch=master)](https://travis-ci.org/spiral-modules/scaffolder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spiral-modules/scaffolder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spiral-modules/scaffolder/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/spiral-modules/scaffolder/badge.svg?branch=master)](https://coveralls.io/github/spiral-modules/scaffolder?branch=master)
 
-Available scaffolding declarations:
-* ControllerDeclaration
-* EntityDeclaration
-    * RecordDeclaration
-* SourceDeclaration
-* ServiceDeclaration (model)
-* MiddlewareDeclaration
-* CommandDeclaration
-
-Usage Example (outside of console)
-----------------
-
-```php
-$file = new FileDeclaration('App\Controllers', 'My project');
-
-$controller = new ControllerDeclaration('SampleController');
-$controller->action('index')->setSource([
-    'return "hello world";'
-]);
-
-$method = $controller->method('internal');
-$method->setAccess(MethodDeclaration::ACCESS_PRIVATE)->setComment('This is internal method');
-
-$file->addElement($controller);
-
-dump($file->render());
-```     
-
-Output:
-
-```php
-<?php
-/**
- * My project
- */
-namespace App\Controllers;
-
-use Spiral\Core\Controller;
-
-class SampleController extends Controller
-{
-    protected function indexAction()
-    {
-        return "hello world";
-    }
-
-    /**
-     * This is internal method
-     */
-    private function internal()
-    {
-    }
-}
-```
-
-Installation
-------------
-Scaffolder should be installed by default in skeleton application, to install this module in case if it was previously erased execute:
-
-```
-composer require spiral/scaffolder
-spiral register spiral/scaffolder
-```
-
-Do not forget to add `app/config/modules/scaffolder.php` into your git repository.
+<b>[Documentation](http://spiral-framework.com/guide)</b> | [CHANGELOG](/CHANGELOG.md) | [Framework Bundle](https://github.com/spiral/spiral)
