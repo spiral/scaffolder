@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Scaffolder\AbstractCommand;
@@ -20,20 +21,12 @@ class CommandCommand extends AbstractCommand
     const ELEMENT = 'command';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:command';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create command declaration';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
-        ['name', InputArgument::REQUIRED, 'Command name'],
+    const NAME        = 'create:command';
+    const DESCRIPTION = 'Create command declaration';
+    const ARGUMENTS   = [
+        ['name', InputArgument::REQUIRED, 'Controller name'],
         ['alias', InputArgument::OPTIONAL, 'Command id/alias'],
     ];
 
@@ -42,14 +35,11 @@ class CommandCommand extends AbstractCommand
      */
     public function perform()
     {
-        $alias = !empty($this->argument('alias')) ? $this->argument('alias') : $this->argument('name');
-
-        /**
-         * @var CommandDeclaration $declaration
-         */
+        /** @var CommandDeclaration $declaration */
         $declaration = $this->createDeclaration(compact('alias'));
 
-        $declaration->setDescription($this->option('description'));
+        $declaration->setAlias($this->argument('alias') ?? $this->argument('name'));
+        $declaration->setDescription((string)$this->option('description'));
 
         $this->writeDeclaration($declaration);
     }
@@ -57,7 +47,7 @@ class CommandCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
             [
