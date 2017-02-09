@@ -65,7 +65,7 @@ class MigrationCommand extends AbstractCommand
             $declaration->declareCreation($this->option('table'), $columns);
         }
 
-        $file = new FileDeclaration($this->elementNamespace(), $this->config->headerLines());
+        $file = new FileDeclaration($this->getNamespace(), $this->config->headerLines());
         $file->addElement($declaration);
 
         $filename = $migrator->getRepository()->registerMigration(
