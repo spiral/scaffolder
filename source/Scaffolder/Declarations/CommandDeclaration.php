@@ -85,15 +85,15 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
         $perform->setComment("Perform command");
 
         $this->constant('NAME');
-        $this->constant('NAME')->setComment('@var string')->setValue('');
+        $this->constant('NAME')->setValue('');
 
         $this->constant('DESCRIPTION');
-        $this->constant('DESCRIPTION')->setComment('@var string')->setValue('');
+        $this->constant('DESCRIPTION')->setValue('');
 
         $this->constant('ARGUMENTS');
-        $this->constant('ARGUMENTS')->setComment('@var array')->setValue([]);
+        $this->constant('ARGUMENTS')->setValue([]);
 
         $this->constant('OPTIONS');
-        $this->constant('OPTIONS')->setComment('@var array')->setValue([]);
+        $this->constant('OPTIONS')->setValue([]);
     }
 }
