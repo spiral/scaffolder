@@ -26,9 +26,9 @@ class ControllerDeclaration extends ClassDeclaration implements DependedInterfac
      * @param string $name
      * @param string $comment
      */
-    public function __construct(string $name, string $comment = null)
+    public function __construct(string $name, string $comment = '')
     {
-        parent::__construct($name, 'Controller', [], (string)$comment);
+        parent::__construct($name, 'Controller', [], $comment);
     }
 
     /**

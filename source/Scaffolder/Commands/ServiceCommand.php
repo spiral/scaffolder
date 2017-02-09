@@ -10,6 +10,7 @@ namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
 use Spiral\Scaffolder\AbstractCommand;
+use Spiral\Scaffolder\Declarations\ServiceDeclaration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -34,6 +35,7 @@ class ServiceCommand extends AbstractCommand
      */
     public function perform()
     {
+        /** @var ServiceDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
         foreach ($this->option('method') as $method) {

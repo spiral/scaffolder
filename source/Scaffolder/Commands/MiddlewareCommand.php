@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Scaffolder\AbstractCommand;
@@ -20,19 +21,11 @@ class MiddlewareCommand extends AbstractCommand
     const ELEMENT = 'middleware';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:middleware';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create middleware declaration';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
+    const NAME        = 'create:middleware';
+    const DESCRIPTION = 'Create middleware declaration';
+    const ARGUMENTS   = [
         ['name', InputArgument::REQUIRED, 'Middleware name']
     ];
 
@@ -41,26 +34,17 @@ class MiddlewareCommand extends AbstractCommand
      */
     public function perform()
     {
-        /**
-         * @var MiddlewareDeclaration $declaration
-         */
+        /** @var MiddlewareDeclaration $declaration */
         $declaration = $this->createDeclaration();
-
         $this->writeDeclaration($declaration);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
-//            [
-//                'depends',
-//                'i',
-//                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-//                'Add dependency to class (type:name or full class name or short binding)'
-//            ],
             [
                 'comment',
                 'c',

@@ -17,7 +17,7 @@ class ServiceTest extends BaseTest
         $this->deleteDeclaration(SampleService::class);
     }
 
-    public function testService()
+    public function testScaffold()
     {
         $this->console->run('create:service', [
             'name'      => 'sample',

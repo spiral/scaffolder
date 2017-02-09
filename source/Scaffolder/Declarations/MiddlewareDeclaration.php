@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Psr\Http\Message\ResponseInterface;
@@ -23,16 +24,17 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
      * @param string $name
      * @param string $comment
      */
-    public function __construct($name, $comment = '')
+    public function __construct(string $name, string $comment = '')
     {
         parent::__construct($name, '', ['MiddlewareInterface'], $comment);
+
         $this->declareStructure();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             MiddlewareInterface::class    => null,
@@ -62,7 +64,7 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
         $invoke->parameter('response')->setType('Response');
         $invoke->parameter('next')->setType('callable');
 
-        $invoke->comment()->setString("{@inheritdoc}");
-        $invoke->source()->setString('return $next($request, $response);');
+        $invoke->setComment("{@inheritdoc}");
+        $invoke->setSource('return $next($request, $response);');
     }
 }

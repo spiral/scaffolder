@@ -11,7 +11,7 @@ use Spiral\Tests\BaseTest;
 
 class DuplicateTest extends BaseTest
 {
-    public function testService()
+    public function testScaffold()
     {
         $output = $this->console->run('create:controller', [
             'name' => 'default'

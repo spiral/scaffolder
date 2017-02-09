@@ -17,7 +17,7 @@ class ControllerTest extends BaseTest
         $this->deleteDeclaration(SampleController::class);
     }
 
-    public function testService()
+    public function testScaffold()
     {
         $this->console->run('create:controller', [
             'name'      => 'sample',

@@ -17,7 +17,7 @@ class NamespacedServiceTest extends BaseTest
         $this->deleteDeclaration(NamespacedService::class);
     }
 
-    public function testService()
+    public function testScaffold()
     {
         $this->console->run('create:service', [
             'name'      => 'namespaced/namespaced',

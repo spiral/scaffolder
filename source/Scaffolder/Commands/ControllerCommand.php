@@ -34,9 +34,7 @@ class ControllerCommand extends AbstractCommand
      */
     public function perform()
     {
-        /**
-         * @var ControllerDeclaration $declaration
-         */
+        /** @var ControllerDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
         foreach ($this->option('action') as $action) {
