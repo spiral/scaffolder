@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Scaffolder\AbstractCommand;
@@ -20,19 +21,11 @@ class ControllerCommand extends AbstractCommand
     const ELEMENT = 'controller';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:controller';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create controller declaration';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
+    const NAME        = 'create:controller';
+    const DESCRIPTION = 'Create controller declaration';
+    const ARGUMENTS   = [
         ['name', InputArgument::REQUIRED, 'Controller name']
     ];
 
@@ -47,7 +40,7 @@ class ControllerCommand extends AbstractCommand
         $declaration = $this->createDeclaration();
 
         foreach ($this->option('action') as $action) {
-            $declaration->action($action);
+            $declaration->addAction($action);
         }
 
         $this->writeDeclaration($declaration);
@@ -56,7 +49,7 @@ class ControllerCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
             [
@@ -65,12 +58,6 @@ class ControllerCommand extends AbstractCommand
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Pre-create controller action'
             ],
-//            [
-//                'depends',
-//                'i',
-//                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-//                'Add dependency to class (type:name or full class name or short binding)'
-//            ],
             [
                 'comment',
                 'c',

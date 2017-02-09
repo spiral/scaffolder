@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Declarations;
 
 use Spiral\Core\Controller;
@@ -25,26 +26,25 @@ class ControllerDeclaration extends ClassDeclaration implements DependedInterfac
      * @param string $name
      * @param string $comment
      */
-    public function __construct($name, $comment = '')
+    public function __construct(string $name, string $comment = null)
     {
-        parent::__construct($name, 'Controller', [], $comment);
+        parent::__construct($name, 'Controller', [], (string)$comment);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
-        return [
-            Controller::class => null
-        ];
+        return [Controller::class => null];
     }
 
     /**
      * @param string $action
+     *
      * @return ClassDeclaration\MethodDeclaration
      */
-    public function action($action)
+    public function addAction(string $action): ClassDeclaration\MethodDeclaration
     {
         $method = $this->method($action . $this->actionPostfix);
 
