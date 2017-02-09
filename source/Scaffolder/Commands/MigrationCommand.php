@@ -18,7 +18,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MigrationCommand extends AbstractCommand
 {
-
     /**
      * Element to be managed.
      */
@@ -40,9 +39,7 @@ class MigrationCommand extends AbstractCommand
      */
     public function perform(Migrator $migrator)
     {
-        /**
-         * @var MigrationDeclaration $declaration
-         */
+        /** @var MigrationDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
         if (!empty($this->option('table'))) {

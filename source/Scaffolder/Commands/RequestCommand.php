@@ -5,6 +5,7 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands;
 
 use Spiral\Http\Request\RequestFilter;
@@ -32,20 +33,12 @@ class RequestCommand extends AbstractCommand
     const ELEMENT = 'request';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:request';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create new RequestFilter model';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
-        ['name', InputArgument::REQUIRED, 'Request name']
+    const NAME        = 'create:request';
+    const DESCRIPTION = 'Create RequestFilter declaration';
+    const ARGUMENTS   = [
+        ['name', InputArgument::REQUIRED, 'Request name'],
     ];
 
     /**
@@ -53,30 +46,27 @@ class RequestCommand extends AbstractCommand
      */
     public function perform(ScaffolderConfig $config)
     {
-        /**
-         * @var RequestDeclaration $declaration
-         */
+        /** @var RequestDeclaration $declaration */
         $declaration = $this->createDeclaration([
             'parent' => RequestFilter::class
         ]);
-
-        $declaration->setMapping($config->getMapping(static::ELEMENT));
 
         foreach ($this->option('field') as $field) {
             list($field, $type, $source, $origin) = $this->parseField($field);
             $declaration->declareField($field, $type, $source, $origin);
         }
 
-        $this->writeDeclaration($declaration->normalize());
+        $this->writeDeclaration($declaration);
     }
 
     /**
      * Parse field to fetch source, origin and type.
      *
      * @param string $field
+     *
      * @return array
      */
-    private function parseField($field)
+    private function parseField(string $field): array
     {
         $source = static::DEFAULT_SOURCE;
         $type = static::DEFAULT_TYPE;
@@ -101,7 +91,7 @@ class RequestCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
             [
