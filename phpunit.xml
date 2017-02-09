@@ -14,14 +14,14 @@
          stderr="true"
 >
     <testsuites>
-        <testsuite name="Profiler Module Tests">
+        <testsuite name="Scaffolder Module Tests">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>source/Profiler</directory>
+            <directory>source/Scaffolder</directory>
         </whitelist>
     </filter>
 </phpunit>
