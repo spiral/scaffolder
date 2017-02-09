@@ -19,11 +19,13 @@ class ServiceTest extends BaseTest
 
     public function testService()
     {
-        $this->assertFalse(class_exists(SampleService::class));
-
         $this->console->run('create:service', [
             'name'      => 'sample',
-            '--comment' => 'Sample Service'
+            '--comment' => 'Sample Service',
+            '-m'        => [
+                'methodA',
+                'methodB'
+            ]
         ]);
 
         clearstatcache();
@@ -31,5 +33,8 @@ class ServiceTest extends BaseTest
 
         $reflection = new \ReflectionClass(SampleService::class);
         $this->assertContains('Sample Service', $reflection->getDocComment());
+
+        $this->assertTrue($reflection->hasMethod('methodA'));
+        $this->assertTrue($reflection->hasMethod('methodB'));
     }
 }
