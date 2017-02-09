@@ -29,7 +29,6 @@ class CommandTest extends BaseTest
         $this->assertTrue(class_exists(SampleCommand::class));
 
         $reflection = new \ReflectionClass(SampleCommand::class);
-        $this->assertContains('Sample Command', $reflection->getDocComment());
 
         $this->assertTrue($reflection->hasMethod('perform'));
 
