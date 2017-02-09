@@ -13,8 +13,18 @@ class ServiceTest extends BaseTest
 {
     public function testService()
     {
-        $this->assertFalse(class_exists(\TestApplication\Services\SampleService::class));
+        $this->assertFalse(
+            class_exists(\TestApplication\Models\SampleService::class)
+        );
 
-        $this->deleteClass(\TestApplication\Services\SampleService::class);
+        $this->console->run('create:service', [
+            'name' => 'sample'
+        ]);
+
+        $this->assertTrue(
+            class_exists(\TestApplication\Models\SampleService::class)
+        );
+
+        $this->deleteClass(\TestApplication\Models\SampleService::class);
     }
 }

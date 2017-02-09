@@ -100,6 +100,8 @@ class ScaffolderConfig extends InjectableConfig
     public function classFilename(string $element, string $name): string
     {
         $namespace = $this->classNamespace($element, $name);
+        $namespace = substr($namespace, strlen($this->baseNamespace()));
+
         $directory = $this->baseDirectory() . '/' . str_replace('\\', '/', $namespace);
 
         return rtrim($directory, '/') . '/' . $this->className($element, $name) . '.php';
