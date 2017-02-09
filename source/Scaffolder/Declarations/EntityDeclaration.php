@@ -36,6 +36,19 @@ abstract class EntityDeclaration extends ClassDeclaration implements DependedInt
     }
 
     /**
+     * Add field into schema.
+     *
+     * @param string $name
+     * @param mixed  $value
+     */
+    public function addField(string $name, $value)
+    {
+        $schema = $this->constant('SCHEMA')->getValue();
+        $schema[$name] = $value;
+        $this->constant('SCHEMA')->setValue($schema);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies(): array

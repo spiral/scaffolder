@@ -5,37 +5,29 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 namespace Spiral\Scaffolder\Commands\Database;
 
-use Spiral\ODM\Document;
 use Spiral\Scaffolder\AbstractCommand;
-use Spiral\Scaffolder\Declarations\Database\DocumentDeclaration;
+use Spiral\Scaffolder\Declarations\Database\RecordDeclaration;
 use Spiral\Scaffolder\Exceptions\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class DocumentCommand extends AbstractCommand
+class RecordCommand extends AbstractCommand
 {
     /**
      * Element to be managed.
      */
-    const ELEMENT = 'document';
+    const ELEMENT = 'record';
 
     /**
-     * @var string
+     * Command name and options.
      */
-    protected $name = 'create:document';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Create new Document model';
-
-    /**
-     * @var array
-     */
-    protected $arguments = [
-        ['name', InputArgument::REQUIRED, 'Document name']
+    const NAME        = 'create:record';
+    const DESCRIPTION = 'Create Record declaration';
+    const ARGUMENTS   = [
+        ['name', InputArgument::REQUIRED, 'Record name']
     ];
 
     /**
@@ -43,32 +35,28 @@ class DocumentCommand extends AbstractCommand
      */
     public function perform()
     {
-        /**
-         * @var DocumentDeclaration $declaration
-         */
-        $declaration = $this->createDeclaration([
-            'parent' => Document::class
-        ]);
+        /** @var RecordDeclaration $declaration */
+        $declaration = $this->createDeclaration();
 
         foreach ($this->option('field') as $field) {
             if (strpos($field, ':') === false) {
-                throw new ScaffolderException("Field definition must in 'name:type' form.");
+                throw new ScaffolderException("Field definition must in 'name:type' form");
             }
 
             list($name, $type) = explode(':', $field);
-            $declaration->declareField($name, $type);
+            $declaration->addField($name, $type);
         }
 
-        $declaration->setCollection($this->option('collection'));
-        $declaration->setDatabase($this->option('database'));
+        $declaration->setTable((string)$this->option('table'));
+        $declaration->setDatabase((string)$this->option('database'));
 
-        $this->writeDeclaration($declaration->normalize());
+        $this->writeDeclaration($declaration->normalizeDeclaration());
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function defineOptions()
+    protected function defineOptions(): array
     {
         return [
             [
@@ -78,10 +66,10 @@ class DocumentCommand extends AbstractCommand
                 'Add field in a format "name:type"'
             ],
             [
-                'collection',
-                'm',
+                'table',
+                't',
                 InputOption::VALUE_OPTIONAL,
-                'Associated collection'
+                'Associated table'
             ],
             [
                 'database',

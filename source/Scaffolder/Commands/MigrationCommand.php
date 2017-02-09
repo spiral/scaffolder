@@ -43,7 +43,6 @@ class MigrationCommand extends AbstractCommand
         $declaration = $this->createDeclaration();
 
         if (!empty($this->option('table'))) {
-
             $columns = [];
             foreach ($this->option('column') as $field) {
                 if (strpos($field, ':') === false) {
