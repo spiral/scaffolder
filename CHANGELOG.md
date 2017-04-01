@@ -1,9 +1,10 @@
 CHANGELOG for 0.9.0 RC
 ======================
 
-0.9.1 (01.04.2017)
+0.9.2 (01.04.2017)
 -----
 - proper config to support migration declaration
+- bugfix in migration declaration (schema => table)
 
 0.9.0 (09.02.2017)
 -----
