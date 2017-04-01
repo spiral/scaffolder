@@ -54,7 +54,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
 
         $source->addLine("    ->create();");
 
-        $this->method('down')->getSource()->addString("\$this->schema('{$table}')->drop();");
+        $this->method('down')->getSource()->addString("\$this->table('{$table}')->drop();");
     }
 
     /**
