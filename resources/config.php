@@ -42,7 +42,7 @@ return [
             'class'     => Declarations\ControllerDeclaration::class
         ],
         'service'    => [
-            'namespace' => 'Services',
+            'namespace' => 'Models',
             'postfix'   => 'Service',
             'class'     => Declarations\ServiceDeclaration::class
         ],
@@ -110,10 +110,10 @@ return [
             'postfix'   => '',
             'class'     => Declarations\Database\DocumentDeclaration::class
         ],
-        'source'     => [
-            'namespace' => 'Database\Sources',
-            'postfix'   => 'Source',
-            'class'     => Declarations\Database\SourceDeclaration::class,
+        'migration'  => [
+            'namespace' => '',
+            'postfix'   => 'Migration',
+            'class'     => Declarations\MigrationDeclaration::class
         ]
         /*{{elements}}*/
     ],
