@@ -97,7 +97,7 @@ class RecordCommand extends AbstractCommand
             [
                 'source',
                 's',
-                InputOption::VALUE_OPTIONAL | InputOption::VALUE_NONE,
+                InputOption::VALUE_NONE,
                 'Create source/repository class'
             ]
         ];
