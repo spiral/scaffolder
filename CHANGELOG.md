@@ -1,6 +1,10 @@
 CHANGELOG for 0.9.0 RC
 ======================
 
+0.9.3 (18.04.2017)
+-----
+- ability to generate source classes
+
 0.9.2 (01.04.2017)
 -----
 - proper config to support migration declaration
