@@ -78,30 +78,16 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * Get namespace of element being rendered.
-     *
-     * @return string
-     */
-    protected function getNamespace()
-    {
-        return $this->config->classNamespace(
-            static::ELEMENT,
-            $this->argument('name')
-        );
-    }
-
-    /**
      * Write declaration into file.
      *
      * @param ClassDeclaration $declaration
+     * @param string           $type If null static::ELEMENT to be used.
      */
-    protected function writeDeclaration(ClassDeclaration $declaration)
+    protected function writeDeclaration(ClassDeclaration $declaration, string $type = null)
     {
-        $filename = $this->config->classFilename(
-            static::ELEMENT,
-            $this->argument('name')
-        );
+        $type = $type ?? static::ELEMENT;
 
+        $filename = $this->config->classFilename($type, $this->argument('name'));
         $filename = $this->files->normalizePath($filename);
 
         if ($this->files->exists($filename)) {
@@ -114,7 +100,10 @@ abstract class AbstractCommand extends Command
         }
 
         //File declaration
-        $file = new FileDeclaration($this->getNamespace());
+        $file = new FileDeclaration(
+            $this->config->classNamespace($type, $this->argument('name'))
+        );
+
         $file->setComment($this->config->headerLines());
         $file->addElement($declaration);
 
@@ -129,5 +118,26 @@ abstract class AbstractCommand extends Command
             "Declaration of '<info>{$declaration->getName()}</info>' "
             . "has been successfully written into '<comment>{$filename}</comment>'."
         );
+    }
+
+    /**
+     * Get namespace of element being rendered.
+     *
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return $this->config->classNamespace(
+            static::ELEMENT,
+            $this->argument('name')
+        );
+    }
+
+    /**
+     * @return \Spiral\Scaffolder\Configs\ScaffolderConfig
+     */
+    protected function getConfig(): ScaffolderConfig
+    {
+        return $this->config;
     }
 }

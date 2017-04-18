@@ -9,12 +9,14 @@ namespace Spiral\Tests\Scaffolder;
 
 use Spiral\Tests\BaseTest;
 use TestApplication\Database\SampleRecord;
+use TestApplication\Database\Sources\SampleRecordSource;
 
 class RecordTest extends BaseTest
 {
     public function tearDown()
     {
         $this->deleteDeclaration(SampleRecord::class);
+        $this->deleteDeclaration(SampleRecordSource::class);
     }
 
     public function testScaffold()
@@ -26,7 +28,8 @@ class RecordTest extends BaseTest
             '--field'    => [
                 'id:primary',
                 'value:int'
-            ]
+            ],
+            '-s'         => true
         ]);
 
         clearstatcache();

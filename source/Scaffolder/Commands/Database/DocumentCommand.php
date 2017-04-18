@@ -9,6 +9,7 @@
 namespace Spiral\Scaffolder\Commands\Database;
 
 use Spiral\Scaffolder\AbstractCommand;
+use Spiral\Scaffolder\Commands\Database\Traits\SourceDeclarationTrait;
 use Spiral\Scaffolder\Declarations\Database\DocumentDeclaration;
 use Spiral\Scaffolder\Exceptions\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,9 +17,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class DocumentCommand extends AbstractCommand
 {
-    /**
-     * Element to be managed.
-     */
+    use SourceDeclarationTrait;
+
     const ELEMENT = 'document';
 
     /**
@@ -51,6 +51,17 @@ class DocumentCommand extends AbstractCommand
         $declaration->setDatabase((string)$this->option('database'));
 
         $this->writeDeclaration($declaration->normalizeDeclaration());
+
+        if ($this->option('source')) {
+            $this->writeDeclaration(
+                $this->sourceDeclaration(
+                    $this->argument('name'),
+                    'document',
+                    $this->getNamespace() . '\\' . $this->getClass()
+                ),
+                'source'
+            );
+        }
     }
 
     /**
@@ -82,6 +93,12 @@ class DocumentCommand extends AbstractCommand
                 'c',
                 InputOption::VALUE_OPTIONAL,
                 'Optional comment to add as class header'
+            ],
+            [
+                'source',
+                's',
+                InputOption::VALUE_OPTIONAL,
+                'Create source/repository class'
             ]
         ];
     }

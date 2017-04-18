@@ -110,11 +110,15 @@ return [
             'postfix'   => '',
             'class'     => Declarations\Database\DocumentDeclaration::class
         ],
+        'source'     => [
+            'namespace' => 'Database\Sources',
+            'postfix'   => 'Source'
+        ],
         'migration'  => [
             'namespace' => '',
             'postfix'   => 'Migration',
             'class'     => Declarations\MigrationDeclaration::class
-        ]
+        ],
         /*{{elements}}*/
     ],
 ];
