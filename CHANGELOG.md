@@ -1,7 +1,7 @@
 CHANGELOG for 0.9.0 RC
 ======================
 
-0.9.3 (18.04.2017)
+1.0.1 (18.04.2017)
 -----
 - ability to generate source classes
 
