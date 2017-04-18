@@ -57,8 +57,9 @@ class RecordCommand extends AbstractCommand
                 $this->sourceDeclaration(
                     $this->argument('name'),
                     'record',
-                    $this->getClass()
-                )
+                    $this->getNamespace() . '\\' . $this->getClass()
+                ),
+                'source'
             );
         }
     }

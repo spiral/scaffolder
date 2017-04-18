@@ -121,6 +121,19 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * Get namespace of element being rendered.
+     *
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return $this->config->classNamespace(
+            static::ELEMENT,
+            $this->argument('name')
+        );
+    }
+
+    /**
      * @return \Spiral\Scaffolder\Configs\ScaffolderConfig
      */
     protected function getConfig(): ScaffolderConfig

@@ -9,12 +9,14 @@ namespace Spiral\Tests\Scaffolder;
 
 use Spiral\Tests\BaseTest;
 use TestApplication\Database\SampleDocument;
+use TestApplication\Database\Sources\SampleDocumentSource;
 
 class DocumentTest extends BaseTest
 {
     public function tearDown()
     {
         $this->deleteDeclaration(SampleDocument::class);
+        $this->deleteDeclaration(SampleDocumentSource::class);
     }
 
     public function testScaffold()
@@ -26,7 +28,8 @@ class DocumentTest extends BaseTest
             '--field'      => [
                 'name:string',
                 'value:int'
-            ]
+            ],
+            '-s'           => true
         ]);
 
         clearstatcache();

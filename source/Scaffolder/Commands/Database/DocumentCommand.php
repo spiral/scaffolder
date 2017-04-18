@@ -57,8 +57,9 @@ class DocumentCommand extends AbstractCommand
                 $this->sourceDeclaration(
                     $this->argument('name'),
                     'document',
-                    $this->getClass()
-                )
+                    $this->getNamespace() . '\\' . $this->getClass()
+                ),
+                'source'
             );
         }
     }
