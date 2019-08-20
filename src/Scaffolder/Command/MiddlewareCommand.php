@@ -38,6 +38,7 @@ class MiddlewareCommand extends AbstractCommand
     {
         /** @var MiddlewareDeclaration $declaration */
         $declaration = $this->createDeclaration();
+
         $this->writeDeclaration($declaration);
     }
 }
