@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
 
-use Spiral\Filters\Filter;
 use Spiral\Scaffolder\Declaration\FilterDeclaration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -51,9 +50,7 @@ class FilterCommand extends AbstractCommand
     public function perform(): void
     {
         /** @var FilterDeclaration $declaration */
-        $declaration = $this->createDeclaration([
-            'parent' => Filter::class
-        ]);
+        $declaration = $this->createDeclaration();
 
         foreach ($this->option('field') as $field) {
             [$field, $type, $source, $origin] = $this->parseField($field);
