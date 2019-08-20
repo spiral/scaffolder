@@ -7,19 +7,24 @@
     {
       "name": "Anton Titov / Wolfy-J",
       "email": "wolfy.jd@gmail.com"
+    },
+    {
+      "name": "Valentin Vintsukevich (vvval)",
+      "email": "valentin@spiralscout.com"
     }
   ],
   "require": {
-    "spiral/framework": "^1.0"
+    "php": "^7.1",
+    "spiral/core": "^1.3",
+    "spiral/reactor": "^2.1",
+    "spiral/filters": "^1.2"
   },
   "require-dev": {
-    "spiral/odm": "^1.0",
-    "phpunit/phpunit": "~5.0",
-    "mockery/mockery": "^0.9.4"
+    "phpunit/phpunit": "^8.2"
   },
   "autoload": {
     "psr-4": {
-      "Spiral\\": "source/"
+      "Spiral\\": "src/"
     }
   },
   "autoload-dev": {

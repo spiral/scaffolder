@@ -5,26 +5,22 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder\Configs;
+namespace Spiral\Scaffolder\Config;
 
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Core\InjectableConfig;
-use Spiral\Scaffolder\Exceptions\ScaffolderException;
+use Spiral\Scaffolder\Exception\ScaffolderException;
 
 /**
  * Configuration for default scaffolder namespaces and other rendering options.
  */
 class ScaffolderConfig extends InjectableConfig
 {
-    /**
-     * Associated config section.
-     */
-    const CONFIG = 'modules/scaffolder';
+    public const CONFIG = 'scaffolder';
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $config = [
         'header'       => [],
         'directory'    => '',
@@ -59,12 +55,11 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
-     *
      * @return string
      */
     public function className(string $element, string $name): string
     {
-        list($namespace, $name) = $this->parseName($name);
+        [$namespace, $name] = $this->parseName($name);
 
         return Inflector::classify($name) . $this->elementPostfix($element);
     }
@@ -72,13 +67,12 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
-     *
      * @return string
      */
     public function classNamespace(string $element, string $name = ''): string
     {
         $localNamespace = trim($this->getOption($element, 'namespace', ''), '\\');
-        list($namespace, $name) = $this->parseName($name);
+        [$namespace, $name] = $this->parseName($name);
 
         if (!empty($namespace)) {
             $localNamespace .= '\\' . Inflector::classify($namespace);
@@ -94,7 +88,6 @@ class ScaffolderConfig extends InjectableConfig
     /**
      * @param string $element
      * @param string $name
-     *
      * @return string
      */
     public function classFilename(string $element, string $name): string
@@ -109,9 +102,7 @@ class ScaffolderConfig extends InjectableConfig
 
     /**
      * @param string $element
-     *
      * @return string
-     *
      * @throws ScaffolderException
      */
     public function declarationClass(string $element): string
@@ -131,7 +122,6 @@ class ScaffolderConfig extends InjectableConfig
      * Declaration options.
      *
      * @param string $element
-     *
      * @return array
      */
     public function declarationOptions(string $element): array
@@ -141,7 +131,6 @@ class ScaffolderConfig extends InjectableConfig
 
     /**
      * @param string $element
-     *
      * @return string
      */
     private function elementPostfix(string $element): string
@@ -153,7 +142,6 @@ class ScaffolderConfig extends InjectableConfig
      * @param string $element
      * @param string $section
      * @param mixed  $default
-     *
      * @return mixed
      */
     private function getOption(string $element, string $section, $default = null)
@@ -173,7 +161,6 @@ class ScaffolderConfig extends InjectableConfig
      * Split user name into namespace and class name.
      *
      * @param string $name
-     *
      * @return array [namespace, name]
      */
     private function parseName(string $name): array
