@@ -5,12 +5,12 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder\Declarations;
+namespace Spiral\Scaffolder\Declaration;
 
 use Spiral\Migrations\Migration;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
 use Spiral\Reactor\DependedInterface;
 
 /**
@@ -52,9 +52,9 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
             $source->addLine("    ->addColumn('{$name}', '{$type}')");
         }
 
-        $source->addLine("    ->create();");
+        $source->addLine('    ->create();');
 
-        $this->method('down')->getSource()->addString("\$this->table('{$table}')->drop();");
+        $this->method('down')->getSource()->addLine("\$this->table('{$table}')->drop();");
     }
 
     /**
@@ -62,8 +62,8 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
      */
     private function declareStructure()
     {
-        $up = $this->method('up')->setAccess(MethodDeclaration::ACCESS_PUBLIC);
-        $down = $this->method('down')->setAccess(MethodDeclaration::ACCESS_PUBLIC);
+        $up = $this->method('up')->setPublic();
+        $down = $this->method('down')->setPublic();
 
         $up->setComment('Create tables, add columns or insert data here');
         $down->setComment('Drop created, columns and etc here');
