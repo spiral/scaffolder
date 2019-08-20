@@ -5,23 +5,24 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder;
+namespace Spiral\Scaffolder\Command;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Spiral\Console\Command;
 use Spiral\Core\FactoryInterface;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\FileDeclaration;
-use Spiral\Scaffolder\Configs\ScaffolderConfig;
+use Spiral\Scaffolder\Config\ScaffolderConfig;
 
 abstract class AbstractCommand extends Command
 {
     /**
      * Element to be managed.
      */
-    const ELEMENT = '';
+    protected const ELEMENT = '';
 
     /**
      * @var ScaffolderConfig
@@ -33,19 +34,27 @@ abstract class AbstractCommand extends Command
      */
     protected $files;
 
+    /** @var FactoryInterface */
+    private $factory;
+
     /**
      * @param ScaffolderConfig   $config
      * @param FilesInterface     $files
      * @param ContainerInterface $container
+     * @param FactoryInterface   $factory
      */
     public function __construct(
         ScaffolderConfig $config,
         FilesInterface $files,
-        ContainerInterface $container
+        ContainerInterface $container,
+        FactoryInterface $factory
     ) {
         $this->config = $config;
         $this->files = $files;
-        parent::__construct($container);
+        $this->factory = $factory;
+        $this->setContainer($container);
+
+        parent::__construct();
     }
 
     /**
@@ -55,7 +64,7 @@ abstract class AbstractCommand extends Command
      */
     protected function createDeclaration(array $parameters = []): ClassDeclaration
     {
-        return $this->container->get(FactoryInterface::class)->make(
+        return $this->factory->make(
             $this->config->declarationClass(static::ELEMENT),
             [
                 'name'    => $this->getClass(),
@@ -83,7 +92,7 @@ abstract class AbstractCommand extends Command
      * @param ClassDeclaration $declaration
      * @param string           $type If null static::ELEMENT to be used.
      */
-    protected function writeDeclaration(ClassDeclaration $declaration, string $type = null)
+    protected function writeDeclaration(ClassDeclaration $declaration, string $type = null): void
     {
         $type = $type ?? static::ELEMENT;
 
@@ -125,19 +134,11 @@ abstract class AbstractCommand extends Command
      *
      * @return string
      */
-    protected function getNamespace()
+    protected function getNamespace(): string
     {
         return $this->config->classNamespace(
             static::ELEMENT,
             $this->argument('name')
         );
-    }
-
-    /**
-     * @return \Spiral\Scaffolder\Configs\ScaffolderConfig
-     */
-    protected function getConfig(): ScaffolderConfig
-    {
-        return $this->config;
     }
 }
