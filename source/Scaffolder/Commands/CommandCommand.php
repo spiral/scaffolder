@@ -26,12 +26,12 @@ class CommandCommand extends AbstractCommand
     const NAME        = 'create:command';
     const DESCRIPTION = 'Create command declaration';
     const ARGUMENTS   = [
-        ['name', InputArgument::REQUIRED, 'Controller name'],
+        ['name', InputArgument::REQUIRED, 'Command name'],
         ['alias', InputArgument::OPTIONAL, 'Command id/alias'],
     ];
 
     /**
-     * Create controller declaration.
+     * Create command declaration.
      */
     public function perform()
     {
