@@ -47,7 +47,7 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
     }
 
     /**
-     * Declare default __invoke method body.
+     * Declare default process method body.
      */
     private function declareStructure()
     {

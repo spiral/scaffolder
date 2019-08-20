@@ -5,12 +5,13 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder\Declarations;
+namespace Spiral\Scaffolder\Declaration;
 
-use Spiral\Core\Controller;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DependedInterface;
+use Spiral\Reactor\Partial\Method;
 
 /**
  * Declares controller.
@@ -18,17 +19,12 @@ use Spiral\Reactor\DependedInterface;
 class ControllerDeclaration extends ClassDeclaration implements DependedInterface
 {
     /**
-     * @var string
-     */
-    private $actionPostfix = 'Action';
-
-    /**
      * @param string $name
      * @param string $comment
      */
     public function __construct(string $name, string $comment = '')
     {
-        parent::__construct($name, 'Controller', [], $comment);
+        parent::__construct($name, '', [], $comment);
     }
 
     /**
@@ -36,18 +32,17 @@ class ControllerDeclaration extends ClassDeclaration implements DependedInterfac
      */
     public function getDependencies(): array
     {
-        return [Controller::class => null];
+        return [];
     }
 
     /**
      * @param string $action
-     *
-     * @return ClassDeclaration\MethodDeclaration
+     * @return Method
      */
-    public function addAction(string $action): ClassDeclaration\MethodDeclaration
+    public function addAction(string $action): Method
     {
-        $method = $this->method($action . $this->actionPostfix);
+        $method = $this->method($action);
 
-        return $method->setAccess(ClassDeclaration\MethodDeclaration::ACCESS_PROTECTED);
+        return $method->setPublic();
     }
 }
