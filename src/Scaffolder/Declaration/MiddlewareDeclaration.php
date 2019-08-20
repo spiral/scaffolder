@@ -5,14 +5,16 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder\Declarations;
+namespace Spiral\Scaffolder\Declaration;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Spiral\Http\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
 use Spiral\Reactor\DependedInterface;
 
 /**
@@ -37,9 +39,10 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
     public function getDependencies(): array
     {
         return [
-            MiddlewareInterface::class    => null,
-            ServerRequestInterface::class => 'Request',
-            ResponseInterface::class      => 'Response'
+            MiddlewareInterface::class     => null,
+            RequestHandlerInterface::class => null,
+            ResponseInterface::class       => 'Response',
+            ServerRequestInterface::class  => 'Request'
         ];
     }
 
@@ -48,13 +51,15 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
      */
     private function declareStructure()
     {
-        $invoke = $this->method('__invoke')->setAccess(MethodDeclaration::ACCESS_PUBLIC);
+        $method = $this->method('process')->setAccess(AbstractDeclaration::ACCESS_PUBLIC);
 
-        $invoke->parameter('request')->setType('Request');
-        $invoke->parameter('response')->setType('Response');
-        $invoke->parameter('next')->setType('callable');
+        $method->setComment('{@inheritdoc}');
+        $method->parameter('request')->setType('Request');
+        $method->parameter('handler')->setType('RequestHandlerInterface');
+        $method->parameter('next')->setType('callable');
 
-        $invoke->setComment("{@inheritdoc}");
-        $invoke->setSource('return $next($request, $response);');
+        $method->setReturn('Response');
+
+        $method->setSource('return $handler->handle($request);');
     }
 }

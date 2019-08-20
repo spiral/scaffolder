@@ -16,8 +16,9 @@
   "require": {
     "php": "^7.1",
     "spiral/core": "^1.3",
-    "spiral/reactor": "^2.1",
-    "spiral/filters": "^1.2"
+    "spiral/reactor": "^2.2",
+    "spiral/filters": "^1.2",
+    "spiral/http": "^1.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.2"
