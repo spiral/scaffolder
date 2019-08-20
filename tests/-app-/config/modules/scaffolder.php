@@ -5,7 +5,7 @@
  *
  * @see ScaffolderConfig
  */
-use Spiral\Scaffolder\Declarations;
+use Spiral\Scaffolder\Declaration;
 
 return [
     /*
@@ -39,27 +39,27 @@ return [
         'controller'      => [
             'namespace' => 'Controllers',
             'postfix'   => 'Controller',
-            'class'     => Declarations\ControllerDeclaration::class
+            'class'     => Declaration\ControllerDeclaration::class
         ],
         'service'         => [
             'namespace' => 'Services',
             'postfix'   => 'Service',
-            'class'     => Declarations\ServiceDeclaration::class
+            'class'     => Declaration\ServiceDeclaration::class
         ],
         'middleware'      => [
             'namespace' => 'Middlewares',
             'postfix'   => '',
-            'class'     => Declarations\MiddlewareDeclaration::class
+            'class'     => Declaration\MiddlewareDeclaration::class
         ],
         'command'         => [
             'namespace' => 'Commands',
             'postfix'   => 'Command',
-            'class'     => Declarations\CommandDeclaration::class
+            'class'     => Declaration\CommandDeclaration::class
         ],
         'request'         => [
             'namespace' => 'Requests',
             'postfix'   => 'Request',
-            'class'     => Declarations\RequestDeclaration::class,
+            'class'     => Declaration\FilterDeclaration::class,
             'options'   => [
                 //Set of default filters and validate rules for various types
                 'mapping' => [
@@ -103,22 +103,22 @@ return [
         'migration'       => [
             'namespace' => 'Migrations',
             'postfix'   => 'Migration',
-            'class'     => Declarations\MigrationDeclaration::class
+            'class'     => Declaration\MigrationDeclaration::class
         ],
         'record'          => [
             'namespace' => 'Database',
             'postfix'   => '',
-            'class'     => Declarations\Database\RecordDeclaration::class
+            'class'     => Declaration\Database\RecordDeclaration::class
         ],
         'document'        => [
             'namespace' => 'Database',
             'postfix'   => '',
-            'class'     => Declarations\Database\DocumentDeclaration::class
+            'class'     => Declaration\Database\DocumentDeclaration::class
         ],
         'source'          => [
             'namespace' => 'Database\Sources',
             'postfix'   => 'Source',
-            'class'     => Declarations\Database\SourceDeclaration::class,
+            'class'     => Declaration\Database\SourceDeclaration::class,
         ]
         /*{{elements}}*/
     ],

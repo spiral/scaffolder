@@ -5,12 +5,12 @@
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
-namespace Spiral\Scaffolder\Declarations;
+namespace Spiral\Scaffolder\Declaration;
 
 use Spiral\Console\Command;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
 use Spiral\Reactor\DependedInterface;
 
 class CommandDeclaration extends ClassDeclaration implements DependedInterface
@@ -47,7 +47,7 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->constant('NAME')->getValue();
     }
@@ -63,29 +63,23 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->constant('DESCRIPTION')->getValue();
     }
 
     /**
-     * Declare default __invoke method body.
+     * Declare default command body.
      */
     private function declareStructure()
     {
-        $perform = $this->method('perform')->setAccess(MethodDeclaration::ACCESS_PROTECTED);
-        $perform->setComment("Perform command");
+        $perform = $this->method('perform')->setProtected();
+        $perform->setReturn('void');
+        $perform->setComment('Perform command');
 
-        $this->constant('NAME');
-        $this->constant('NAME')->setValue('');
-
-        $this->constant('DESCRIPTION');
-        $this->constant('DESCRIPTION')->setValue('');
-
-        $this->constant('ARGUMENTS');
-        $this->constant('ARGUMENTS')->setValue([]);
-
-        $this->constant('OPTIONS');
-        $this->constant('OPTIONS')->setValue([]);
+        $this->constant('NAME')->setPublic()->setValue('');
+        $this->constant('DESCRIPTION')->setPublic()->setValue('');
+        $this->constant('ARGUMENTS')->setPublic()->setValue([]);
+        $this->constant('OPTIONS')->setPublic()->setValue([]);
     }
 }

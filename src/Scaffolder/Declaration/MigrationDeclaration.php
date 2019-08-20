@@ -62,8 +62,8 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
      */
     private function declareStructure()
     {
-        $up = $this->method('up')->setPublic();
-        $down = $this->method('down')->setPublic();
+        $up = $this->method('up')->setPublic()->setReturn('void');
+        $down = $this->method('down')->setPublic()->setReturn('void');
 
         $up->setComment('Create tables, add columns or insert data here');
         $down->setComment('Drop created, columns and etc here');

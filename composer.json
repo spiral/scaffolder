@@ -19,7 +19,8 @@
     "spiral/reactor": "^2.2",
     "spiral/filters": "^1.2",
     "spiral/http": "^1.2",
-    "spiral/migrations": "^2.0"
+    "spiral/migrations": "^2.0",
+    "spiral/console": "^1.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.2"
