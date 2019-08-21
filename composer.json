@@ -36,7 +36,7 @@
   "autoload-dev": {
     "psr-4": {
       "Spiral\\Tests\\": "tests/",
-      "TestApplication\\": "tests/-app-/classes/"
+      "TestApp\\": "tests/app/classes/"
     }
   }
 }

@@ -25,7 +25,7 @@ class EntityCommand extends AbstractCommand
     protected const DESCRIPTION = 'Create entity declaration';
     protected const ARGUMENTS   = [
         ['name', InputArgument::REQUIRED, 'Entity name'],
-        ['format', InputArgument::REQUIRED, 'Declaration format (annotated, xml?, yaml?, php?)', 'annotated'],
+        ['format', InputArgument::OPTIONAL, 'Declaration format (annotated, xml?, yaml?, php?)', 'annotated'],
     ];
     protected const OPTIONS     = [
         [

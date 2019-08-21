@@ -44,7 +44,7 @@ class ScaffolderBootloader extends Bootloader
              * Base directory for generated classes, class will be automatically localed into sub directory
              * using given namespace.
              */
-            'directory'    => directory('application') . 'classes/',
+            'directory'    => directory('app') . 'classes/',
 
             /*
              * Default namespace to be applied for every generated class.
