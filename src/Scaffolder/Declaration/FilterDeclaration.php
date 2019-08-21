@@ -76,7 +76,7 @@ class FilterDeclaration extends ClassDeclaration implements DependedInterface
     }
 
     /**
-     * Declare record entity structure.
+     * Declare filter structure.
      */
     protected function declareStructure(): void
     {

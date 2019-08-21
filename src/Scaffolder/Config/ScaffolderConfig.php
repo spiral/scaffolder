@@ -45,14 +45,6 @@ class ScaffolderConfig extends InjectableConfig
     }
 
     /**
-     * @return string
-     */
-    public function baseNamespace(): string
-    {
-        return trim($this->config['namespace'], '\\');
-    }
-
-    /**
      * @param string $element
      * @param string $name
      * @return string
@@ -176,5 +168,13 @@ class ScaffolderConfig extends InjectableConfig
 
         //No user namespace
         return ['', $name];
+    }
+
+    /**
+     * @return string
+     */
+    private function baseNamespace(): string
+    {
+        return trim($this->config['namespace'], '\\');
     }
 }

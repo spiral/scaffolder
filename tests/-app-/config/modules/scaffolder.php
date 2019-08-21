@@ -108,17 +108,12 @@ return [
         'record'          => [
             'namespace' => 'Database',
             'postfix'   => '',
-            'class'     => Declaration\Database\RecordDeclaration::class
-        ],
-        'document'        => [
-            'namespace' => 'Database',
-            'postfix'   => '',
-            'class'     => Declaration\Database\DocumentDeclaration::class
+            'class'     => Declaration\Database\AnnotatedEntityDeclaration::class
         ],
         'source'          => [
             'namespace' => 'Database\Sources',
             'postfix'   => 'Source',
-            'class'     => Declaration\Database\SourceDeclaration::class,
+            'class'     => Declaration\Database\RepositoryDeclaration::class,
         ]
         /*{{elements}}*/
     ],

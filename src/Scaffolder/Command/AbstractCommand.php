@@ -65,12 +65,21 @@ abstract class AbstractCommand extends Command
     protected function createDeclaration(array $parameters = []): ClassDeclaration
     {
         return $this->factory->make(
-            $this->config->declarationClass(static::ELEMENT),
+            $this->declarationClass(static::ELEMENT),
             [
                 'name'    => $this->getClass(),
                 'comment' => (string)$this->option('comment')
             ] + $parameters + $this->config->declarationOptions(static::ELEMENT)
         );
+    }
+
+    /**
+     * @param string $element
+     * @return string
+     */
+    protected function declarationClass(string $element): string
+    {
+        return $this->config->declarationClass($element);
     }
 
     /**

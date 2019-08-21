@@ -122,20 +122,18 @@ class ScaffolderBootloader extends Bootloader
                         ]
                     ]
                 ],
-//                'record'     => [
-//                    'namespace' => 'Database',
-//                    'postfix'   => '',
-//                    'class'     => Declaration\Database\RecordDeclaration::class
-//                ],
-//                'document'   => [
-//                    'namespace' => 'Database',
-//                    'postfix'   => '',
-//                    'class'     => Declaration\Database\DocumentDeclaration::class
-//                ],
-//                'source'     => [
-//                    'namespace' => 'Database\Sources',
-//                    'postfix'   => 'Source'
-//                ],
+                'entity'     => [
+                    'namespace' => 'Database',
+                    'postfix'   => '',
+                    'options'   => [
+                        'annotated' => Declaration\Database\Entity\AnnotatedDeclaration::class
+                    ],
+                ],
+                'repository' => [
+                    'namespace' => 'Repository',
+                    'postfix'   => 'Repository',
+                    'class'     => Declaration\Database\RepositoryDeclaration::class,
+                ],
             ],
         ]);
 
