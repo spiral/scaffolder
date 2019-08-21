@@ -11,9 +11,6 @@ namespace Spiral\Tests\Scaffolder\Command;
 
 class CommandTest extends AbstractCommandTest
 {
-    private const CLASS_NAME_WITH_ALIAS    = '\\TestApp\\Command\\SampleAliasCommand';
-    private const CLASS_NAME_WITHOUT_ALIAS = '\\TestApp\\Command\\SampleCommand';
-
     /**
      * @dataProvider commandDataProvider
      * @param string      $className
@@ -57,8 +54,8 @@ class CommandTest extends AbstractCommandTest
     public function commandDataProvider(): array
     {
         return [
-            [self::CLASS_NAME_WITHOUT_ALIAS, 'sample', null],
-            [self::CLASS_NAME_WITH_ALIAS, 'sampleAlias', 'my-sample-command-alias'],
+            ['\\TestApp\\Command\\SampleCommand', 'sample', null],
+            ['\\TestApp\\Command\\SampleAliasCommand', 'sampleAlias', 'my-sample-command-alias'],
         ];
     }
 }
