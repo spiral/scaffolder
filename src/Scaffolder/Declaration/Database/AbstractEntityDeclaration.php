@@ -1,6 +1,6 @@
 <?php
 /**
- * Spiral Framework.
+ * Spiral Framework. Scaffolder
  *
  * @license MIT
  * @author  Valentin V (vvval)

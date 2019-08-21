@@ -1,6 +1,6 @@
 <?php
 /**
- * Spiral Framework.
+ * Spiral Framework. Scaffolder
  *
  * @license MIT
  * @author  Valentin V (vvval)
@@ -12,7 +12,6 @@ namespace Spiral\Scaffolder\Bootloader;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Append;
-use Spiral\Core\Container\Autowire;
 use Spiral\Scaffolder\Declaration;
 
 class ScaffolderBootloader extends Bootloader

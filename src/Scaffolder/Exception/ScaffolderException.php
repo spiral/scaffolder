@@ -1,9 +1,9 @@
 <?php
 /**
- * Spiral Framework.
+ * Spiral Framework. Scaffolder
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * @license MIT
+ * @author  Anton Titov (Wolfy-J)
  */
 declare(strict_types=1);
 

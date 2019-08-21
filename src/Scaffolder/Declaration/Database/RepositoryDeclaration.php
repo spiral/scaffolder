@@ -1,8 +1,9 @@
 <?php
 /**
- * scaffolder
+ * Spiral Framework. Scaffolder
  *
- * @author    Wolfy-J
+ * @license MIT
+ * @author  Valentin V (vvval)
  */
 declare(strict_types=1);
 

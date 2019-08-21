@@ -1,9 +1,9 @@
 <?php
 /**
- * Spiral Framework.
+ * Spiral Framework. Scaffolder
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * @license MIT
+ * @author  Valentin V (vvval)
  */
 declare(strict_types=1);
 
@@ -13,7 +13,6 @@ use Spiral\Console\Console;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Scaffolder\Command\AbstractCommand;
 use Spiral\Scaffolder\Declaration\Database\Entity\AnnotatedDeclaration;
-use Spiral\Scaffolder\Declaration\Database\RepositoryDeclaration;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

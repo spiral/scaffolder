@@ -1,9 +1,10 @@
 <?php
 /**
- * Spiral Framework.
+ * Spiral Framework. Scaffolder
  *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
+ * @license MIT
+ * @author  Anton Titov (Wolfy-J)
+ * @author  Valentin V (vvval)
  */
 declare(strict_types=1);
 
@@ -28,7 +29,7 @@ class FilterCommand extends AbstractCommand
     protected const ELEMENT = 'filter';
 
     protected const NAME        = 'create:request';
-    protected const DESCRIPTION = 'Create RequestFilter declaration';
+    protected const DESCRIPTION = 'Create filter declaration';
     protected const ARGUMENTS   = [
         ['name', InputArgument::REQUIRED, 'Request name'],
     ];
