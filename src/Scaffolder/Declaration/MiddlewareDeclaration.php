@@ -57,7 +57,6 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
         $method->setComment('{@inheritdoc}');
         $method->parameter('request')->setType('Request');
         $method->parameter('handler')->setType('RequestHandlerInterface');
-        $method->parameter('next')->setType('callable');
 
         $method->setReturn('Response');
 

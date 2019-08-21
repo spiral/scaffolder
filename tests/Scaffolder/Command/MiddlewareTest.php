@@ -1,0 +1,40 @@
+<?php
+/**
+ * Spiral Framework. Scaffolder
+ *
+ * @license MIT
+ * @author  Valentin V (vvval)
+ */
+declare(strict_types=1);
+
+namespace Spiral\Tests\Scaffolder\Command;
+
+class MiddlewareTest extends AbstractCommandTest
+{
+    private const CLASS_NAME = '\\TestApp\\Middleware\\SampleMiddleware';
+
+    public function tearDown(): void
+    {
+        $this->deleteDeclaration(self::CLASS_NAME);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws \Throwable
+     */
+    public function testScaffold(): void
+    {
+        $this->console()->run('create:middleware', [
+            'name'      => 'sample-middleware',
+            '--comment' => 'Sample Middleware'
+        ]);
+
+        clearstatcache();
+        $this->assertTrue(class_exists(self::CLASS_NAME));
+
+        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $this->assertStringContainsString('Sample Middleware', $reflection->getDocComment());
+
+        $this->assertTrue($reflection->hasMethod('process'));
+    }
+}
