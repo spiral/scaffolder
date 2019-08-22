@@ -162,7 +162,7 @@ class EntityTest extends AbstractCommandTest
         $this->assertStringContainsString('myTable', $source);
         $this->assertStringContainsString('myDatabase', $source);
 
-//        $this->deleteDeclaration($className);
+        $this->deleteDeclaration($className);
     }
 
     /**
@@ -194,7 +194,7 @@ class EntityTest extends AbstractCommandTest
 
         $this->assertStringContainsString($needle, $source);
 
-//        $this->deleteDeclaration($className);
+        $this->deleteDeclaration($className);
     }
 
     public function inflectionDataProvider(): array
@@ -204,11 +204,4 @@ class EntityTest extends AbstractCommandTest
             [__LINE__, 'camelize', 'myAnotherValue'],
         ];
     }
-
-    //test annotated:
-    //role
-    //mapper
-    //table
-    //database
-    //inflection
 }
