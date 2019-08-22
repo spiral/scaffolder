@@ -7,6 +7,8 @@
  */
 declare(strict_types=1);
 
+namespace Spiral\Scaffolder;
+
 if (!function_exists('trimPostfix')) {
     /**
      * @param string $name

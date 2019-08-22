@@ -16,6 +16,7 @@ use Spiral\Scaffolder\Declaration\Database\Entity\AnnotatedDeclaration;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use function Spiral\Scaffolder\trimPostfix;
 
 class EntityCommand extends AbstractCommand
 {
