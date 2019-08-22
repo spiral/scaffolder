@@ -37,19 +37,19 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     public function finalize(): void
     {
         $entities = [];
-        if ($this->role) {
+        if (!empty($this->role)) {
             $entities[] = "role = \"$this->role\"";
         }
-        if ($this->mapper) {
+        if (!empty($this->mapper)) {
             $entities[] = "mapper = \"$this->mapper\"";
         }
-        if ($this->repository) {
+        if (!empty($this->repository)) {
             $entities[] = "repository = \"$this->repository\"";
         }
-        if ($this->table) {
+        if (!empty($this->table)) {
             $entities[] = "table = \"$this->table\"";
         }
-        if ($this->database) {
+        if (!empty($this->database)) {
             $entities[] = "database = \"$this->database\"";
         }
 
@@ -63,7 +63,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     {
         $columns = ["type = \"$type\""];
 
-        if ($this->inflection) {
+        if (!empty($this->inflection)) {
             $inflected = $this->inflect($this->inflection, $name);
             if ($inflected !== null && $inflected !== $name) {
                 $columns[] = "name = \"$inflected\"";
