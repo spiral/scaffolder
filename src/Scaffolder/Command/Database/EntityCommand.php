@@ -102,9 +102,11 @@ class EntityCommand extends AbstractCommand
             $declaration->addField($name, $accessibility, $type, $parts[2] ?? null);
         }
 
+        $repository = trimPostfix((string)$this->option('repository'), 'repository');
+
         $declaration->setRole((string)$this->option('role'));
         $declaration->setMapper((string)$this->option('mapper'));
-        $declaration->setRepository((string)$this->option('repository'));
+        $declaration->setRepository($repository);
         $declaration->setTable((string)$this->option('table'));
         $declaration->setDatabase((string)$this->option('database'));
 
@@ -114,7 +116,7 @@ class EntityCommand extends AbstractCommand
 
         if ($this->option('repository')) {
             $console->run('create:repository', [
-                'name' => $this->repositoryName((string)$this->option('repository'), $this->argument('name'))
+                'name' => $repository ?? $this->argument('name')
             ]);
         }
     }
@@ -136,31 +138,5 @@ class EntityCommand extends AbstractCommand
         ], true)) {
             throw new ScaffolderException("Invalid accessibility value `$accessibility`");
         }
-    }
-
-    /**
-     * @param string $repository
-     * @param string $name
-     * @return string
-     */
-    private function repositoryName(string $repository, string $name): string
-    {
-        $repository = $this->cleanRepositoryPostfix($repository);
-        if (empty($repository)) {
-            return $name;
-        }
-
-        return $repository;
-    }
-
-    /**
-     * @param string $repository
-     * @return string
-     */
-    private function cleanRepositoryPostfix(string $repository): string
-    {
-        $pos = mb_strripos($repository, 'repository');
-
-        return $pos === false ? $repository : mb_substr($repository, 0, $pos);
     }
 }

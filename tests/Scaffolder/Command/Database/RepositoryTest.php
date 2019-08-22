@@ -8,11 +8,13 @@
  */
 declare(strict_types=1);
 
-namespace Spiral\Tests\Scaffolder\Command;
+namespace Spiral\Tests\Scaffolder\Command\Database;
 
-class MiddlewareTest extends AbstractCommandTest
+use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
+
+class RepositoryTest extends AbstractCommandTest
 {
-    private const CLASS_NAME = '\\TestApp\\Middleware\\SampleMiddleware';
+    private const CLASS_NAME = '\\TestApp\\Repository\\SampleRepository';
 
     public function tearDown(): void
     {
@@ -25,9 +27,9 @@ class MiddlewareTest extends AbstractCommandTest
      */
     public function testScaffold(): void
     {
-        $this->console()->run('create:middleware', [
-            'name'      => 'sample-middleware',
-            '--comment' => 'Sample Middleware'
+        $this->console()->run('create:repository', [
+            'name'      => 'sample',
+            '--comment' => 'Sample Repository'
         ]);
 
         clearstatcache();
@@ -35,7 +37,6 @@ class MiddlewareTest extends AbstractCommandTest
 
         $reflection = new \ReflectionClass(self::CLASS_NAME);
 
-        $this->assertStringContainsString('Sample Middleware', $reflection->getDocComment());
-        $this->assertTrue($reflection->hasMethod('process'));
+        $this->assertStringContainsString('Sample Repository', $reflection->getDocComment());
     }
 }

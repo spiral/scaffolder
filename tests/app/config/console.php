@@ -4,6 +4,7 @@
  *
  * @license MIT
  * @author  Valentin V (vvval)
+ * @see     \Spiral\Console\Config\ConsoleConfig
  */
 declare(strict_types=1);
 

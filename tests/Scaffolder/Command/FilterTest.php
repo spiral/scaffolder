@@ -3,6 +3,7 @@
  * Spiral Framework. Scaffolder
  *
  * @license MIT
+ * @author  Anton Titov (Wolfy-J)
  * @author  Valentin V (vvval)
  */
 declare(strict_types=1);

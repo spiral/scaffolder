@@ -1,9 +1,13 @@
 <?php
 /**
+ * Spiral Framework. Scaffolder
+ *
  * Migrations component configuration file. Attention, configs might include runtime code which
  * depended on environment values only.
  *
- * @see \Spiral\Migrations\Config\MigrationConfig
+ * @license MIT
+ * @author  Valentin V (vvval)
+ * @see     \Spiral\Migrations\Config\MigrationConfig
  */
 return [
     'directory' => directory('app') . 'migrations/',

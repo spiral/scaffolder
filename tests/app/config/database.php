@@ -1,9 +1,14 @@
 <?php
 /**
+ * Spiral Framework. Scaffolder
+ *
  * DatabaseManager component configuration file. Attention, configs might include runtime code
  * which depended on environment values only.
  *
- * @see \Spiral\Database\Config\DatabaseConfig
+ *
+ * @license MIT
+ * @author  Valentin V (vvval)
+ * @see     \Spiral\Database\Config\DatabaseConfig
  */
 
 use Spiral\Database\Driver\SQLite\SQLiteDriver;
