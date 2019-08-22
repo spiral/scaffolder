@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration\Database\Entity;
 
+use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\Partial\Property;
 use Spiral\Scaffolder\Declaration\Database\AbstractEntityDeclaration;
 
@@ -17,10 +18,10 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     /**
      * {@inheritDoc}
      */
-    public function addField(string $name, string $accessibility, string $type, ?string $as): Property
+    public function addField(string $name, string $accessibility, string $type): Property
     {
-        $property = parent::addField($name, $accessibility, $type, $as);
-        $property->setComment($this->makeFieldComment($name, $type, $as));
+        $property = parent::addField($name, $accessibility, $type);
+        $property->setComment($this->makeFieldComment($name, $type));
 
         return $property;
     }
@@ -54,18 +55,37 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
 
         if (!empty($entities)) {
             $entity = join(', ', $entities);
-            $this->setComment("/**\n * @Annotation\Entity($entity)\n */");
+            $this->setComment("@Annotation\Entity($entity)");
         }
     }
 
-    private function makeFieldComment(string $name, string $type, ?string $as): string
+    private function makeFieldComment(string $name, string $type): string
     {
         $columns = ["type = \"$type\""];
-        if ($as && $as !== $name) {
-            $columns[] = "name = \"$as\"";
+
+        if ($this->inflection) {
+            $inflected = $this->inflect($this->inflection, $name);
+            if ($inflected !== null && $inflected !== $name) {
+                $columns[] = "name = \"$inflected\"";
+            }
         }
+
         $column = join(', ', $columns);
 
         return "@Annotation\Column($column)";
+    }
+
+    private function inflect(string $inflection, string $value): ?string
+    {
+        switch ($inflection) {
+            case 'tableize':
+                return Inflector::tableize($value);
+
+            case 'camelize':
+                return Inflector::camelize($value);
+
+            default:
+                throw new \UnexpectedValueException("Unknown inflection, got `$inflection`");
+        }
     }
 }

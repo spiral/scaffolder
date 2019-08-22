@@ -11,7 +11,7 @@ namespace Spiral\Tests\Scaffolder\Command;
 
 use Spiral\Console\Console;
 use Spiral\Files\FilesInterface;
-use Spiral\Tests\BaseTest;
+use Spiral\Tests\Scaffolder\BaseTest;
 
 abstract class AbstractCommandTest extends BaseTest
 {

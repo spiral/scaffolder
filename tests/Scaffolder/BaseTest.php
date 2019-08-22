@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Spiral\Tests;
+namespace Spiral\Tests\Scaffolder;
 
 use PHPUnit\Framework\TestCase;
 use TestApp\TestApp;
@@ -26,6 +26,6 @@ abstract class BaseTest extends TestCase
 
     private function dir(): string
     {
-        return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR;
+        return dirname(__DIR__) . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR;
     }
 }

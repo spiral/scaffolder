@@ -44,7 +44,7 @@ class EntityCommand extends AbstractCommand
             'repository',
             'repo',
             InputOption::VALUE_NONE,
-            'Repository class to represent read operations for an entity, defaults to Cycle\ORM\Select\Repository'
+            'Repository class to represent read operations for an entity, defaults to Cycle\ORM\Select\Repository',
         ],
         [
             'table',
@@ -77,6 +77,12 @@ class EntityCommand extends AbstractCommand
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             'Add field in a format "name:type"'
         ],
+        [
+            'comment',
+            'c',
+            InputOption::VALUE_OPTIONAL,
+            'Optional comment to add as class header'
+        ]
     ];
 
     /**
@@ -91,17 +97,6 @@ class EntityCommand extends AbstractCommand
         /** @var AnnotatedDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
-        foreach ($this->option('field') as $field) {
-            if (strpos($field, ':') === false) {
-                throw new ScaffolderException("Field definition must in 'name:type' or 'name:type:tableColumnName' form");
-            }
-
-            $parts = explode(':', $field);
-            [$name, $type] = $parts;
-
-            $declaration->addField($name, $accessibility, $type, $parts[2] ?? null);
-        }
-
         $repository = trimPostfix((string)$this->option('repository'), 'repository');
 
         $declaration->setRole((string)$this->option('role'));
@@ -109,6 +104,18 @@ class EntityCommand extends AbstractCommand
         $declaration->setRepository($repository);
         $declaration->setTable((string)$this->option('table'));
         $declaration->setDatabase((string)$this->option('database'));
+        $declaration->setInflection((string)$this->option('inflection'));
+
+        foreach ($this->option('field') as $field) {
+            if (strpos($field, ':') === false) {
+                throw new ScaffolderException("Field definition must in 'name:type' or 'name:type' form");
+            }
+
+            $parts = explode(':', $field);
+            [$name, $type] = $parts;
+
+            $declaration->addField($name, $accessibility, $type);
+        }
 
         $declaration->finalize();
 
@@ -116,7 +123,7 @@ class EntityCommand extends AbstractCommand
 
         if ($this->option('repository')) {
             $console->run('create:repository', [
-                'name' => $repository ?? $this->argument('name')
+                'name' => !empty($repository) ? $repository : $this->argument('name')
             ]);
         }
     }

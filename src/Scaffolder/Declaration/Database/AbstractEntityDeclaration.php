@@ -30,6 +30,9 @@ abstract class AbstractEntityDeclaration extends ClassDeclaration implements Dep
     /** @var string|null */
     protected $database;
 
+    /** @var string|null */
+    protected $inflection;
+
     /**
      * @param string|null $role
      */
@@ -62,21 +65,31 @@ abstract class AbstractEntityDeclaration extends ClassDeclaration implements Dep
         $this->table = $table;
     }
 
+    /**
+     * @param string $database
+     */
     public function setDatabase(string $database): void
     {
         $this->database = $database;
     }
 
     /**
+     * @param string $inflection
+     */
+    public function setInflection(string $inflection): void
+    {
+        $this->inflection = $inflection;
+    }
+
+    /**
      * Add field.
      *
-     * @param string      $name
-     * @param string      $accessibility
-     * @param string      $type
-     * @param string|null $as
+     * @param string $name
+     * @param string $accessibility
+     * @param string $type
      * @return Property
      */
-    public function addField(string $name, string $accessibility, string $type, ?string $as): Property
+    public function addField(string $name, string $accessibility, string $type): Property
     {
         $property = $this->property($name);
         if ($accessibility) {
@@ -87,9 +100,4 @@ abstract class AbstractEntityDeclaration extends ClassDeclaration implements Dep
     }
 
     abstract public function finalize(): void;
-
-    public static function factory(string $type): self
-    {
-
-    }
 }
