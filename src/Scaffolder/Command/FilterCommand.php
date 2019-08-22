@@ -48,6 +48,9 @@ class FilterCommand extends AbstractCommand
         ]
     ];
 
+    /**
+     * Create filter declaration.
+     */
     public function perform(): void
     {
         /** @var FilterDeclaration $declaration */
@@ -65,7 +68,6 @@ class FilterCommand extends AbstractCommand
      * Parse field to fetch source, origin and type.
      *
      * @param string $field
-     *
      * @return array
      */
     private function parseField(string $field): array

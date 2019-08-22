@@ -60,7 +60,6 @@ abstract class AbstractCommand extends Command
 
     /**
      * @param array $parameters
-     *
      * @return ClassDeclaration
      */
     protected function createDeclaration(array $parameters = []): ClassDeclaration

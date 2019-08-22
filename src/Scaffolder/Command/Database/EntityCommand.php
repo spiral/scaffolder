@@ -87,6 +87,8 @@ class EntityCommand extends AbstractCommand
     ];
 
     /**
+     * Create entity declaration.
+     *
      * @param Console $console
      * @throws \Throwable
      */
@@ -129,6 +131,10 @@ class EntityCommand extends AbstractCommand
         }
     }
 
+    /**
+     * @param string $element
+     * @return string
+     */
     protected function declarationClass(string $element): string
     {
         return $this->config->declarationOptions($element)[$this->argument('format')];

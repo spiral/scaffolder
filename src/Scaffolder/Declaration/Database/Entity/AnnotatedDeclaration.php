@@ -59,6 +59,11 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
         }
     }
 
+    /**
+     * @param string $name
+     * @param string $type
+     * @return string
+     */
     private function makeFieldComment(string $name, string $type): string
     {
         $columns = ["type = \"$type\""];
@@ -75,6 +80,11 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
         return "@Annotation\Column($column)";
     }
 
+    /**
+     * @param string $inflection
+     * @param string $value
+     * @return string|null
+     */
     private function inflect(string $inflection, string $value): ?string
     {
         switch ($inflection) {

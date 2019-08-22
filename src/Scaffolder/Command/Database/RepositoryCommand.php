@@ -33,7 +33,7 @@ class RepositoryCommand extends AbstractCommand
     ];
 
     /**
-     * Create middleware declaration.
+     * Create repository declaration.
      */
     public function perform(): void
     {
