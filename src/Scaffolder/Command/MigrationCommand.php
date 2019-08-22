@@ -35,7 +35,7 @@ class MigrationCommand extends AbstractCommand
         ],
         [
             'column',
-            'f',
+            'col',
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             'Create column in a format "name:type"'
         ],

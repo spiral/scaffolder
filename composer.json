@@ -14,19 +14,19 @@
     }
   ],
   "require": {
-    "php": "^7.1",
-    "spiral/core": "^1.3",
-    "spiral/reactor": "^2.2",
-    "spiral/boot": "^1.1",
-    "spiral/console": "^1.2"
+    "php": "^7.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.2",
     "cycle/orm": "^1.1",
     "cycle/annotated": "^2.0",
-    "spiral/migrations": "^2.0",
+    "spiral/boot": "^1.1",
+    "spiral/console": "^1.2",
+    "spiral/core": "^1.3",
     "spiral/filters": "^1.2",
-    "spiral/http": "^1.2"
+    "spiral/http": "^1.2",
+    "spiral/migrations": "^2.0",
+    "spiral/reactor": "^2.2"
   },
   "autoload": {
     "psr-4": {

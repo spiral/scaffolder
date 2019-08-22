@@ -34,7 +34,7 @@ abstract class AbstractCommandTest extends BaseTest
         return $this->app->get(Console::class);
     }
 
-    private function files(): FilesInterface
+    protected function files(): FilesInterface
     {
         return $this->app->get(FilesInterface::class);
     }
