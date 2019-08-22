@@ -7,6 +7,12 @@ build:
   environment:
     php: "7.3"
 
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
   tests:
     before:
       - "phpunit"
