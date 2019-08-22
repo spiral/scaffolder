@@ -33,18 +33,15 @@ class CommandTest extends AbstractCommandTest
         $this->console()->run('create:command', $input);
 
         clearstatcache();
-
         $this->assertTrue(class_exists($className));
 
         $reflection = new \ReflectionClass($className);
 
         $this->assertTrue($reflection->hasMethod('perform'));
-
         $this->assertTrue($reflection->hasConstant('NAME'));
         $this->assertTrue($reflection->hasConstant('DESCRIPTION'));
         $this->assertTrue($reflection->hasConstant('ARGUMENTS'));
         $this->assertTrue($reflection->hasConstant('OPTIONS'));
-
         $this->assertSame($alias ?? $name, $reflection->getConstant('NAME'));
         $this->assertSame('My sample command description', $reflection->getConstant('DESCRIPTION'));
 

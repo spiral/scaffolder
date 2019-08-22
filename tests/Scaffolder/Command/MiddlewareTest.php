@@ -33,8 +33,8 @@ class MiddlewareTest extends AbstractCommandTest
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME);
-        $this->assertStringContainsString('Sample Middleware', $reflection->getDocComment());
 
+        $this->assertStringContainsString('Sample Middleware', $reflection->getDocComment());
         $this->assertTrue($reflection->hasMethod('process'));
     }
 }

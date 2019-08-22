@@ -28,10 +28,10 @@ class FilterCommand extends AbstractCommand
 
     protected const ELEMENT = 'filter';
 
-    protected const NAME        = 'create:request';
+    protected const NAME        = 'create:filter';
     protected const DESCRIPTION = 'Create filter declaration';
     protected const ARGUMENTS   = [
-        ['name', InputArgument::REQUIRED, 'Request name'],
+        ['name', InputArgument::REQUIRED, 'filter name'],
     ];
     protected const OPTIONS     = [
         [

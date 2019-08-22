@@ -34,8 +34,8 @@ class ControllerTest extends AbstractCommandTest
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
         $reflection = new \ReflectionClass(self::CLASS_NAME);
-        $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
 
+        $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
         $this->assertTrue($reflection->hasMethod('index'));
         $this->assertTrue($reflection->hasMethod('save'));
     }

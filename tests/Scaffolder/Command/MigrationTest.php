@@ -32,6 +32,7 @@ class MigrationTest extends AbstractCommandTest
         foreach ($this->files()->getFiles($this->app->directory('app') . 'migrations') as $file) {
             require_once $file;
         }
+
         $source = $this->doGeneralAssertions(self::CLASS_NAME);
 
         $this->assertStringContainsString('sample_table', $source);
