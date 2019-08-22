@@ -47,7 +47,7 @@ class CommandCommand extends AbstractCommand
         /** @var CommandDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
-        $declaration->setAlias($this->argument('alias') ?? $this->argument('name'));
+        $declaration->setAlias((string)($this->argument('alias') ?? $this->argument('name')));
         $declaration->setDescription((string)$this->option('description'));
 
         $this->writeDeclaration($declaration);

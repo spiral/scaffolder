@@ -137,7 +137,7 @@ class EntityCommand extends AbstractCommand
      */
     protected function declarationClass(string $element): string
     {
-        return $this->config->declarationOptions($element)[$this->argument('format')];
+        return $this->config->declarationOptions($element)[(string)$this->argument('format')];
     }
 
     /**

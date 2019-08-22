@@ -69,7 +69,7 @@ class MigrationCommand extends AbstractCommand
                 $columns[$name] = $type;
             }
 
-            $declaration->declareCreation($this->option('table'), $columns);
+            $declaration->declareCreation((string)$this->option('table'), $columns);
         }
 
         $file = new FileDeclaration($this->getNamespace());
@@ -78,7 +78,7 @@ class MigrationCommand extends AbstractCommand
         $file->addElement($declaration);
 
         $filename = $migrator->getRepository()->registerMigration(
-            $this->argument('name'),
+            (string)$this->argument('name'),
             $declaration->getName(),
             $file->render()
         );

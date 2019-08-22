@@ -91,7 +91,7 @@ abstract class AbstractCommand extends Command
     {
         return $this->config->className(
             static::ELEMENT,
-            $this->argument('name')
+            (string)$this->argument('name')
         );
     }
 
@@ -105,7 +105,7 @@ abstract class AbstractCommand extends Command
     {
         $type = $type ?? static::ELEMENT;
 
-        $filename = $this->config->classFilename($type, $this->argument('name'));
+        $filename = $this->config->classFilename($type, (string)$this->argument('name'));
         $filename = $this->files->normalizePath($filename);
 
         if ($this->files->exists($filename)) {
@@ -119,7 +119,7 @@ abstract class AbstractCommand extends Command
 
         //File declaration
         $file = new FileDeclaration(
-            $this->config->classNamespace($type, $this->argument('name'))
+            $this->config->classNamespace($type, (string)$this->argument('name'))
         );
 
         $file->setComment($this->config->headerLines());
@@ -147,7 +147,7 @@ abstract class AbstractCommand extends Command
     {
         return $this->config->classNamespace(
             static::ELEMENT,
-            $this->argument('name')
+            (string)$this->argument('name')
         );
     }
 }
