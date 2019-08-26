@@ -1,5 +1,11 @@
-CHANGELOG for 0.9.0 RC
+CHANGELOG for 2.0.0
 ======================
+
+2.0.0 (27.04.2017)
+-----
+- Major updates according to Spiral Framework v2
+- Removed ORM/ODM, RequestFilter and Service generations
+- Added Entity, Repository and Filter generations
 
 1.0.4 (27.04.2017)
 -----
