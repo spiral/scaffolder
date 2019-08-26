@@ -1,7 +1,7 @@
 CHANGELOG for 2.0.0
 ======================
 
-2.0.0 (27.04.2017)
+2.0.0 (26.08.2019)
 -----
 - Major updates according to Spiral Framework v2
 - Removed ORM/ODM, RequestFilter and Service generations
