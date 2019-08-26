@@ -1,5 +1,5 @@
 .idea/
-composer/
+vendor/
 tests/-app-/runtime/
 composer.phar
 composer.lock
