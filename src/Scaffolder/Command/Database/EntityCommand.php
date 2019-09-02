@@ -63,14 +63,14 @@ class EntityCommand extends AbstractCommand
             'accessibility',
             'a',
             InputOption::VALUE_OPTIONAL,
-            'Optional visibility accessor (public, protected, private), defaults to public',
+            'Accessibility accessor (public, protected, private)',
             AbstractDeclaration::ACCESS_PUBLIC,
         ],
         [
             'inflection',
             'i',
             InputOption::VALUE_OPTIONAL,
-            'Optional column name inflection, allowed values: tableize (t), camelize (c)'
+            'Column name inflection, allowed values: tableize (t), camelize (c)'
         ],
         [
             'field',

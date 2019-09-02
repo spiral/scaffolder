@@ -89,9 +89,11 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     {
         switch ($inflection) {
             case 'tableize':
+            case 't':
                 return Inflector::tableize($value);
 
             case 'camelize':
+            case 'c':
                 return Inflector::camelize($value);
 
             default:
