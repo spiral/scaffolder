@@ -19,6 +19,9 @@ $ composer require spiral/scaffolder
 You can customize scaffolder component by replacing declaration generators and their options using `scaffolder` configuration file.
 Default configuration is located in the `ScaffolderBootloader`
 
+## Usage
+Add `ScaffolderBootloader` to a list of application bootloaders in order to enable all commands.
+
 ## Available Commands
 Command            | Description
 ---                | ---
