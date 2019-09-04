@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-namespace Spiral\Tests\Scaffolder;
+namespace Spiral\Tests\Scaffolder\Command\Database;
 
 use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
 use function Spiral\Scaffolder\trimPostfix;
@@ -93,6 +93,65 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
+     * @dataProvider accessorsDataProvider
+     * @param int         $line
+     * @param string|null $accessibility
+     * @param bool        $hasAccessors
+     * @throws \ReflectionException
+     * @throws \Throwable
+     */
+    public function testAccessors(int $line, ?string $accessibility, bool $hasAccessors): void
+    {
+        $className = self::CLASS_NAME . $line;
+        $input = [
+            'name'    => 'sample' . $line,
+            '--field' => [
+                'id:primary',
+                'name:string',
+            ],
+        ];
+        if (!empty($accessibility)) {
+            $input['--accessibility'] = $accessibility;
+        }
+
+        $this->console()->run('create:entity', $input);
+
+        clearstatcache();
+        $this->assertTrue(class_exists($className));
+
+        $reflection = new \ReflectionClass($className);
+
+        $methods = [];
+        foreach ($reflection->getMethods() as $method) {
+            $methods[] = $method->getName();
+        }
+
+        if ($hasAccessors) {
+            $this->assertContains('getId', $methods);
+            $this->assertContains('getName', $methods);
+            $this->assertContains('setId', $methods);
+            $this->assertContains('setName', $methods);
+        } else {
+            $this->assertNotContains('getId', $methods);
+            $this->assertNotContains('setId', $methods);
+            $this->assertNotContains('setId', $methods);
+            $this->assertNotContains('setName', $methods);
+        }
+
+        $this->deleteDeclaration($className);
+    }
+
+    public function accessorsDataProvider(): array
+    {
+        return [
+            [__LINE__, null, false],
+            [__LINE__, 'public', false],
+            [__LINE__, 'protected', true],
+            [__LINE__, 'private', true],
+        ];
+    }
+
+    /**
      * @dataProvider repositoryDataProvider
      * @param string $className
      * @param string $name
@@ -136,7 +195,7 @@ class EntityTest extends AbstractCommandTest
      * @throws \ReflectionException
      * @throws \Throwable
      */
-    public function testAannotated(): void
+    public function testAnnotated(): void
     {
         $line = __LINE__;
         $className = self::CLASS_NAME . $line;
@@ -201,8 +260,8 @@ class EntityTest extends AbstractCommandTest
     public function inflectionDataProvider(): array
     {
         return [
-            [__LINE__, 'tableize', 'my_value'],
-            [__LINE__, 'camelize', 'myAnotherValue'],
+            [__LINE__ + random_int(101, 200), 'tableize', 'my_value'],
+            [__LINE__ + random_int(201, 300), 'camelize', 'myAnotherValue'],
         ];
     }
 }

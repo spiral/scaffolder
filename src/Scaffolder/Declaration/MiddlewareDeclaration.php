@@ -14,7 +14,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DependedInterface;
 
@@ -52,7 +51,7 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
      */
     private function declareStructure()
     {
-        $method = $this->method('process')->setAccess(AbstractDeclaration::ACCESS_PUBLIC);
+        $method = $this->method('process')->setPublic();
 
         $method->setComment('{@inheritdoc}');
         $method->parameter('request')->setType('Request');

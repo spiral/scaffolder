@@ -70,7 +70,8 @@ class EntityCommand extends AbstractCommand
             'inflection',
             'i',
             InputOption::VALUE_OPTIONAL,
-            'Column name inflection, allowed values: tableize (t), camelize (c)'
+            'Column name inflection, allowed values: tableize (t), camelize (c)',
+            'tableize'
         ],
         [
             'field',
@@ -120,7 +121,7 @@ class EntityCommand extends AbstractCommand
             $declaration->addField($name, $accessibility, $type);
         }
 
-        $declaration->finalize();
+        $declaration->declareSchema();
 
         $this->writeDeclaration($declaration);
 

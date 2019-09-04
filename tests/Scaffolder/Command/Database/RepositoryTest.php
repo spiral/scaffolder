@@ -14,7 +14,7 @@ use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
 
 class RepositoryTest extends AbstractCommandTest
 {
-    private const CLASS_NAME = '\\TestApp\\Repository\\SampleRepository';
+    private const CLASS_NAME = '\\TestApp\\Repository\\AnotherSampleRepository';
 
     public function tearDown(): void
     {
@@ -28,7 +28,7 @@ class RepositoryTest extends AbstractCommandTest
     public function testScaffold(): void
     {
         $this->console()->run('create:repository', [
-            'name'      => 'sample',
+            'name'      => 'anotherSample',
             '--comment' => 'Sample Repository'
         ]);
 
