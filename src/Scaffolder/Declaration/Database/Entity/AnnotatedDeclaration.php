@@ -38,20 +38,11 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     public function declareSchema(): void
     {
         $entities = [];
-        if (!empty($this->role)) {
-            $entities[] = "role = \"$this->role\"";
-        }
-        if (!empty($this->mapper)) {
-            $entities[] = "mapper = \"$this->mapper\"";
-        }
-        if (!empty($this->repository)) {
-            $entities[] = "repository = \"$this->repository\"";
-        }
-        if (!empty($this->table)) {
-            $entities[] = "table = \"$this->table\"";
-        }
-        if (!empty($this->database)) {
-            $entities[] = "database = \"$this->database\"";
+        $attributes = ['role', 'mapper', 'repository', 'table', 'database'];
+        foreach ($attributes as $attribute) {
+            if (!empty($this->$attribute)) {
+                $entities[] = "$attribute = \"{$this->$attribute}\"";
+            }
         }
 
         if (!empty($entities)) {
