@@ -136,6 +136,9 @@ class ScaffolderBootloader extends Bootloader
             ],
         ]);
 
-        $this->config->modify('tokenizer', new Append('directories', null, directory('vendor') . 'spiral/scaffolder/src/'));
+        $this->config->modify(
+            'tokenizer',
+            new Append('directories', null, directory('vendor') . 'spiral/scaffolder/src/')
+        );
     }
 }
