@@ -160,8 +160,13 @@ class EntityTest extends AbstractCommandTest
      * @param bool   $exists
      * @throws \Throwable
      */
-    public function testRepository(string $className, string $name, string $repositoryClassName, string $repositoryName, bool $exists): void
-    {
+    public function testRepository(
+        string $className,
+        string $name,
+        string $repositoryClassName,
+        string $repositoryName,
+        bool $exists
+    ): void {
         $this->console()->run('create:entity', [
             'name'         => $name,
             '--repository' => $repositoryName

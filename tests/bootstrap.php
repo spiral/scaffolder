@@ -6,6 +6,7 @@
  * @author  Anton Titov (Wolfy-J)
  * @author  Valentin V (vvval)
  */
+// phpcs:ignoreFile
 declare(strict_types=1);
 
 define('SPIRAL_INITIAL_TIME', microtime(true));
