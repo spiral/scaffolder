@@ -1,9 +1,7 @@
 Spiral, scaffolder module
 =========================
 [![Latest Stable Version](https://poser.pugx.org/spiral/scaffolder/v/stable)](https://packagist.org/packages/spiral/scaffolder) 
-[![License](https://poser.pugx.org/spiral/scaffolder/license)](https://packagist.org/packages/spiral/scaffolder)
 [![Build Status](https://travis-ci.org/spiral/scaffolder.svg?branch=master)](https://travis-ci.org/spiral/scaffolder)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spiral/scaffolder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spiral/scaffolder/?branch=master)
 [![Codecov](https://codecov.io/gh/spiral/scaffolder/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/scaffolder/)
 
 <b>[Documentation](http://spiral-framework.com/guide)</b> | [CHANGELOG](/CHANGELOG.md) | [Framework Bundle](https://github.com/spiral/spiral)
