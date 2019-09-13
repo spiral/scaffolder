@@ -44,7 +44,7 @@ class ScaffolderBootloader extends Bootloader
              * Base directory for generated classes, class will be automatically localed into sub directory
              * using given namespace.
              */
-            'directory'    => directory('app') . 'classes/',
+            'directory'    => directory('app') . 'src/',
 
             /*
              * Default namespace to be applied for every generated class.
@@ -52,7 +52,7 @@ class ScaffolderBootloader extends Bootloader
              * Example: 'namespace' => 'MyApplication'
              * Controllers: MyApplication\Controllers\SampleController
              */
-            'namespace'    => '',
+            'namespace'    => 'App',
 
             /*
              * This is set of default settings to be used for your scaffolding commands.
