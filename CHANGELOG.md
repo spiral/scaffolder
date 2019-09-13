@@ -1,6 +1,11 @@
 CHANGELOG for 2.0.0
 ======================
 
+2.0.2 (13.09.2019)
+-----
+- added automatic namespace detection
+- default target directory is `app/src`
+
 2.0.0 (26.08.2019)
 -----
 - Major updates according to Spiral Framework v2
