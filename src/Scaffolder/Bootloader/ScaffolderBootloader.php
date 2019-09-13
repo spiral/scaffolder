@@ -10,25 +10,39 @@ declare(strict_types=1);
 namespace Spiral\Scaffolder\Bootloader;
 
 use Spiral\Boot\Bootloader\Bootloader;
+use Spiral\Boot\KernelInterface;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Append;
 use Spiral\Scaffolder\Declaration;
+use ReflectionClass;
 
 class ScaffolderBootloader extends Bootloader
 {
     /** @var ConfiguratorInterface */
     private $config;
 
+    /** @var KernelInterface */
+    private $kernel;
+
     /**
+     * ScaffolderBootloader constructor.
      * @param ConfiguratorInterface $config
+     * @param KernelInterface $kernel
      */
-    public function __construct(ConfiguratorInterface $config)
+    public function __construct(ConfiguratorInterface $config, KernelInterface $kernel)
     {
         $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function boot(): void
     {
+        try {
+            $defaultNamespace = (new ReflectionClass($this->kernel))->getNamespaceName();
+        } catch (\ReflectionException $e) {
+            $defaultNamespace = '';
+        }
+
         $this->config->setDefaults('scaffolder', [
             /*
              * This is set of comment lines to be applied to every scaffolded file, you can use env() function
@@ -47,12 +61,12 @@ class ScaffolderBootloader extends Bootloader
             'directory'    => directory('app') . 'src/',
 
             /*
-             * Default namespace to be applied for every generated class.
+             * Default namespace to be applied for every generated class. By default uses Kernel namespace
              *
              * Example: 'namespace' => 'MyApplication'
              * Controllers: MyApplication\Controllers\SampleController
              */
-            'namespace'    => 'App',
+            'namespace'    => $defaultNamespace,
 
             /*
              * This is set of default settings to be used for your scaffolding commands.
