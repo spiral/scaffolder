@@ -72,6 +72,11 @@ class ScaffolderBootloader extends Bootloader
              * This is set of default settings to be used for your scaffolding commands.
              */
             'declarations' => [
+                'bootloader' => [
+                    'namespace' => 'Bootloader',
+                    'postfix'   => 'Bootloader',
+                    'class'     => Declaration\BootloaderDeclaration::class
+                ],
                 'controller' => [
                     'namespace' => 'Controller',
                     'postfix'   => 'Controller',

@@ -14,6 +14,7 @@ return [
     'commands' => [
         Command\Database\EntityCommand::class,
         Command\Database\RepositoryCommand::class,
+        Command\BootloaderCommand::class,
         Command\CommandCommand::class,
         Command\ControllerCommand::class,
         Command\FilterCommand::class,
