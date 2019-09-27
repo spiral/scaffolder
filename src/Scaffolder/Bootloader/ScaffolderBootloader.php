@@ -101,6 +101,11 @@ class ScaffolderBootloader extends Bootloader
                     'postfix'   => 'Command',
                     'class'     => Declaration\CommandDeclaration::class
                 ],
+                'jobHandler'    => [
+                    'namespace' => 'Job',
+                    'postfix'   => 'Job',
+                    'class'     => Declaration\JobHandlerDeclaration::class
+                ],
                 'migration'  => [
                     'namespace' => '',
                     'postfix'   => 'Migration',
