@@ -16,6 +16,7 @@ return [
         Command\Database\RepositoryCommand::class,
         Command\BootloaderCommand::class,
         Command\CommandCommand::class,
+        Command\ConfigCommand::class,
         Command\ControllerCommand::class,
         Command\FilterCommand::class,
         Command\MiddlewareCommand::class,

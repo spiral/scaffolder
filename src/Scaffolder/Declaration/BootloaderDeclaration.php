@@ -46,7 +46,6 @@ class BootloaderDeclaration extends ClassDeclaration implements DependedInterfac
         $this->constant('DEPENDENCIES')->setPublic()->setValue([]);
 
         $method = $this->method('boot');
-
         $method->setPublic();
         $method->setReturn('void');
     }

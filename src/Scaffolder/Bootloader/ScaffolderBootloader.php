@@ -26,8 +26,9 @@ class ScaffolderBootloader extends Bootloader
 
     /**
      * ScaffolderBootloader constructor.
+     *
      * @param ConfiguratorInterface $config
-     * @param KernelInterface $kernel
+     * @param KernelInterface       $kernel
      */
     public function __construct(ConfiguratorInterface $config, KernelInterface $kernel)
     {
@@ -76,6 +77,14 @@ class ScaffolderBootloader extends Bootloader
                     'namespace' => 'Bootloader',
                     'postfix'   => 'Bootloader',
                     'class'     => Declaration\BootloaderDeclaration::class
+                ],
+                'config'     => [
+                    'namespace' => 'Config',
+                    'postfix'   => 'Config',
+                    'class'     => Declaration\ConfigDeclaration::class,
+                    'options'   => [
+                        'directory' => directory('app') . 'config/',
+                    ]
                 ],
                 'controller' => [
                     'namespace' => 'Controller',
