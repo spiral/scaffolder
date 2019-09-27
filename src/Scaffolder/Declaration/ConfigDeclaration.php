@@ -32,8 +32,13 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
      * @param string         $comment
      * @param string         $directory
      */
-    public function __construct(FilesInterface $files, string $configName, string $name, string $comment = '', string $directory = '')
-    {
+    public function __construct(
+        FilesInterface $files,
+        string $configName,
+        string $name,
+        string $comment = '',
+        string $directory = ''
+    ) {
         parent::__construct($name, 'InjectableConfig', [], $comment);
 
         $this->files = $files;
