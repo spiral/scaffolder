@@ -10,21 +10,17 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use Spiral\Prototype\Traits\PrototypeTrait;
+
 class ControllerTest extends AbstractCommandTest
 {
-    private const CLASS_NAME = '\\TestApp\\Controller\\SampleController';
-
-    public function tearDown(): void
-    {
-        $this->deleteDeclaration(self::CLASS_NAME);
-    }
-
     /**
      * @throws \ReflectionException
      * @throws \Throwable
      */
     public function testScaffold(): void
     {
+        $class = '\\TestApp\\Controller\\SampleController';
         $this->console()->run('create:controller', [
             'name'      => 'sample',
             '--comment' => 'Sample Controller',
@@ -32,12 +28,42 @@ class ControllerTest extends AbstractCommandTest
         ]);
 
         clearstatcache();
-        $this->assertTrue(class_exists(self::CLASS_NAME));
+        $this->assertTrue(class_exists($class));
 
-        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $reflection = new \ReflectionClass($class);
 
         $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
         $this->assertTrue($reflection->hasMethod('index'));
         $this->assertTrue($reflection->hasMethod('save'));
+
+        $traits = $reflection->getTraitNames();
+
+        $this->assertEmpty($traits);
+        $this->assertNotContains(PrototypeTrait::class, $traits);
+
+        $this->deleteDeclaration($class);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws \Throwable
+     */
+    public function testPrototypeTrait(): void
+    {
+        $class = '\\TestApp\\Controller\\Sample2Controller';
+        $this->console()->run('create:controller', [
+            'name'        => 'sample2',
+            '--prototype' => true,
+        ]);
+
+        clearstatcache();
+        $this->assertTrue(class_exists($class));
+
+        $reflection = new \ReflectionClass($class);
+        $traits = $reflection->getTraitNames();
+
+        $this->assertNotEmpty($traits);
+        $this->assertContains(PrototypeTrait::class, $traits);
+        $this->deleteDeclaration($class);
     }
 }

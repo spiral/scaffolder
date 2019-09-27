@@ -32,19 +32,19 @@ class EntityCommand extends AbstractCommand
         [
             'role',
             'r',
-            InputOption::VALUE_NONE,
+            InputOption::VALUE_OPTIONAL,
             'Entity role, defaults to lowercase class name without a namespace'
         ],
         [
             'mapper',
             'm',
-            InputOption::VALUE_NONE,
+            InputOption::VALUE_OPTIONAL,
             'Mapper class name, defaults to Cycle\ORM\Mapper\Mapper'
         ],
         [
             'repository',
             'repo',
-            InputOption::VALUE_NONE,
+            InputOption::VALUE_OPTIONAL,
             'Repository class to represent read operations for an entity, defaults to Cycle\ORM\Select\Repository',
         ],
         [

@@ -31,6 +31,12 @@ class ControllerCommand extends AbstractCommand
             'Pre-create controller action'
         ],
         [
+            'prototype',
+            'p',
+            InputOption::VALUE_NONE,
+            'Add \Spiral\Prototype\Traits\PrototypeTrait to controller'
+        ],
+        [
             'comment',
             'c',
             InputOption::VALUE_OPTIONAL,
@@ -48,6 +54,10 @@ class ControllerCommand extends AbstractCommand
 
         foreach ($this->option('action') as $action) {
             $declaration->addAction($action);
+        }
+
+        if ((bool)$this->option('prototype')) {
+            $declaration->addPrototypeTrait();
         }
 
         $this->writeDeclaration($declaration);

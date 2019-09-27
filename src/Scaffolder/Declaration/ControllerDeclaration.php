@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration;
 
+use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DependedInterface;
 use Spiral\Reactor\Partial\Method;
@@ -19,6 +20,9 @@ use Spiral\Reactor\Partial\Method;
  */
 class ControllerDeclaration extends ClassDeclaration implements DependedInterface
 {
+    /** @var bool */
+    private $withPrototype = false;
+
     /**
      * @param string $name
      * @param string $comment
@@ -33,7 +37,7 @@ class ControllerDeclaration extends ClassDeclaration implements DependedInterfac
      */
     public function getDependencies(): array
     {
-        return [];
+        return $this->withPrototype ? [PrototypeTrait::class => null] : [];
     }
 
     /**
@@ -45,5 +49,12 @@ class ControllerDeclaration extends ClassDeclaration implements DependedInterfac
         $method = $this->method($action);
 
         return $method->setPublic();
+    }
+
+    public function addPrototypeTrait(): void
+    {
+        $this->withPrototype = true;
+
+        $this->addTrait('PrototypeTrait');
     }
 }
