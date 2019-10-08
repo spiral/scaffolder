@@ -52,7 +52,7 @@ class ScaffolderConfig extends InjectableConfig
      */
     public function className(string $element, string $name): string
     {
-        [$namespace, $name] = $this->parseName($name);
+        ['name' => $name] = $this->parseName($name);
 
         return Inflector::classify($name) . $this->elementPostfix($element);
     }
@@ -65,7 +65,7 @@ class ScaffolderConfig extends InjectableConfig
     public function classNamespace(string $element, string $name = ''): string
     {
         $localNamespace = trim($this->getOption($element, 'namespace', ''), '\\');
-        [$namespace, $name] = $this->parseName($name);
+        ['namespace' => $namespace] = $this->parseName($name);
 
         if (!empty($namespace)) {
             $localNamespace .= '\\' . Inflector::classify($namespace);
@@ -88,9 +88,11 @@ class ScaffolderConfig extends InjectableConfig
         $namespace = $this->classNamespace($element, $name);
         $namespace = substr($namespace, strlen($this->baseNamespace()));
 
-        $directory = $this->baseDirectory() . '/' . str_replace('\\', '/', $namespace);
-
-        return rtrim($directory, '/') . '/' . $this->className($element, $name) . '.php';
+        return $this->joinPathChunks([
+            $this->baseDirectory(),
+            str_replace('\\', '/', $namespace),
+            $this->className($element, $name) . '.php'
+        ], '/');
     }
 
     /**
@@ -164,11 +166,11 @@ class ScaffolderConfig extends InjectableConfig
             $names = explode('\\', $name);
             $class = array_pop($names);
 
-            return [join('\\', $names), $class];
+            return ['namespace' => join('\\', $names), 'name' => $class];
         }
 
         //No user namespace
-        return ['', $name];
+        return ['namespace' => '', 'name' => $name];
     }
 
     /**
@@ -177,5 +179,26 @@ class ScaffolderConfig extends InjectableConfig
     private function baseNamespace(): string
     {
         return trim($this->config['namespace'], '\\');
+    }
+
+    /**
+     * @param array  $chunks
+     * @param string $joint
+     * @return string
+     */
+    private function joinPathChunks(array $chunks, string $joint): string
+    {
+        $firstChunkIterated = false;
+        $joinedPath = '';
+        foreach ($chunks as $chunk) {
+            if (!$firstChunkIterated) {
+                $firstChunkIterated = true;
+                $joinedPath = $chunk;
+            } else {
+                $joinedPath = rtrim($joinedPath, $joint) . $joint . ltrim($chunk, $joint);
+            }
+        }
+
+        return $joinedPath;
     }
 }
