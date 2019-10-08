@@ -222,6 +222,7 @@ class EntityTest extends AbstractCommandTest
         $reflection = new \ReflectionClass($className);
         $source = $this->files()->read($reflection->getFileName());
 
+        $this->assertStringContainsString('Entity', $source);
         $this->assertStringContainsString('myRole', $source);
         $this->assertStringContainsString('myMapper', $source);
         $this->assertStringContainsString('myTable', $source);
@@ -258,10 +259,15 @@ class EntityTest extends AbstractCommandTest
         $source = $this->files()->read($reflection->getFileName());
 
         $this->assertStringContainsString($needle, $source);
+        $this->assertStringContainsString('Entity', $source);
 
         $this->deleteDeclaration($className);
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function inflectionDataProvider(): array
     {
         return [

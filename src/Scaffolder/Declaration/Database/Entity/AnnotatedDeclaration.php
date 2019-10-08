@@ -32,7 +32,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
      */
     public function getDependencies(): array
     {
-        return ['Cycle\Annotated\Annotation' => null];
+        return ['Cycle\Annotated\Annotation' => 'Cycle'];
     }
 
     public function declareSchema(): void
@@ -45,10 +45,8 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
             }
         }
 
-        if (!empty($entities)) {
-            $entity = join(', ', $entities);
-            $this->addCommentLine($this, "@Annotation\Entity($entity)");
-        }
+        $entity = join(', ', $entities);
+        $this->addCommentLine($this, "@Cycle\Entity($entity)");
     }
 
     /**
@@ -86,7 +84,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
 
         $column = join(', ', $columns);
 
-        return "@Annotation\Column($column)";
+        return "@Cycle\Column($column)";
     }
 
     /**
