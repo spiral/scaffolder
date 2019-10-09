@@ -69,8 +69,8 @@ return [
         'two' => 'another parameter',
     ],
     'values'      => [
-        'one' => 'value',
-        'two' => 'another value',
+        1 => 'value',
+        2 => 'another value',
     ],
     'value'       => 'third value',
     //won't create due to only 1 sub-value
@@ -104,7 +104,7 @@ public function param(string $param): string {
 }
 
 //successful singularize name but having a conflict
-public function valueBy(string $value): string {
+public function valueBy(int $value): string {
     return $this->config['values'][$value];
 }
 
