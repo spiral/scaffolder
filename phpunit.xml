@@ -14,7 +14,7 @@
 >
     <testsuites>
         <testsuite name="Scaffolder Module Tests">
-            <directory>./tests/</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
