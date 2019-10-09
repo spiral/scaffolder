@@ -210,7 +210,6 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
         $chunks[] = count($chunks) !== 0 ? ucfirst($name) : $name;
         if (!empty($postfix)) {
             $chunks[] = ucfirst($postfix);
-
         }
 
         return join('', $chunks);
