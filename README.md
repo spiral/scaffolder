@@ -23,7 +23,9 @@ Add `ScaffolderBootloader` to a list of application bootloaders in order to enab
 ## Available Commands
 Command            | Description
 ---                | ---
+create:bootloader  | Create bootloader declaration
 create:command     | Create command declaration
+create:config      | Create config declaration
 create:controller  | Create controller declaration
 create:filter      | Create HTTP Request Filter declaration
 create:middleware  | Create middleware declaration
@@ -31,11 +33,88 @@ create:migration   | Create migration declaration
 create:repository  | Create Entity Repository declaration
 create:entity      | Create Entity declaration
 
+### Create bootloader
+```
+$ php app.php create:bootloader <name> [<alias>]
+```
+`<Name>Bootloader` class will be created.
+
 ### Create command
 ```
 $ php app.php create:command <name> [<alias>]
 ```
 `<Name>Command` class will be created. Command executable name will be set to `name` or `alias` if alias is set.
+
+### Create config
+```
+$ php app.php create:config <name>
+```
+`<Name>Config` class will be created. Also, `<app directory>/config/<name>.php` file will be created if doesn't exists.
+Available options:
+* `reverse (r)` - Using this flag, scaffolder will look for `<app directory>/config/<name>.php` file and create a rich `<Name>Config` class based on the given config file.
+Class will include default values and getters, in some cases it will also include by-key-getters for array values. Details below:
+
+If an array-value consists of more than 1 sub-values with the same types for keys and sub-values,
+scaffolder will try to create a by-key-getter method.
+If a generated key is conflicting with an existing method, by-key-getter will be omitted.
+```php
+//...config file:
+return [
+    'params'      => [
+        'one' => 'param',
+        'two' => 'another param',
+    ],
+    'parameter'   => [
+        'one' => 'parameter',
+        'two' => 'another parameter',
+    ],
+    'values'      => [
+        'one' => 'value',
+        'two' => 'another value',
+    ],
+    'value'       => 'third value',
+    //won't create due to only 1 sub-value
+    'few'        => [
+        'one' => 'value',
+    ],
+    //won't create due to mixed values
+    'mixedValues' => [
+        'one' => 'value',
+        'two' => 2,
+    ],
+    //won't create due to mixed keys
+    'mixedKeys'   => [
+        'one' => 'value',
+        2 => 'another value',
+    ],
+    //won't create due to name conflicts
+    'conflicts'   => [
+        'one' => 'conflict',
+        'two' => 'another conflict',
+    ],
+    'conflict'    => 'third conflic',
+    'conflictBy'  => 'fourth conflic',
+];
+
+//...config class
+
+//successful singularize name
+public function param(string $param): string {
+    return $this->config['params'][$param];
+}
+
+//successful singularize name but having a conflict
+public function valueBy(string $value): string {
+    return $this->config['values'][$value];
+}
+
+//unsuccessful singularize name
+public function parameterBy(string $parameter): string {
+    return $this->config['parameter'][$parameter];
+}
+```
+
+>No by-key-getters for `few`, `mixedValues`, `mixedKeys` and `conflicts` keys.
 
 ### Create controller
 ```
