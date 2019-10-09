@@ -85,7 +85,7 @@ return [
     //won't create due to mixed keys
     'mixedKeys'   => [
         'one' => 'value',
-        2 => 'another value',
+        2     => 'another value',
     ],
     //won't create due to name conflicts
     'conflicts'   => [
