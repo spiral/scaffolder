@@ -27,9 +27,9 @@
     "spiral/filters": "^1.2",
     "spiral/http": "^1.2",
     "spiral/migrations": "^2.0",
-    "squizlabs/php_codesniffer": "^3.4",
     "spiral/prototype": "^1.0",
-    "spiral/jobs": "^2.0"
+    "spiral/jobs": "^2.0",
+    "spiral/code-style": "^0.1.0"
   },
   "autoload": {
     "psr-4": {

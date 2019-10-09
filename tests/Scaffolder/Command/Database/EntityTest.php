@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -11,6 +12,7 @@ declare(strict_types=1);
 namespace Spiral\Tests\Scaffolder\Command\Database;
 
 use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
+
 use function Spiral\Scaffolder\trimPostfix;
 
 class EntityTest extends AbstractCommandTest

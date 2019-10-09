@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -129,7 +130,7 @@ abstract class AbstractEntityDeclaration extends ClassDeclaration implements Dep
      * @param string $field
      * @param string $type
      */
-    private function declareAccessors(string $field, string $type)
+    private function declareAccessors(string $field, string $type): void
     {
         $setter = $this->method('set' . Inflector::classify($field));
         $setter->setPublic();

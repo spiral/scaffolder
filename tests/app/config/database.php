@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -10,7 +13,6 @@
  * @author  Valentin V (vvval)
  * @see     \Spiral\Database\Config\DatabaseConfig
  */
-
 use Spiral\Database\Driver\SQLite\SQLiteDriver;
 
 return [

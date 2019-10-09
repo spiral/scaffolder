@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -16,16 +17,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class FilterCommand extends AbstractCommand
 {
-    /**
-     * Default input source.
-     */
-    private const DEFAULT_SOURCE = 'data';
-
-    /**
-     * Default type to apply.
-     */
-    private const   DEFAULT_TYPE = 'string';
-
     protected const ELEMENT = 'filter';
 
     protected const NAME        = 'create:filter';
@@ -47,6 +38,15 @@ class FilterCommand extends AbstractCommand
             'Optional comment to add as class header'
         ]
     ];
+    /**
+     * Default input source.
+     */
+    private const DEFAULT_SOURCE = 'data';
+
+    /**
+     * Default type to apply.
+     */
+    private const   DEFAULT_TYPE = 'string';
 
     /**
      * Create filter declaration.
