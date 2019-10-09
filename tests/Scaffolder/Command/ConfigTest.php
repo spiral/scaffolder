@@ -101,18 +101,10 @@ class ConfigTest extends AbstractCommandTest
                 if (!$method->hasReturnType()) {
                     $this->assertNull($methods[$method->name]['hint']);
                 } else {
-                    $this->assertEquals(
-                        $methods[$method->name]['hint'],
-                        $method->getReturnType()->getName(),
-                        "Method '{$method->name}' has '{$method->getReturnType()->getName()}' return type instead of expecting '{$methods[$method->name]['hint']}'"
-                    );
+                    $this->assertEquals($methods[$method->name]['hint'], $method->getReturnType()->getName());
                 }
 
-                $this->assertStringContainsString(
-                    $methods[$method->name]['annotation'],
-                    $method->getDocComment(),
-                    "Method '{$method->name}' has '{$method->getDocComment()}' annotation and doesn't contain expected '{$methods[$method->name]['annotation']}'"
-                );
+                $this->assertStringContainsString($methods[$method->name]['annotation'], $method->getDocComment());
             }
         }
 
