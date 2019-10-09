@@ -213,7 +213,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 
         }
 
-        return join($chunks);
+        return join('', $chunks);
     }
 
     /**
