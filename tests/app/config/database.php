@@ -10,6 +10,7 @@
  * @author  Valentin V (vvval)
  * @see     \Spiral\Database\Config\DatabaseConfig
  */
+declare(strict_types=1);
 
 use Spiral\Database\Driver\SQLite\SQLiteDriver;
 

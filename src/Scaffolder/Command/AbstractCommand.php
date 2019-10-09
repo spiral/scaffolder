@@ -122,6 +122,7 @@ abstract class AbstractCommand extends Command
             $this->config->classNamespace($type, (string)$this->argument('name'))
         );
 
+        $file->setDirectives('strict_types=1');
         $file->setComment($this->config->headerLines());
         $file->addElement($declaration);
 

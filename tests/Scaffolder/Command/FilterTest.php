@@ -30,7 +30,8 @@ class FilterTest extends AbstractCommandTest
             '--field' => [
                 'name:string',
                 'email:email',
-                'upload:image'
+                'upload:image',
+                'unknown:unknown'
             ]
         ]);
 
@@ -39,10 +40,12 @@ class FilterTest extends AbstractCommandTest
 
         $reflection = new \ReflectionClass(self::CLASS_NAME);
 
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertSame([
-            'name'   => 'data:name',
-            'email'  => 'data:email',
-            'upload' => 'file:upload'
+            'name'    => 'data:name',
+            'email'   => 'data:email',
+            'upload'  => 'file:upload',
+            'unknown' => 'data:unknown'
         ], $reflection->getConstant('SCHEMA'));
         $this->assertSame([
             'name'   => ['notEmpty', 'string'],

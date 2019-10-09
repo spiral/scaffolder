@@ -46,27 +46,11 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     }
 
     /**
-     * @return string
-     */
-    public function getAlias(): string
-    {
-        return $this->constant('NAME')->getValue();
-    }
-
-    /**
      * @param string $description
      */
     public function setDescription(string $description)
     {
         $this->constant('DESCRIPTION')->setValue($description);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->constant('DESCRIPTION')->getValue();
     }
 
     /**

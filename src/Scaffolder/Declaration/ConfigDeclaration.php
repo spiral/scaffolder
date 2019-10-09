@@ -14,7 +14,9 @@ use Spiral\Core\InjectableConfig;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DependedInterface;
+use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\Method;
+use Spiral\Reactor\Partial\Source;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 
 class ConfigDeclaration extends ClassDeclaration implements DependedInterface
@@ -104,13 +106,17 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     {
         $this->files->touch($filename);
 
-        $lines = [
-            '<?php',
-            'declare(strict_types=1);',
-            '',
-            'return [];'
-        ];
-        $this->files->write($filename, join("\n", $lines));
+        $file = new FileDeclaration();
+        $file->setDirectives('strict_types=1');
+        $file->addElement(new Source(['', 'return [];']));
+        $file->render();
+
+        $this->files->write(
+            $filename,
+            $file->render(),
+            FilesInterface::READONLY,
+            true
+        );
     }
 
     /**

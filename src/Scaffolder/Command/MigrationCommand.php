@@ -73,8 +73,8 @@ class MigrationCommand extends AbstractCommand
         }
 
         $file = new FileDeclaration($this->getNamespace());
+        $file->setDirectives('strict_types=1');
         $file->setComment($this->config->headerLines());
-
         $file->addElement($declaration);
 
         $filename = $migrator->getRepository()->registerMigration(

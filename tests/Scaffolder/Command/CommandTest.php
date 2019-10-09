@@ -38,6 +38,7 @@ class CommandTest extends AbstractCommandTest
 
         $reflection = new \ReflectionClass($className);
 
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertTrue($reflection->hasMethod('perform'));
         $this->assertTrue($reflection->hasConstant('NAME'));
         $this->assertTrue($reflection->hasConstant('DESCRIPTION'));

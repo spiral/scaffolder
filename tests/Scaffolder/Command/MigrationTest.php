@@ -96,6 +96,7 @@ class MigrationTest extends AbstractCommandTest
 
         $reflection = new \ReflectionClass($className);
 
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertTrue($reflection->hasMethod('up'));
         $this->assertTrue($reflection->hasMethod('down'));
 

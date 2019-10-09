@@ -34,6 +34,7 @@ class ConfigTest extends AbstractCommandTest
 
         $reflection = new \ReflectionClass(self::CLASS_NAME);
 
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertStringContainsString('Sample Config', $reflection->getDocComment());
 
         $this->assertTrue($reflection->hasConstant('CONFIG'));
@@ -119,6 +120,7 @@ class ConfigTest extends AbstractCommandTest
     public function testConfigFile(): void
     {
         $filename = $this->createConfig('sample', 'Sample Config');
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($filename));
 
         $this->deleteConfigFile($filename);
     }

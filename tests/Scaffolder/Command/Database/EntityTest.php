@@ -40,6 +40,7 @@ class EntityTest extends AbstractCommandTest
 
         $this->assertTrue($reflection->hasProperty('id'));
         $this->assertTrue($reflection->hasProperty('value'));
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
 
         $this->deleteDeclaration($className);
     }
