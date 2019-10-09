@@ -79,12 +79,37 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
         $columns[] = "type = \"{$this->annotatedType($type)}\"";
 
         if (!empty($this->inflection)) {
-            $columns = $this->addInflectedName($columns, $name);
+            $columns = $this->addInflectedName($this->inflection, $name, $columns);
         }
 
         $column = join(', ', $columns);
 
         return "@Cycle\Column($column)";
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    private function annotatedType(string $type): string
+    {
+        return $this->isNullableType($type) ? substr($type, 1) : $type;
+    }
+
+    /**
+     * @param string $inflection
+     * @param string $name
+     * @param array  $columns
+     * @return array
+     */
+    private function addInflectedName(string $inflection, string $name, array $columns): array
+    {
+        $inflected = $this->inflect($inflection, $name);
+        if ($inflected !== null && $inflected !== $name) {
+            $columns[] = "name = \"$inflected\"";
+        }
+
+        return $columns;
     }
 
     /**
@@ -106,29 +131,5 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
             default:
                 throw new \UnexpectedValueException("Unknown inflection, got `$inflection`");
         }
-    }
-
-    /**
-     * @param string $type
-     * @return string
-     */
-    private function annotatedType(string $type): string
-    {
-        return $this->isNullableType($type) ? substr($type, 1) : $type;
-    }
-
-    /**
-     * @param array  $columns
-     * @param string $name
-     * @return array
-     */
-    private function addInflectedName(array $columns, string $name): array
-    {
-        $inflected = $this->inflect($this->inflection, $name);
-        if ($inflected !== null && $inflected !== $name) {
-            $columns[] = "name = \"$inflected\"";
-        }
-
-        return $columns;
     }
 }
