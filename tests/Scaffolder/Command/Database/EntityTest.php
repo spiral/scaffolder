@@ -302,7 +302,9 @@ class EntityTest extends AbstractCommandTest
     {
         return [
             [__LINE__ + random_int(101, 200), 'tableize', 'my_value'],
+            [__LINE__ + random_int(101, 200), 't', 'my_value'],
             [__LINE__ + random_int(201, 300), 'camelize', 'myAnotherValue'],
+            [__LINE__ + random_int(201, 300), 'c', 'myAnotherValue'],
         ];
     }
 }

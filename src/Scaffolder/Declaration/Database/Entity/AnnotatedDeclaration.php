@@ -51,18 +51,11 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
 
     /**
      * @param CommentTrait $target
-     * @param string|array $comment
+     * @param string $comment
      */
-    protected function addCommentLine($target, $comment): void
+    protected function addCommentLine($target, string $comment): void
     {
-        $comments = [];
-        if (is_array($comment)) {
-            $comments = $comment;
-        } elseif (is_string($comment)) {
-            $comments = [$comment];
-        }
-
-        $target->setComment(array_merge($this->getComment()->getLines(), $comments));
+        $target->setComment(array_merge($this->getComment()->getLines(), [$comment]));
     }
 
     /**
