@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command\Database;
 
+use Spiral\Scaffolder\Exception\ScaffolderException;
 use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
 use function Spiral\Scaffolder\trimPostfix;
 
@@ -43,6 +44,33 @@ class EntityTest extends AbstractCommandTest
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
 
         $this->deleteDeclaration($className);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testScaffoldExceptionOnField(): void
+    {
+        $this->expectException(ScaffolderException::class);
+
+        $this->console()->run('create:entity', [
+            'name'    => 'sample3',
+            '--field' => ['id'],
+        ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testScaffoldExceptionOnAccessibility(): void
+    {
+        $this->expectException(ScaffolderException::class);
+
+        $this->console()->run('create:entity', [
+            'name'            => 'sample3',
+            '--field'         => ['id:primary'],
+            '--accessibility' => 'unknown'
+        ]);
     }
 
     /**
@@ -209,7 +237,7 @@ class EntityTest extends AbstractCommandTest
             'name'       => 'sample' . $line,
             '--field'    => [
                 'id:primary',
-                'myValue:int'
+                'myValue:?int'
             ],
             '--role'     => 'myRole',
             '--mapper'   => 'myMapper',
@@ -228,6 +256,7 @@ class EntityTest extends AbstractCommandTest
         $this->assertStringContainsString('myMapper', $source);
         $this->assertStringContainsString('myTable', $source);
         $this->assertStringContainsString('myDatabase', $source);
+        $this->assertStringContainsString('nullable', $source);
 
         $this->deleteDeclaration($className);
     }

@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use Spiral\Scaffolder\Exception\ScaffolderException;
+
 class MigrationTest extends AbstractCommandTest
 {
     private const CLASS_NAME  = '\\TestApp\\SampleMigration';
@@ -60,6 +62,20 @@ class MigrationTest extends AbstractCommandTest
         $source = $this->doGeneralAssertions(self::CLASS_NAME2);
 
         $this->assertStringNotContainsString('sample_table', $source);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testScaffoldException(): void
+    {
+        $this->expectException(ScaffolderException::class);
+
+        $this->console()->run('create:migration', [
+            'name'     => 'sample3',
+            '--table'  => 'sample3_table',
+            '--column' => ['id',]
+        ]);
     }
 
     private function input(string $name, bool $withTable): array
