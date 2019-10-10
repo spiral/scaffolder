@@ -74,6 +74,20 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
+     * @throws \Throwable
+     */
+    public function testScaffoldExceptionOnInflection(): void
+    {
+        $this->expectException(ScaffolderException::class);
+
+        $this->console()->run('create:entity', [
+            'name'         => 'sample3',
+            '--field'      => ['id:primary'],
+            '--inflection' => 'unknown'
+        ]);
+    }
+
+    /**
      * @dataProvider accessibilityDataProvider
      * @param int         $line
      * @param string|null $accessibility

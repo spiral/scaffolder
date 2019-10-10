@@ -13,6 +13,7 @@ use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\Partial\Property;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Scaffolder\Declaration\Database\AbstractEntityDeclaration;
+use Spiral\Scaffolder\Exception\ScaffolderException;
 
 class AnnotatedDeclaration extends AbstractEntityDeclaration
 {
@@ -122,7 +123,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
                 return Inflector::camelize($value);
 
             default:
-                throw new \UnexpectedValueException("Unknown inflection, got `$inflection`");
+                throw new ScaffolderException("Unknown inflection, got `$inflection`");
         }
     }
 }
