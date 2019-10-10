@@ -73,7 +73,6 @@ class ConfigTest extends AbstractCommandTest
             'getNullParam'  => ['hint' => null, 'annotation' => 'null'],
 
             'getArrParam'   => ['hint' => 'array', 'annotation' => 'array|string[]'],
-            'getArrParamBy' => ['hint' => 'string', 'annotation' => 'string'],
 
             'getMapParam'   => ['hint' => 'array', 'annotation' => 'array|string[]'],
             'getMapParamBy' => ['hint' => 'string', 'annotation' => 'string'],
@@ -95,18 +94,63 @@ class ConfigTest extends AbstractCommandTest
 
         $reflectionMethods = [];
         foreach ($reflection->getMethods() as $method) {
-            if ($method->getDeclaringClass()->name === $reflection->name) {
-                $reflectionMethods[$method->name] = $method;
-                $this->assertArrayHasKey($method->name, $methods);
-
-                if (!$method->hasReturnType()) {
-                    $this->assertNull($methods[$method->name]['hint']);
-                } else {
-                    $this->assertEquals($methods[$method->name]['hint'], $method->getReturnType()->getName());
-                }
-
-                $this->assertStringContainsString($methods[$method->name]['annotation'], $method->getDocComment());
+            if ($method->getDeclaringClass()->name !== $reflection->name) {
+                continue;
             }
+
+            $reflectionMethods[$method->name] = $method;
+            $this->assertArrayHasKey($method->name, $methods);
+
+            if (!$method->hasReturnType()) {
+                $this->assertNull($methods[$method->name]['hint']);
+            } else {
+                $this->assertEquals($methods[$method->name]['hint'], $method->getReturnType()->getName());
+            }
+
+            $this->assertStringContainsString($methods[$method->name]['annotation'], $method->getDocComment());
+        }
+
+        $this->assertCount(count($methods), $reflectionMethods);
+
+        $this->deleteDeclaration($className);
+    }
+
+    public function testReverseWeirdKeys(): void
+    {
+        $className = '\\TestApp\\Config\\WeirdConfig';
+        $this->console()->run('create:config', [
+            'name'      => 'weird',
+            '--comment' => 'Weird Config',
+            '--reverse' => true
+        ]);
+
+        clearstatcache();
+        $this->assertTrue(class_exists($className));
+
+        $reflection = new \ReflectionClass($className);
+
+        $this->assertTrue($reflection->hasConstant('CONFIG'));
+        $this->assertTrue($reflection->hasProperty('config'));
+
+        $this->assertIsString($reflection->getReflectionConstant('CONFIG')->getValue());
+        $this->assertIsArray($reflection->getDefaultProperties()['config']);
+        $this->assertNotEmpty($reflection->getDefaultProperties()['config']);
+
+        $methods = [
+            'getAthello',
+            'getWithSpaces',
+            'getAndOtherChars',
+            'getWithUnderscoreAndDashes'
+        ];
+
+        $reflectionMethods = [];
+        foreach ($reflection->getMethods() as $method) {
+            if ($method->getDeclaringClass()->name !== $reflection->name) {
+                continue;
+            }
+            $reflectionMethods[$method->name] = $method;
+
+            $this->assertContains($method->name, $methods);
         }
 
         $this->assertCount(count($methods), $reflectionMethods);

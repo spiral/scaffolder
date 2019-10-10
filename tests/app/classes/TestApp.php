@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace TestApp;
 
+use Cocur\Slugify;
 use Spiral\Boot;
 use Spiral\Migrations;
 use Spiral\Scaffolder;
@@ -25,6 +26,7 @@ class TestApp extends Boot\AbstractKernel
     protected function bootstrap(): void
     {
         $this->container->bind(Migrations\RepositoryInterface::class, Migrations\FileRepository::class);
+        $this->container->bind(Slugify\SlugifyInterface::class, Slugify\Slugify::class);
     }
 
     /**

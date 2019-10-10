@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration;
 
+use Cocur\Slugify\SlugifyInterface;
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Core\InjectableConfig;
 use Spiral\Files\FilesInterface;
@@ -18,17 +19,16 @@ use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Partial\Source;
 use Spiral\Scaffolder\Exception\ScaffolderException;
+use function Spiral\Scaffolder\defineArrayType;
+use function Spiral\Scaffolder\isAssociativeArray;
 
 class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 {
     /** @var FilesInterface */
     private $files;
 
-    /** @var string */
-    private $directory;
-
-    /** @var string */
-    private $configName;
+    /** @var SlugifyInterface */
+    private $slugify;
 
     /** @var ConfigDeclaration\ReturnTypes */
     private $returnTypes;
@@ -36,15 +36,27 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     /** @var ConfigDeclaration\DefaultValues */
     private $defaultValues;
 
+    /** @var string */
+    private $configName;
+
+    /** @var string */
+    private $directory;
+
     /**
-     * @param FilesInterface $files
-     * @param string         $configName
-     * @param string         $name
-     * @param string         $comment
-     * @param string         $directory
+     * @param FilesInterface                  $files
+     * @param SlugifyInterface                $slugify
+     * @param ConfigDeclaration\ReturnTypes   $returnTypes
+     * @param ConfigDeclaration\DefaultValues $defaultValues
+     * @param string                          $configName
+     * @param string                          $name
+     * @param string                          $comment
+     * @param string                          $directory
      */
     public function __construct(
         FilesInterface $files,
+        SlugifyInterface $slugify,
+        ConfigDeclaration\ReturnTypes $returnTypes,
+        ConfigDeclaration\DefaultValues $defaultValues,
         string $configName,
         string $name,
         string $comment = '',
@@ -53,10 +65,11 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
         parent::__construct($name, 'InjectableConfig', [], $comment);
 
         $this->files = $files;
+        $this->slugify = $slugify;
+        $this->returnTypes = $returnTypes;
+        $this->defaultValues = $defaultValues;
         $this->directory = $directory;
         $this->configName = $configName;
-        $this->returnTypes = new ConfigDeclaration\ReturnTypes();
-        $this->defaultValues = new ConfigDeclaration\DefaultValues();
     }
 
     /**
@@ -166,7 +179,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
      */
     private function declareGettersByKey(array $methodNames, string $key, array $value): ?Method
     {
-        //Wont create if there's less than 2 sub-items
+        //Won't create if there's less than 2 sub-items
         if (count($value) < 2) {
             return null;
         }
@@ -177,23 +190,29 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
             $name = $this->makeGetterName($singularKey, 'get', 'by');
         }
 
-        //Name conflict, wont merge
+        //Name conflict, won't merge
         if (in_array($name, $methodNames, true)) {
             return null;
         }
 
-        ['keyType' => $keyType, 'valueType' => $valueType] = $this->defineReturnTypes($value);
+        $keyType = defineArrayType(array_keys($value), '-mixed-');
+        $valueType = defineArrayType(array_values($value), '-mixed-');
         //We need a fixed structure here
-        if ($keyType === null || $valueType === null) {
+        if ($keyType === '-mixed-' || $valueType === '-mixed-') {
+            return null;
+        }
+
+        //Won't create for associated arrays
+        if ($this->returnTypes->mapType($keyType) === 'int' && !isAssociativeArray($value)) {
             return null;
         }
 
         $method = $this->method($name)->setPublic();
-        $method->parameter($singularKey)->setType($keyType);
+        $method->parameter($singularKey)->setType($this->returnTypes->getHint($keyType));
         $method->setSource("return \$this->config['$key'][\$$singularKey];");
         $method->setReturn($valueType);
         $method->setComment([
-            "@param $keyType $singularKey",
+            "@param {$this->returnTypes->mapType($keyType)} $singularKey",
             "@return {$this->returnTypes->getAnnotation(array_values($value)[0])}"
         ]);
 
@@ -213,34 +232,13 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
             $chunks[] = $prefix;
         }
 
-        $chunks[] = count($chunks) !== 0 ? ucfirst($name) : $name;
+        $name = $this->slugify->slugify($name, ['lowercase' => false]);
+        $chunks[] = count($chunks) !== 0 ? Inflector::classify($name) : $name;
         if (!empty($postfix)) {
             $chunks[] = ucfirst($postfix);
         }
 
         return join('', $chunks);
-    }
-
-    /**
-     * @param array $value
-     * @return array
-     */
-    private function defineReturnTypes(array $value): array
-    {
-        $keys = [];
-        $values = [];
-        foreach ($value as $k => $v) {
-            $keys[] = gettype($k);
-            $values[] = gettype($v);
-        }
-
-        $keys = array_unique($keys);
-        $values = array_unique($values);
-
-        return [
-            'keyType'   => count($keys) === 1 ? $keys[0] : null,
-            'valueType' => count($values) === 1 ? $values[0] : null,
-        ];
     }
 
     /**

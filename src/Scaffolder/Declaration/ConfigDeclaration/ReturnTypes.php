@@ -16,8 +16,12 @@ class ReturnTypes
         'integer'  => 'int',
         'double'   => 'float',
         'NULL'     => 'null',
+    ];
 
-        //These types aren't mapped
+    private const REAL_TYPES = [
+        'bool'     => 'bool',
+        'int'      => 'int',
+        'null'     => 'null',
         'float'    => 'float',
         'string'   => 'string',
         'array'    => 'array',
@@ -37,7 +41,6 @@ class ReturnTypes
         'object'  => 'object',
     ];
 
-
     /**
      * @param string $type
      * @return string
@@ -54,17 +57,26 @@ class ReturnTypes
     public function getAnnotation($value): string
     {
         if (is_array($value)) {
-            return $this->makeArrayAnnotation($value);
+            return $this->arrayAnnotationString($value);
         }
 
-        return $this->makeAnnotation(gettype($value));
+        return $this->mapType(gettype($value));
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    public function mapType(string $type): string
+    {
+        return self::ANNOTATIONS_TYPE_MAPPING[$type] ?? self::REAL_TYPES[$type] ?? 'mixed';
     }
 
     /**
      * @param array $value
      * @return string
      */
-    private function makeArrayAnnotation(array $value): string
+    private function arrayAnnotationString(array $value): string
     {
         $types = [];
         foreach ($value as $item) {
@@ -72,15 +84,6 @@ class ReturnTypes
         }
         $types = array_unique($types);
 
-        return count($types) === 1 ? "array|{$this->makeAnnotation($types[0])}[]" : 'array';
-    }
-
-    /**
-     * @param string $type
-     * @return string
-     */
-    private function makeAnnotation(string $type): string
-    {
-        return self::ANNOTATIONS_TYPE_MAPPING[$type] ?? 'mixed';
+        return count($types) === 1 ? "array|{$this->mapType($types[0])}[]" : 'array';
     }
 }
