@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration\ConfigDeclaration;
 
-class DefaultValues
+class Defaults
 {
     private const TYPE_DEFAULTS = [
         'boolean'  => false,

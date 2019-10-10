@@ -31,7 +31,10 @@ class FilterTest extends AbstractCommandTest
                 'name:string',
                 'email:email',
                 'upload:image',
-                'unknown:unknown'
+                'unknown:unknown',
+                'address',
+                'age:string(query)',
+                'datetime:datetime(query:date)',
             ]
         ]);
 
@@ -42,15 +45,20 @@ class FilterTest extends AbstractCommandTest
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertSame([
-            'name'    => 'data:name',
-            'email'   => 'data:email',
-            'upload'  => 'file:upload',
-            'unknown' => 'data:unknown'
+            'name'     => 'data:name',
+            'email'    => 'data:email',
+            'upload'   => 'file:upload',
+            'unknown'  => 'data:unknown',
+            'address'  => 'data:address',
+            'age'      => 'query:age',
+            'datetime' => 'query:date',
         ], $reflection->getConstant('SCHEMA'));
         $this->assertSame([
-            'name'   => ['notEmpty', 'string'],
-            'email'  => ['notEmpty', 'string', 'email'],
-            'upload' => ['image::uploaded', 'image::valid']
+            'name'    => ['notEmpty', 'string'],
+            'email'   => ['notEmpty', 'string', 'email'],
+            'upload'  => ['image::uploaded', 'image::valid'],
+            'address' => ['notEmpty', 'string'],
+            'age'     => ['notEmpty', 'string'],
         ], $reflection->getConstant('VALIDATES'));
     }
 }

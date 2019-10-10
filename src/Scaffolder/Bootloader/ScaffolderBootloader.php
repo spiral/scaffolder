@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Bootloader;
 
+use ReflectionClass;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\KernelInterface;
 use Spiral\Config\ConfiguratorInterface;
 use Spiral\Config\Patch\Append;
 use Spiral\Scaffolder\Declaration;
-use ReflectionClass;
 
 class ScaffolderBootloader extends Bootloader
 {
@@ -101,7 +101,7 @@ class ScaffolderBootloader extends Bootloader
                     'postfix'   => 'Command',
                     'class'     => Declaration\CommandDeclaration::class
                 ],
-                'jobHandler'    => [
+                'jobHandler' => [
                     'namespace' => 'Job',
                     'postfix'   => 'Job',
                     'class'     => Declaration\JobHandlerDeclaration::class
@@ -150,6 +150,11 @@ class ScaffolderBootloader extends Bootloader
                             'image'  => [
                                 'source'    => 'file',
                                 'validates' => ['image::uploaded', 'image::valid']
+                            ],
+                            null     => [
+                                'source'    => 'data',
+                                'setter'    => 'strval',
+                                'validates' => ['notEmpty', 'string']
                             ],
                         ]
                     ]

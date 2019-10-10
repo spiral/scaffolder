@@ -16,6 +16,11 @@ use Spiral\Reactor\DependedInterface;
 
 class FilterDeclaration extends ClassDeclaration implements DependedInterface
 {
+    /**
+     * Default input source.
+     */
+    private const DEFAULT_SOURCE = 'data';
+
     /** @var array */
     private $mapping;
 
@@ -43,18 +48,18 @@ class FilterDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * Add new field to request and generate default filters and validations if type presented in mapping.
      *
-     * @param string $field
-     * @param string $type
-     * @param string $source
-     * @param string $origin
+     * @param string      $field
+     * @param string|null $type
+     * @param string|null $source
+     * @param string|null $origin
      */
-    public function declareField(string $field, string $type, string $source, string $origin = null): void
+    public function declareField(string $field, ?string $type, ?string $source, ?string $origin = null): void
     {
         $schema = $this->constant('SCHEMA')->getValue();
         $validates = $this->constant('VALIDATES')->getValue();
 
         if (!isset($this->mapping[$type])) {
-            $schema[$field] = $source . ':' . ($origin ?: $field);
+            $schema[$field] = ($source ?? self::DEFAULT_SOURCE) . ':' . ($origin ?: $field);
 
             $this->constant('SCHEMA')->setValue($schema);
 
@@ -64,7 +69,7 @@ class FilterDeclaration extends ClassDeclaration implements DependedInterface
         $definition = $this->mapping[$type];
 
         //Source can depend on type
-        $source = $definition['source'];
+        $source = $source ?? $definition['source'];
         $schema[$field] = $source . ':' . ($origin ?: $field);
 
         if (!empty($definition['validates'])) {

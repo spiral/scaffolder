@@ -30,10 +30,13 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     /** @var SlugifyInterface */
     private $slugify;
 
-    /** @var ConfigDeclaration\ReturnTypes */
-    private $returnTypes;
+    /** @var ConfigDeclaration\TypeAnnotations */
+    private $typeAnnotations;
 
-    /** @var ConfigDeclaration\DefaultValues */
+    /** @var ConfigDeclaration\TypeHints */
+    private $typeHints;
+
+    /** @var ConfigDeclaration\Defaults */
     private $defaultValues;
 
     /** @var string */
@@ -43,20 +46,22 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     private $directory;
 
     /**
-     * @param FilesInterface                  $files
-     * @param SlugifyInterface                $slugify
-     * @param ConfigDeclaration\ReturnTypes   $returnTypes
-     * @param ConfigDeclaration\DefaultValues $defaultValues
-     * @param string                          $configName
-     * @param string                          $name
-     * @param string                          $comment
-     * @param string                          $directory
+     * @param FilesInterface                    $files
+     * @param SlugifyInterface                  $slugify
+     * @param ConfigDeclaration\TypeAnnotations $typeAnnotations
+     * @param ConfigDeclaration\TypeHints       $typeHints
+     * @param ConfigDeclaration\Defaults        $defaultValues
+     * @param string                            $configName
+     * @param string                            $name
+     * @param string                            $comment
+     * @param string                            $directory
      */
     public function __construct(
         FilesInterface $files,
         SlugifyInterface $slugify,
-        ConfigDeclaration\ReturnTypes $returnTypes,
-        ConfigDeclaration\DefaultValues $defaultValues,
+        ConfigDeclaration\TypeAnnotations $typeAnnotations,
+        ConfigDeclaration\TypeHints $typeHints,
+        ConfigDeclaration\Defaults $defaultValues,
         string $configName,
         string $name,
         string $comment = '',
@@ -66,7 +71,8 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 
         $this->files = $files;
         $this->slugify = $slugify;
-        $this->returnTypes = $returnTypes;
+        $this->typeAnnotations = $typeAnnotations;
+        $this->typeHints = $typeHints;
         $this->defaultValues = $defaultValues;
         $this->directory = $directory;
         $this->configName = $configName;
@@ -149,13 +155,13 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 
             $method = $this->method($getter)->setPublic();
             $method->setSource("return \$this->config['$key'];");
-            $method->setComment("@return {$this->returnTypes->getAnnotation($value)}");
+            $method->setComment("@return {$this->typeAnnotations->getAnnotation($value)}");
 
             if (is_array($value)) {
                 $gettersByKey[] = compact('key', 'value');
             }
 
-            $returnTypeHint = $this->returnTypes->getHint(gettype($value));
+            $returnTypeHint = $this->typeHints->getHint(gettype($value));
             if ($returnTypeHint !== null) {
                 $method->setReturn($returnTypeHint);
             }
@@ -203,18 +209,23 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
         }
 
         //Won't create for associated arrays
-        if ($this->returnTypes->mapType($keyType) === 'int' && !isAssociativeArray($value)) {
+        if ($this->typeAnnotations->mapType($keyType) === 'int' && !isAssociativeArray($value)) {
             return null;
         }
 
         $method = $this->method($name)->setPublic();
-        $method->parameter($singularKey)->setType($this->returnTypes->getHint($keyType));
         $method->setSource("return \$this->config['$key'][\$$singularKey];");
         $method->setReturn($valueType);
         $method->setComment([
-            "@param {$this->returnTypes->mapType($keyType)} $singularKey",
-            "@return {$this->returnTypes->getAnnotation(array_values($value)[0])}"
+            "@param {$this->typeAnnotations->mapType($keyType)} $singularKey",
+            "@return {$this->typeAnnotations->getAnnotation(array_values($value)[0])}"
         ]);
+
+        $param = $method->parameter($singularKey);
+        $paramTypeHint = $this->typeHints->getHint($keyType);
+        if ($paramTypeHint !== null) {
+            $param->setType($paramTypeHint);
+        }
 
         return $method;
     }

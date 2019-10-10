@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration\ConfigDeclaration;
 
-class ReturnTypes
+class TypeAnnotations
 {
-    private const ANNOTATIONS_TYPE_MAPPING = [
-        'boolean'  => 'bool',
-        'integer'  => 'int',
-        'double'   => 'float',
-        'NULL'     => 'null',
+    private const MAPPED_ANNOTATION_TYPES = [
+        'boolean' => 'bool',
+        'integer' => 'int',
+        'double'  => 'float',
+        'NULL'    => 'null',
     ];
 
-    private const REAL_TYPES = [
+    private const REAL_ANNOTATION_TYPES = [
         'bool'     => 'bool',
         'int'      => 'int',
         'null'     => 'null',
@@ -28,27 +28,6 @@ class ReturnTypes
         'object'   => 'object',
         'resource' => 'resource',
     ];
-
-    private const HINTS_TYPE_MAPPING = [
-        'boolean' => 'bool',
-        'integer' => 'int',
-        'double'  => 'float',
-
-        //These types aren't mapped
-        'float'   => 'float',
-        'string'  => 'string',
-        'array'   => 'array',
-        'object'  => 'object',
-    ];
-
-    /**
-     * @param string $type
-     * @return string
-     */
-    public function getHint(string $type): ?string
-    {
-        return self::HINTS_TYPE_MAPPING[$type] ?? null;
-    }
 
     /**
      * @param mixed $value
@@ -69,7 +48,7 @@ class ReturnTypes
      */
     public function mapType(string $type): string
     {
-        return self::ANNOTATIONS_TYPE_MAPPING[$type] ?? self::REAL_TYPES[$type] ?? 'mixed';
+        return self::MAPPED_ANNOTATION_TYPES[$type] ?? self::REAL_ANNOTATION_TYPES[$type] ?? 'mixed';
     }
 
     /**

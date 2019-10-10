@@ -16,16 +16,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class FilterCommand extends AbstractCommand
 {
-    /**
-     * Default input source.
-     */
-    private const DEFAULT_SOURCE = 'data';
-
-    /**
-     * Default type to apply.
-     */
-    private const   DEFAULT_TYPE = 'string';
-
     protected const ELEMENT = 'filter';
 
     protected const NAME        = 'create:filter';
@@ -72,8 +62,8 @@ class FilterCommand extends AbstractCommand
      */
     private function parseField(string $field): array
     {
-        $source = static::DEFAULT_SOURCE;
-        $type = static::DEFAULT_TYPE;
+        $type = null;
+        $source = null;
         $origin = null;
 
         if (strpos($field, '(') !== false) {
