@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -19,6 +20,7 @@ use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Partial\Source;
 use Spiral\Scaffolder\Exception\ScaffolderException;
+
 use function Spiral\Scaffolder\defineArrayType;
 use function Spiral\Scaffolder\isAssociativeArray;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP Data Grid Source
  *
@@ -10,6 +11,7 @@ declare(strict_types=1);
 namespace Spiral\Tests\Scaffolder;
 
 use PHPUnit\Framework\TestCase;
+
 use function Spiral\Scaffolder\defineArrayType;
 use function Spiral\Scaffolder\isAssociativeArray;
 

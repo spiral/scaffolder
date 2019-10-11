@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -40,7 +41,7 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
      *
      * @param string $name
      */
-    public function setAlias(string $name)
+    public function setAlias(string $name): void
     {
         $this->constant('NAME')->setValue($name);
     }
@@ -48,7 +49,7 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * @param string $description
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->constant('DESCRIPTION')->setValue($description);
     }
@@ -56,7 +57,7 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * Declare default command body.
      */
-    private function declareStructure()
+    private function declareStructure(): void
     {
         $perform = $this->method('perform')->setProtected();
         $perform->setReturn('void');

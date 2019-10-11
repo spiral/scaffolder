@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -44,7 +45,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
      * @param string $table
      * @param array  $columns
      */
-    public function declareCreation(string $table, array $columns)
+    public function declareCreation(string $table, array $columns): void
     {
         $source = $this->method('up')->getSource();
 
@@ -61,7 +62,7 @@ class MigrationDeclaration extends ClassDeclaration implements DependedInterface
     /**
      * Declare default __invoke method body.
      */
-    private function declareStructure()
+    private function declareStructure(): void
     {
         $up = $this->method('up')->setPublic()->setReturn('void');
         $down = $this->method('down')->setPublic()->setReturn('void');

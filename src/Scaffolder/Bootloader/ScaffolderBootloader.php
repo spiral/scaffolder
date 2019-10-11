@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -20,7 +21,9 @@ use Spiral\Scaffolder\Declaration;
 
 class ScaffolderBootloader extends Bootloader
 {
-    protected const BINDINGS = [SlugifyInterface::class => Slugify::class];
+    protected const BINDINGS = [
+        SlugifyInterface::class => Slugify::class
+    ];
 
     /** @var ConfiguratorInterface */
     private $config;

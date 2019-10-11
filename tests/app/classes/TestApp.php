@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -20,13 +21,25 @@ class TestApp extends Boot\AbstractKernel
         Scaffolder\Bootloader\ScaffolderBootloader::class
     ];
 
+    public function get(string $target)
+    {
+        return $this->container->get($target);
+    }
+
+    public function directory(string $directory): string
+    {
+        /** @var Boot\DirectoriesInterface $directories */
+        $directories = $this->container->get(Boot\DirectoriesInterface::class);
+
+        return $directories->get($directory);
+    }
+
     /**
      * {@inheritDoc}
      */
     protected function bootstrap(): void
     {
         $this->container->bind(Migrations\RepositoryInterface::class, Migrations\FileRepository::class);
-        $this->container->bind(Slugify\SlugifyInterface::class, Slugify\Slugify::class);
     }
 
     /**
@@ -50,18 +63,5 @@ class TestApp extends Boot\AbstractKernel
             'runtime' => $directories['root'] . '/runtime/',
             'config'  => $directories['app'] . '/config/'
         ], $directories);
-    }
-
-    public function get(string $target)
-    {
-        return $this->container->get($target);
-    }
-
-    public function directory(string $directory): string
-    {
-        /** @var Boot\DirectoriesInterface $directories */
-        $directories = $this->container->get(Boot\DirectoriesInterface::class);
-
-        return $directories->get($directory);
     }
 }

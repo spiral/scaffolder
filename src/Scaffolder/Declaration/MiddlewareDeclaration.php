@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -49,7 +50,7 @@ class MiddlewareDeclaration extends ClassDeclaration implements DependedInterfac
     /**
      * Declare default process method body.
      */
-    private function declareStructure()
+    private function declareStructure(): void
     {
         $method = $this->method('process')->setPublic();
 

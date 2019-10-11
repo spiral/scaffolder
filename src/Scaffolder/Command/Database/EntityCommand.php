@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -16,6 +17,7 @@ use Spiral\Scaffolder\Declaration\Database\Entity\AnnotatedDeclaration;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Spiral\Scaffolder\trimPostfix;
 
 class EntityCommand extends AbstractCommand
@@ -146,11 +148,13 @@ class EntityCommand extends AbstractCommand
      */
     private function validateAccessibility(string $accessibility): void
     {
-        if (!in_array($accessibility, [
+        if (
+            !in_array($accessibility, [
             AbstractDeclaration::ACCESS_PUBLIC,
             AbstractDeclaration::ACCESS_PROTECTED,
             AbstractDeclaration::ACCESS_PRIVATE
-        ], true)) {
+            ], true)
+        ) {
             throw new ScaffolderException("Invalid accessibility value `$accessibility`");
         }
     }

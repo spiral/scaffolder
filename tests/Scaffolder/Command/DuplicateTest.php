@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -15,7 +16,7 @@ class DuplicateTest extends AbstractCommandTest
     /**
      * @throws \Throwable
      */
-    public function testScaffold():void
+    public function testScaffold(): void
     {
         $output = $this->console()->run('create:controller', [
             'name' => 'default'
