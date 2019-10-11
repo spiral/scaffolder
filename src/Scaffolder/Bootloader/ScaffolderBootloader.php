@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Bootloader;
 
+use Cocur\Slugify\Slugify;
+use Cocur\Slugify\SlugifyInterface;
 use ReflectionClass;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\KernelInterface;
@@ -18,6 +20,8 @@ use Spiral\Scaffolder\Declaration;
 
 class ScaffolderBootloader extends Bootloader
 {
+    protected const BINDINGS = [SlugifyInterface::class => Slugify::class];
+
     /** @var ConfiguratorInterface */
     private $config;
 
