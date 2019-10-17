@@ -38,7 +38,7 @@ class ConfigCommand extends AbstractCommand
         [
             'reverse',
             'r',
-            InputOption::VALUE_OPTIONAL,
+            InputOption::VALUE_NONE,
             'Create config class based on a given config filename'
         ],
     ];

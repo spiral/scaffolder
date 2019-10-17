@@ -63,9 +63,9 @@ class CommandDeclaration extends ClassDeclaration implements DependedInterface
         $perform->setReturn('void');
         $perform->setComment('Perform command');
 
-        $this->constant('NAME')->setPublic()->setValue('');
-        $this->constant('DESCRIPTION')->setPublic()->setValue('');
-        $this->constant('ARGUMENTS')->setPublic()->setValue([]);
-        $this->constant('OPTIONS')->setPublic()->setValue([]);
+        $this->constant('NAME')->setProtected()->setValue('');
+        $this->constant('DESCRIPTION')->setProtected()->setValue('');
+        $this->constant('ARGUMENTS')->setProtected()->setValue([]);
+        $this->constant('OPTIONS')->setProtected()->setValue([]);
     }
 }

@@ -42,9 +42,9 @@ class BootloaderDeclaration extends ClassDeclaration implements DependedInterfac
      */
     private function declareStructure(): void
     {
-        $this->constant('BINDINGS')->setPublic()->setValue([]);
-        $this->constant('SINGLETONS')->setPublic()->setValue([]);
-        $this->constant('DEPENDENCIES')->setPublic()->setValue([]);
+        $this->constant('BINDINGS')->setProtected()->setValue([]);
+        $this->constant('SINGLETONS')->setProtected()->setValue([]);
+        $this->constant('DEPENDENCIES')->setProtected()->setValue([]);
 
         $method = $this->method('boot');
         $method->setPublic();
