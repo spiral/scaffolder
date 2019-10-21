@@ -7,6 +7,7 @@
  * @author  Valentin V (vvval)
  * @see     \Spiral\Scaffolder\Config\ScaffolderConfig
  */
+
 declare(strict_types=1);
 
 return [

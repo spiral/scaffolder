@@ -7,6 +7,7 @@
  * @author  Valentin V (vvval)
  * @see     \Spiral\Console\Config\ConsoleConfig
  */
+
 declare(strict_types=1);
 
 use Spiral\Scaffolder\Command;

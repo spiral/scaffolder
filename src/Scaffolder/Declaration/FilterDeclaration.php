@@ -7,6 +7,7 @@
  * @author  Anton Titov (Wolfy-J)
  * @author  Valentin V (vvval)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration;
