@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use Symfony\Component\Console\Input\StringInput;
+
 class ConfigTest extends AbstractCommandTest
 {
     private const CLASS_NAME = '\\TestApp\\Config\\SampleConfig';
@@ -48,6 +50,15 @@ class ConfigTest extends AbstractCommandTest
     public function testReverse(): void
     {
         $className = '\\TestApp\\Config\\ReversedConfig';
+        $this->console()->run(null, new StringInput('create:config reversed -r'));
+
+        clearstatcache();
+        $this->assertTrue(class_exists($className));
+    }
+
+    public function testReverseDefinition(): void
+    {
+        $className = '\\TestApp\\Config\\ReversedConfig';
         $this->console()->run('create:config', [
             'name'      => 'reversed',
             '--comment' => 'Reversed Config',
@@ -73,7 +84,7 @@ class ConfigTest extends AbstractCommandTest
             'getBoolParam'  => ['hint' => 'bool', 'annotation' => 'bool'],
             'getNullParam'  => ['hint' => null, 'annotation' => 'null'],
 
-            'getArrParam'   => ['hint' => 'array', 'annotation' => 'array|string[]'],
+            'getArrParam' => ['hint' => 'array', 'annotation' => 'array|string[]'],
 
             'getMapParam'   => ['hint' => 'array', 'annotation' => 'array|string[]'],
             'getMapParamBy' => ['hint' => 'string', 'annotation' => 'string'],
