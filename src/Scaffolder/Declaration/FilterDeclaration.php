@@ -88,7 +88,8 @@ class FilterDeclaration extends ClassDeclaration implements DependedInterface
      */
     protected function declareStructure(): void
     {
-        $this->constant('SCHEMA')->setPublic()->setValue([]);
-        $this->constant('VALIDATES')->setPublic()->setValue([]);
+        $this->constant('SCHEMA')->setProtected()->setValue([]);
+        $this->constant('VALIDATES')->setProtected()->setValue([]);
+        $this->constant('SETTERS')->setProtected()->setValue([]);
     }
 }

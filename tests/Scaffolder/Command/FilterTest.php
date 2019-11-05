@@ -62,5 +62,6 @@ class FilterTest extends AbstractCommandTest
             'address' => ['notEmpty', 'string'],
             'age'     => ['notEmpty', 'string'],
         ], $reflection->getConstant('VALIDATES'));
+        $this->assertSame([], $reflection->getConstant('SETTERS'));
     }
 }
