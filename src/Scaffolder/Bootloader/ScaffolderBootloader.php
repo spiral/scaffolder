@@ -16,8 +16,8 @@ use Cocur\Slugify\SlugifyInterface;
 use ReflectionClass;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\KernelInterface;
+use Spiral\Bootloader\TokenizerBootloader;
 use Spiral\Config\ConfiguratorInterface;
-use Spiral\Config\Patch\Append;
 use Spiral\Scaffolder\Declaration;
 
 class ScaffolderBootloader extends Bootloader
@@ -44,7 +44,10 @@ class ScaffolderBootloader extends Bootloader
         $this->kernel = $kernel;
     }
 
-    public function boot(): void
+    /**
+     * @param \Spiral\Bootloader\TokenizerBootloader $tokenizer
+     */
+    public function boot(TokenizerBootloader $tokenizer): void
     {
         try {
             $defaultNamespace = (new ReflectionClass($this->kernel))->getNamespaceName();
@@ -182,9 +185,6 @@ class ScaffolderBootloader extends Bootloader
             ],
         ]);
 
-        $this->config->modify(
-            'tokenizer',
-            new Append('directories', null, directory('vendor') . 'spiral/scaffolder/src/')
-        );
+        $tokenizer->addDirectory(directory('vendor') . 'spiral/scaffolder/src/Command');
     }
 }
