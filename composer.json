@@ -35,7 +35,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spiral\\": "src/"
+      "Spiral\\Scaffolder\\": "src/"
     },
     "files": [
       "functions.php"
