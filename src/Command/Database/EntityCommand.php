@@ -46,8 +46,8 @@ class EntityCommand extends AbstractCommand
         ],
         [
             'repository',
-            'repo',
-            InputOption::VALUE_OPTIONAL,
+            'e',
+            InputOption::VALUE_NONE,
             'Repository class to represent read operations for an entity, defaults to Cycle\ORM\Select\Repository',
         ],
         [
@@ -58,7 +58,7 @@ class EntityCommand extends AbstractCommand
         ],
         [
             'database',
-            'db',
+            'd',
             InputOption::VALUE_OPTIONAL,
             'Database name, defaults to null (default database)'
         ],
@@ -104,11 +104,13 @@ class EntityCommand extends AbstractCommand
         /** @var AnnotatedDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
-        $repository = trimPostfix((string)$this->option('repository'), 'repository');
+        $repository = trimPostfix((string)$this->argument('name'), 'repository');
+        if ($this->option('repository')) {
+            $declaration->setRepository($repository);
+        }
 
         $declaration->setRole((string)$this->option('role'));
         $declaration->setMapper((string)$this->option('mapper'));
-        $declaration->setRepository($repository);
         $declaration->setTable((string)$this->option('table'));
         $declaration->setDatabase((string)$this->option('database'));
         $declaration->setInflection((string)$this->option('inflection'));

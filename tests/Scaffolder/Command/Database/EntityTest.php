@@ -231,9 +231,9 @@ class EntityTest extends AbstractCommandTest
         $line2 = __LINE__;
         $line3 = __LINE__;
 
-        $repositoryClassName1 = self::REPOSITORY_CLASS_NAME;
+        $repositoryClassName1 = trimPostfix(self::REPOSITORY_CLASS_NAME, 'repository') . $line1 . 'Repository';
         $repositoryClassName2 = trimPostfix(self::REPOSITORY_CLASS_NAME, 'repository') . $line2 . 'Repository';
-        $repositoryClassName3 = self::REPOSITORY_CLASS_NAME . $line3;
+        $repositoryClassName3 = trimPostfix(self::REPOSITORY_CLASS_NAME, 'repository') . $line3 . 'Repository';
 
         return [
             [self::CLASS_NAME . $line1, 'sample' . $line1, $repositoryClassName1, 'sample', true],
