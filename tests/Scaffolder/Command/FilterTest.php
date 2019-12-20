@@ -102,19 +102,20 @@ class FilterTest extends AbstractCommandTest
 
         $reflection = new ReflectionClass($className);
 
-        $this->assertSame([
-            'noTypeString'      => 'data:noTypeString',
-            'obj'               => 'data:obj',
-            'int'               => 'data:int',
-            'noTypeWithDefault' => 'data:noTypeWithDefault',
-        ], $reflection->getConstant('SCHEMA'));
-        $this->assertSame([
-            'noTypeString'      => ['notEmpty', 'string'],
-            'obj'               => ['notEmpty', 'string'],
-            'int'               => ['notEmpty', 'integer'],
-            'noTypeWithDefault' => ['notEmpty', 'float'],
-        ], $reflection->getConstant('VALIDATES'));
+        try {
+            $schema = $reflection->getConstant('SCHEMA');
+            $this->assertSame($schema['noTypeString'], 'data:noTypeString');
+            $this->assertSame($schema['obj'], 'data:obj');
+            $this->assertSame($schema['intFromPhpDoc'], 'data:intFromPhpDoc');
+            $this->assertSame($schema['noTypeWithFloatDefault'], 'data:noTypeWithFloatDefault');
 
-        $this->deleteDeclaration($className);
+            $validates = $reflection->getConstant('VALIDATES');
+            $this->assertSame($validates['noTypeString'], ['notEmpty', 'string']);
+            $this->assertSame($validates['obj'], ['notEmpty', 'string']);
+            $this->assertSame($validates['intFromPhpDoc'], ['notEmpty', 'integer']);
+            $this->assertSame($validates['noTypeWithFloatDefault'], ['notEmpty', 'float']);
+        } finally {
+            $this->deleteDeclaration($className);
+        }
     }
 }

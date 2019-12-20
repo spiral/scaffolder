@@ -18,7 +18,7 @@ class SourceEntity
     public $obj;
 
     /** @var int */
-    protected $int;
+    protected $intFromPhpDoc;
 
-    private $noTypeWithDefault = 1.2;
+    private $noTypeWithFloatDefault = 1.1;
 }

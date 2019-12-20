@@ -130,45 +130,55 @@ class ScaffolderBootloader extends Bootloader
                     'options'   => [
                         //Set of default filters and validate rules for various types
                         'mapping' => [
-                            'int'    => [
+                            'int'     => [
                                 'source'    => 'data',
                                 'setter'    => 'intval',
                                 'validates' => ['notEmpty', 'integer']
                             ],
-                            'float'  => [
+                            'integer' => [
+                                'source'    => 'data',
+                                'setter'    => 'intval',
+                                'validates' => ['notEmpty', 'integer']
+                            ],
+                            'float'   => [
                                 'source'    => 'data',
                                 'setter'    => 'floatval',
                                 'validates' => ['notEmpty', 'float']
                             ],
-                            'double' => [
+                            'double'  => [
                                 'source'    => 'data',
                                 'setter'    => 'floatval',
                                 'validates' => ['notEmpty', 'float']
                             ],
-                            'string' => [
+                            'string'  => [
                                 'source'    => 'data',
                                 'setter'    => 'strval',
                                 'validates' => ['notEmpty', 'string']
                             ],
-                            'bool'   => [
+                            'bool'    => [
                                 'source'    => 'data',
                                 'setter'    => 'boolval',
                                 'validates' => ['notEmpty', 'boolean']
                             ],
-                            'email'  => [
+                            'boolean' => [
+                                'source'    => 'data',
+                                'setter'    => 'boolval',
+                                'validates' => ['notEmpty', 'boolean']
+                            ],
+                            'email'   => [
                                 'source'    => 'data',
                                 'setter'    => 'strval',
                                 'validates' => ['notEmpty', 'string', 'email']
                             ],
-                            'file'   => [
+                            'file'    => [
                                 'source'    => 'file',
                                 'validates' => ['file::uploaded']
                             ],
-                            'image'  => [
+                            'image'   => [
                                 'source'    => 'file',
                                 'validates' => ['image::uploaded', 'image::valid']
                             ],
-                            null     => [
+                            null      => [
                                 'source'    => 'data',
                                 'setter'    => 'strval',
                                 'validates' => ['notEmpty', 'string']

@@ -50,7 +50,7 @@ class FilterCommand extends AbstractCommand
     ];
 
     private const   NATIVE_TYPES = [
-        'string', 'int', 'float', 'double', 'bool', 'array'
+        'string', 'int', 'integer', 'float', 'double', 'bool', 'boolean', 'array'
     ];
 
     /**
