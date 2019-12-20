@@ -252,7 +252,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
             $chunks[] = ucfirst($postfix);
         }
 
-        return join('', $chunks);
+        return implode('', $chunks);
     }
 
     /**

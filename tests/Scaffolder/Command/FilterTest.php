@@ -12,6 +12,11 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
+use Spiral\Tests\Scaffolder\Command\Fixtures\SourceEntity;
+use Throwable;
+
 class FilterTest extends AbstractCommandTest
 {
     private const CLASS_NAME = '\\TestApp\\Filter\\SampleFilter';
@@ -22,8 +27,8 @@ class FilterTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -43,7 +48,7 @@ class FilterTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
-        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $reflection = new ReflectionClass(self::CLASS_NAME);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertSame([
@@ -63,5 +68,53 @@ class FilterTest extends AbstractCommandTest
             'age'     => ['notEmpty', 'string'],
         ], $reflection->getConstant('VALIDATES'));
         $this->assertSame([], $reflection->getConstant('SETTERS'));
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFromUnknownEntity(): void
+    {
+        $output = $this->console()->run('create:filter', [
+            'name'     => 'sample',
+            '--entity' => '\Some\Unknown\Entity'
+        ]);
+
+        $this->assertStringContainsString('Unable', $output->getOutput()->fetch());
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testFromUnknown(): void
+    {
+        $line = __LINE__;
+        $className = "\\TestApp\\Filter\\Sample{$line}Filter";
+        $output = $this->console()->run('create:filter', [
+            'name'     => 'sample' . $line,
+            '--entity' => SourceEntity::class
+        ]);
+
+        $this->assertStringNotContainsString('Unable', $output->getOutput()->fetch());
+
+        clearstatcache();
+        $this->assertTrue(class_exists($className));
+
+        $reflection = new ReflectionClass($className);
+
+        $this->assertSame([
+            'noTypeString'      => 'data:noTypeString',
+            'obj'               => 'data:obj',
+            'int'               => 'data:int',
+            'noTypeWithDefault' => 'data:noTypeWithDefault',
+        ], $reflection->getConstant('SCHEMA'));
+        $this->assertSame([
+            'noTypeString'      => ['notEmpty', 'string'],
+            'obj'               => ['notEmpty', 'string'],
+            'int'               => ['notEmpty', 'integer'],
+            'noTypeWithDefault' => ['notEmpty', 'float'],
+        ], $reflection->getConstant('VALIDATES'));
+
+        $this->deleteDeclaration($className);
     }
 }

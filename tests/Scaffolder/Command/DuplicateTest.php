@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use Throwable;
+
 class DuplicateTest extends AbstractCommandTest
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffold(): void
     {

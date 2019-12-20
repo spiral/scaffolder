@@ -14,6 +14,7 @@ namespace Spiral\Scaffolder\Bootloader;
 use Cocur\Slugify\Slugify;
 use Cocur\Slugify\SlugifyInterface;
 use ReflectionClass;
+use ReflectionException;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\KernelInterface;
 use Spiral\Bootloader\TokenizerBootloader;
@@ -45,13 +46,13 @@ class ScaffolderBootloader extends Bootloader
     }
 
     /**
-     * @param \Spiral\Bootloader\TokenizerBootloader $tokenizer
+     * @param TokenizerBootloader $tokenizer
      */
     public function boot(TokenizerBootloader $tokenizer): void
     {
         try {
             $defaultNamespace = (new ReflectionClass($this->kernel))->getNamespaceName();
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             $defaultNamespace = '';
         }
 
@@ -135,6 +136,11 @@ class ScaffolderBootloader extends Bootloader
                                 'validates' => ['notEmpty', 'integer']
                             ],
                             'float'  => [
+                                'source'    => 'data',
+                                'setter'    => 'floatval',
+                                'validates' => ['notEmpty', 'float']
+                            ],
+                            'double' => [
                                 'source'    => 'data',
                                 'setter'    => 'floatval',
                                 'validates' => ['notEmpty', 'float']

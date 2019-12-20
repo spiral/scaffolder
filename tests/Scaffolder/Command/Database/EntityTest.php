@@ -12,8 +12,13 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command\Database;
 
+use Exception;
+use Reflection;
+use ReflectionClass;
+use ReflectionException;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Spiral\Tests\Scaffolder\Command\AbstractCommandTest;
+use Throwable;
 
 use function Spiral\Scaffolder\trimPostfix;
 
@@ -23,7 +28,7 @@ class EntityTest extends AbstractCommandTest
     private const REPOSITORY_CLASS_NAME = '\\TestApp\\Repository\\SampleRepository';
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -40,7 +45,7 @@ class EntityTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertTrue($reflection->hasProperty('id'));
         $this->assertTrue($reflection->hasProperty('value'));
@@ -50,7 +55,7 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffoldExceptionOnField(): void
     {
@@ -63,7 +68,7 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffoldExceptionOnAccessibility(): void
     {
@@ -77,7 +82,7 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffoldExceptionOnInflection(): void
     {
@@ -95,8 +100,8 @@ class EntityTest extends AbstractCommandTest
      * @param int         $line
      * @param string|null $accessibility
      * @param string      $modifier
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testAccessibility(int $line, ?string $accessibility, string $modifier): void
     {
@@ -116,12 +121,12 @@ class EntityTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertTrue($reflection->hasProperty('id'));
 
         $property = $reflection->getProperty('id');
-        $modifiers = \Reflection::getModifierNames($property->getModifiers());
+        $modifiers = Reflection::getModifierNames($property->getModifiers());
 
         $this->assertContains($modifier, $modifiers);
 
@@ -143,8 +148,8 @@ class EntityTest extends AbstractCommandTest
      * @param int         $line
      * @param string|null $accessibility
      * @param bool        $hasAccessors
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testAccessors(int $line, ?string $accessibility, bool $hasAccessors): void
     {
@@ -165,7 +170,7 @@ class EntityTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $methods = [];
         foreach ($reflection->getMethods() as $method) {
@@ -204,7 +209,7 @@ class EntityTest extends AbstractCommandTest
      * @param string $repositoryClassName
      * @param string $repositoryName
      * @param bool   $exists
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testRepository(
         string $className,
@@ -243,8 +248,8 @@ class EntityTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testAnnotated(): void
     {
@@ -265,7 +270,7 @@ class EntityTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
         $source = $this->files()->read($reflection->getFileName());
 
         $this->assertStringContainsString('Entity', $source);
@@ -283,8 +288,8 @@ class EntityTest extends AbstractCommandTest
      * @param int    $line
      * @param string $inflection
      * @param string $needle
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testAnnotatedInflection(int $line, string $inflection, string $needle): void
     {
@@ -302,7 +307,7 @@ class EntityTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
         $source = $this->files()->read($reflection->getFileName());
 
         $this->assertStringContainsString($needle, $source);
@@ -313,7 +318,7 @@ class EntityTest extends AbstractCommandTest
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function inflectionDataProvider(): array
     {

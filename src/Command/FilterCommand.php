@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
+use ReflectionType;
 use Spiral\Scaffolder\Declaration\FilterDeclaration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,6 +30,12 @@ class FilterCommand extends AbstractCommand
     ];
     protected const OPTIONS     = [
         [
+            'entity',
+            'e',
+            InputOption::VALUE_OPTIONAL,
+            'Source entity. Is a prior to the fields.'
+        ],
+        [
             'field',
             'f',
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
@@ -40,6 +49,10 @@ class FilterCommand extends AbstractCommand
         ]
     ];
 
+    private const   NATIVE_TYPES = [
+        'string', 'int', 'float', 'double', 'bool', 'array'
+    ];
+
     /**
      * Create filter declaration.
      */
@@ -48,8 +61,28 @@ class FilterCommand extends AbstractCommand
         /** @var FilterDeclaration $declaration */
         $declaration = $this->createDeclaration();
 
-        foreach ($this->option('field') as $field) {
-            [$field, $type, $source, $origin] = $this->parseField($field);
+        $fields = [];
+        if ($this->option('entity')) {
+            $name = $this->option('entity');
+            try {
+                $fields = $this->parseSourceEntity($name);
+            } catch (ReflectionException $exception) {
+                $this->writeln(
+                    "<fg=red>Unable to create '<comment>{$declaration->getName()} from $name</comment>' declaration: "
+                    . "'<comment>{$exception->getMessage()}' at {$exception->getFile()}:{$exception->getLine()}.</comment></fg=red>"
+                );
+
+                return;
+            }
+        } else {
+            foreach ($this->option('field') as $field) {
+                $fields[] = $this->parseField($field);
+            }
+        }
+
+        foreach ($fields as $values) {
+            [$field, $type, $source, $origin] = $values;
+
             $declaration->declareField($field, $type, $source, $origin);
         }
 
@@ -82,5 +115,46 @@ class FilterCommand extends AbstractCommand
         }
 
         return [$field, $type, $source, $origin];
+    }
+
+    /**
+     * @param string $name
+     * @return array
+     * @throws ReflectionException
+     */
+    private function parseSourceEntity(string $name): array
+    {
+        $fields = [];
+        $reflection = new ReflectionClass($name);
+        foreach ($reflection->getProperties() as $property) {
+            $type = null;
+            if (method_exists($property, 'hasType') && method_exists($property, 'getType')) {
+                if ($property->hasType()) {
+                    /** @var ReflectionType $reflectionType */
+                    $reflectionType = $property->getType();
+                    if ($reflectionType->isBuiltin() && method_exists($reflectionType, 'getName')) {
+                        $type = $reflectionType->getName();
+                    }
+                }
+            } else {
+                $defaultValue = $reflection->getDefaultProperties()[$property->name] ?? null;
+                if ($defaultValue !== null) {
+                    $type = gettype($defaultValue);
+                } else {
+                    $doc = $property->getDocComment();
+                    if (is_string($doc)) {
+                        preg_match('/@var\s*([a-z]+)/i', $doc, $match);
+
+                        if (!empty($match[1]) && in_array($match[1], self::NATIVE_TYPES, true)) {
+                            $type = $match[1];
+                        }
+                    }
+                }
+            }
+
+            $fields[] = [$property->name, $type, null, null];
+        }
+
+        return $fields;
     }
 }

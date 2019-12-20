@@ -18,6 +18,7 @@ use Spiral\Scaffolder\Declaration\Database\Entity\AnnotatedDeclaration;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Throwable;
 
 use function Spiral\Scaffolder\trimPostfix;
 
@@ -94,7 +95,7 @@ class EntityCommand extends AbstractCommand
      * Create entity declaration.
      *
      * @param Console $console
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function perform(Console $console): void
     {
