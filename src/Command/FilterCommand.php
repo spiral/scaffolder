@@ -66,10 +66,10 @@ class FilterCommand extends AbstractCommand
             $name = $this->option('entity');
             try {
                 $fields = $this->parseSourceEntity($name);
-            } catch (ReflectionException $exception) {
+            } catch (ReflectionException $e) {
                 $this->writeln(
                     "<fg=red>Unable to create '<comment>{$declaration->getName()} from $name</comment>' declaration: "
-                    . "'<comment>{$exception->getMessage()}' at {$exception->getFile()}:{$exception->getLine()}.</comment></fg=red>"
+                    . "'<comment>{$e->getMessage()}' at {$e->getFile()}:{$e->getLine()}.</comment></fg=red>"
                 );
 
                 return;
