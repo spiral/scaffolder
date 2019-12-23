@@ -86,7 +86,7 @@ class FilterTest extends AbstractCommandTest
     /**
      * @throws Throwable
      */
-    public function testFromUnknown(): void
+    public function testFromEntity(): void
     {
         $line = __LINE__;
         $className = "\\TestApp\\Filter\\Sample{$line}Filter";

@@ -14,7 +14,10 @@
 >
     <testsuites>
         <testsuite name="Scaffolder Module Tests">
-            <directory>tests</directory>
+            <directory>tests/Scaffolder</directory>
+        </testsuite>
+        <testsuite name="Scaffolder Module Tests 74">
+            <directory phpVersion="7.4.0" phpVersionOperator="ge">tests/php74/</directory>
         </testsuite>
     </testsuites>
 

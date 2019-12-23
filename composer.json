@@ -44,6 +44,7 @@
   "autoload-dev": {
     "psr-4": {
       "Spiral\\Tests\\": "tests/",
+      "Spiral\\Tests74\\": "tests/php74/",
       "TestApp\\": "tests/app/classes/"
     }
   }
