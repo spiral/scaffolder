@@ -33,7 +33,7 @@ create:entity      | Create Entity declaration
 
 ### Create bootloader
 ```
-$ php app.php create:bootloader <name> [<alias>]
+$ php app.php create:bootloader <name>
 ```
 `<Name>Bootloader` class will be created.
 
@@ -170,6 +170,6 @@ Available options:
 * `accessibility (a)` - accessibility accessor (public, protected, private), defaults to public
 * `inflection (i)` - Optional column name inflection, allowed values: tableize (or t), camelize (or c). See [Doctrine inflector](https://github.com/doctrine/inflector)
 * `field (f)` - Add field in a format "name:type" (multiple values allowed)
-* `repository (repo)` - Repository class to represent read operations for an entity, defaults to `Cycle\ORM\Select\Repository`
-* `database (db)` - Database name, defaults to null (default database)
+* `repository (e)` - Repository class to represent read operations for an entity, defaults to `Cycle\ORM\Select\Repository`
+* `database (d)` - Database name, defaults to null (default database)
 
