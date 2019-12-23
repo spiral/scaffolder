@@ -11,7 +11,10 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Console\Input\StringInput;
+use Throwable;
 
 class ConfigTest extends AbstractCommandTest
 {
@@ -23,8 +26,8 @@ class ConfigTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -36,7 +39,7 @@ class ConfigTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
-        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $reflection = new ReflectionClass(self::CLASS_NAME);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertStringContainsString('Sample Config', $reflection->getDocComment());
@@ -48,6 +51,9 @@ class ConfigTest extends AbstractCommandTest
         $this->assertEquals([], $reflection->getDefaultProperties()['config']);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReverse(): void
     {
         $className = '\\TestApp\\Config\\ReversedConfig';
@@ -57,6 +63,9 @@ class ConfigTest extends AbstractCommandTest
         $this->assertTrue(class_exists($className));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReverseDefinition(): void
     {
         $className = '\\TestApp\\Config\\ReversedConfig';
@@ -69,7 +78,7 @@ class ConfigTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertTrue($reflection->hasConstant('CONFIG'));
         $this->assertTrue($reflection->hasProperty('config'));
@@ -128,6 +137,9 @@ class ConfigTest extends AbstractCommandTest
         $this->deleteDeclaration($className);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReverseWeirdKeys(): void
     {
         $className = '\\TestApp\\Config\\WeirdConfig';
@@ -140,7 +152,7 @@ class ConfigTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertTrue($reflection->hasConstant('CONFIG'));
         $this->assertTrue($reflection->hasProperty('config'));
@@ -172,7 +184,7 @@ class ConfigTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testConfigFile(): void
     {
@@ -183,7 +195,7 @@ class ConfigTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testConfigFileExists(): void
     {
@@ -204,6 +216,7 @@ class ConfigTest extends AbstractCommandTest
 
     /**
      * @param string $filename
+     * @throws Throwable
      */
     private function deleteConfigFile(string $filename): void
     {
@@ -214,7 +227,7 @@ class ConfigTest extends AbstractCommandTest
      * @param string $name
      * @param string $comment
      * @return string
-     * @throws \Throwable
+     * @throws Throwable
      */
     private function createConfig(string $name, string $comment): string
     {

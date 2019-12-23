@@ -48,13 +48,13 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
             }
         }
 
-        $entity = join(', ', $entities);
+        $entity = implode(', ', $entities);
         $this->addCommentLine($this, "@Cycle\Entity($entity)");
     }
 
     /**
      * @param CommentTrait $target
-     * @param string $comment
+     * @param string       $comment
      */
     protected function addCommentLine($target, string $comment): void
     {
@@ -78,7 +78,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
             $columns = $this->addInflectedName($this->inflection, $name, $columns);
         }
 
-        $column = join(', ', $columns);
+        $column = implode(', ', $columns);
 
         return "@Cycle\Column($column)";
     }

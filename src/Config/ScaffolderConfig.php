@@ -168,7 +168,7 @@ class ScaffolderConfig extends InjectableConfig
             $names = explode('\\', $name);
             $class = array_pop($names);
 
-            return ['namespace' => join('\\', $names), 'name' => $class];
+            return ['namespace' => implode('\\', $names), 'name' => $class];
         }
 
         //No user namespace

@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace TestApp;
 
-use Cocur\Slugify;
 use Spiral\Boot;
 use Spiral\Migrations;
 use Spiral\Scaffolder;
+use Throwable;
 
 class TestApp extends Boot\AbstractKernel
 {
@@ -22,11 +22,21 @@ class TestApp extends Boot\AbstractKernel
         Scaffolder\Bootloader\ScaffolderBootloader::class
     ];
 
+    /**
+     * @param string $target
+     * @return mixed|object|null
+     * @throws Throwable
+     */
     public function get(string $target)
     {
         return $this->container->get($target);
     }
 
+    /**
+     * @param string $directory
+     * @return string
+     * @throws Throwable
+     */
     public function directory(string $directory): string
     {
         /** @var Boot\DirectoriesInterface $directories */

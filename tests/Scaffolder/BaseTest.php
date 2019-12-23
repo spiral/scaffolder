@@ -13,16 +13,20 @@ namespace Spiral\Tests\Scaffolder;
 
 use PHPUnit\Framework\TestCase;
 use TestApp\TestApp;
+use Throwable;
 
 abstract class BaseTest extends TestCase
 {
     /** @var TestApp */
     protected $app;
 
+    /**
+     * @throws Throwable
+     */
     public function setUp(): void
     {
         $this->app = TestApp::init([
-            'root'   => $this->dir(),
+            'root' => $this->dir(),
         ], null, false);
     }
 

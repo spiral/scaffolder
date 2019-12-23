@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
+use Throwable;
+
 class CommandTest extends AbstractCommandTest
 {
     /**
@@ -19,8 +23,8 @@ class CommandTest extends AbstractCommandTest
      * @param string      $className
      * @param string      $name
      * @param string|null $alias
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(string $className, string $name, ?string $alias): void
     {
@@ -38,7 +42,7 @@ class CommandTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertTrue($reflection->hasMethod('perform'));

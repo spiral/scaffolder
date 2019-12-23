@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
+use Throwable;
+
 class BootloaderTest extends AbstractCommandTest
 {
     private const CLASS_NAME = '\\TestApp\\Bootloader\\SampleBootloader';
@@ -22,8 +26,8 @@ class BootloaderTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -35,7 +39,7 @@ class BootloaderTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
-        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $reflection = new ReflectionClass(self::CLASS_NAME);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertStringContainsString('Sample Bootloader', $reflection->getDocComment());

@@ -12,13 +12,16 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
 use Spiral\Prototype\Traits\PrototypeTrait;
+use Throwable;
 
 class ControllerTest extends AbstractCommandTest
 {
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -32,7 +35,7 @@ class ControllerTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($class));
 
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
@@ -48,8 +51,8 @@ class ControllerTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testPrototypeTrait(): void
     {
@@ -62,7 +65,7 @@ class ControllerTest extends AbstractCommandTest
         clearstatcache();
         $this->assertTrue(class_exists($class));
 
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
         $traits = $reflection->getTraitNames();
 
         $this->assertNotEmpty($traits);

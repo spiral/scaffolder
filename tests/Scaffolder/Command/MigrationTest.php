@@ -12,21 +12,27 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
+use ReflectionClass;
+use ReflectionException;
 use Spiral\Scaffolder\Exception\ScaffolderException;
+use Throwable;
 
 class MigrationTest extends AbstractCommandTest
 {
     private const CLASS_NAME  = '\\TestApp\\SampleMigration';
     private const CLASS_NAME2 = '\\TestApp\\Sample2Migration';
 
+    /**
+     * @throws Throwable
+     */
     public function tearDown(): void
     {
         $this->files()->deleteDirectory($this->app->directory('app') . 'migrations', true);
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffoldWithTable(): void
     {
@@ -48,8 +54,8 @@ class MigrationTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffoldWithoutTable(): void
     {
@@ -67,7 +73,7 @@ class MigrationTest extends AbstractCommandTest
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testScaffoldException(): void
     {
@@ -100,7 +106,8 @@ class MigrationTest extends AbstractCommandTest
     /**
      * @param string $className
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
+     * @throws Throwable
      */
     private function doGeneralAssertions(string $className): string
     {
@@ -112,7 +119,7 @@ class MigrationTest extends AbstractCommandTest
 
         $this->assertTrue(class_exists($className));
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
 
         $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
         $this->assertTrue($reflection->hasMethod('up'));
