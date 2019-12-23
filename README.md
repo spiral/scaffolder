@@ -4,8 +4,6 @@ Spiral, scaffolder module
 [![Build Status](https://travis-ci.org/spiral/scaffolder.svg?branch=master)](https://travis-ci.org/spiral/scaffolder)
 [![Codecov](https://codecov.io/gh/spiral/scaffolder/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/scaffolder/)
 
-<b>[Documentation](http://spiral-framework.com/guide)</b> | [CHANGELOG](/CHANGELOG.md) | [Framework Bundle](https://github.com/spiral/spiral)
-
 ## Installation
 If you do not have scaffolder module installed execute following commands:
 
