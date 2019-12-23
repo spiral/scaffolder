@@ -43,7 +43,7 @@ class MigrationCommand extends AbstractCommand
         ],
         [
             'comment',
-            'c',
+            null,
             InputOption::VALUE_OPTIONAL,
             'Optional comment to add as class header'
         ]
