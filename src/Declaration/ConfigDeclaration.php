@@ -264,6 +264,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     private function declareStructure(string $configName, array $defaults): void
     {
         $this->constant('CONFIG')->setPublic()->setValue($configName);
-        $this->property('config')->setProtected()->setDefaultValue($defaults);
+        $this->property('config')->setProtected()->setDefaultValue($defaults)
+            ->setComment('@internal For internal usage. Will be hydrated in the constructor.');
     }
 }
