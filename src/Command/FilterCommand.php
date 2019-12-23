@@ -144,7 +144,7 @@ class FilterCommand extends AbstractCommand
      */
     private function getTypedPropertyType(ReflectionProperty $property): ?string
     {
-        if (method_exists($property, 'hasType') && $property->hasType()) {
+        if (method_exists($property, 'hasType') && method_exists($property, 'getType') && $property->hasType()) {
             /** @var ReflectionType $type */
             $type = $property->getType();
             if (method_exists($type, 'getName') && $this->isKnownType($type->getName())) {
