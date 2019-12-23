@@ -14,6 +14,7 @@ namespace Spiral\Scaffolder\Command;
 
 use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 use ReflectionType;
 use Spiral\Scaffolder\Declaration\FilterDeclaration;
 use Symfony\Component\Console\Input\InputArgument;
@@ -127,34 +128,72 @@ class FilterCommand extends AbstractCommand
         $fields = [];
         $reflection = new ReflectionClass($name);
         foreach ($reflection->getProperties() as $property) {
-            $type = null;
-            if (method_exists($property, 'hasType') && method_exists($property, 'getType')) {
-                if ($property->hasType()) {
-                    /** @var ReflectionType $reflectionType */
-                    $reflectionType = $property->getType();
-                    if ($reflectionType->isBuiltin() && method_exists($reflectionType, 'getName')) {
-                        $type = $reflectionType->getName();
-                    }
-                }
-            } else {
-                $defaultValue = $reflection->getDefaultProperties()[$property->name] ?? null;
-                if ($defaultValue !== null) {
-                    $type = gettype($defaultValue);
-                } else {
-                    $doc = $property->getDocComment();
-                    if (is_string($doc)) {
-                        preg_match('/@var\s*([a-z]+)/i', $doc, $match);
-
-                        if (!empty($match[1]) && in_array($match[1], self::NATIVE_TYPES, true)) {
-                            $type = $match[1];
-                        }
-                    }
-                }
-            }
+            $type = $this->getTypedPropertyType($property)
+                ?? $this->getPropertyTypeFromDefaults($property, $reflection)
+                ?? $this->getPropertyTypeFromDocBlock($property);
 
             $fields[] = [$property->name, $type, null, null];
         }
 
         return $fields;
+    }
+
+    /**
+     * @param ReflectionProperty $property
+     * @return string|null
+     */
+    private function getTypedPropertyType(ReflectionProperty $property): ?string
+    {
+        if (method_exists($property, 'hasType') && $property->hasType()) {
+            /** @var ReflectionType $type */
+            $type = $property->getType();
+            if (method_exists($type, 'getName') && $this->isKnownType($type->getName())) {
+                return $type->getName();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param ReflectionProperty $property
+     * @param ReflectionClass    $reflection
+     * @return string|null
+     */
+    private function getPropertyTypeFromDefaults(ReflectionProperty $property, ReflectionClass $reflection): ?string
+    {
+        if (!isset($reflection->getDefaultProperties()[$property->name])) {
+            return null;
+        }
+
+        $default = $reflection->getDefaultProperties()[$property->name];
+
+        return $default !== null ? gettype($default) : null;
+    }
+
+    /**
+     * @param ReflectionProperty $property
+     * @return string|null
+     */
+    private function getPropertyTypeFromDocBlock(ReflectionProperty $property): ?string
+    {
+        $doc = $property->getDocComment();
+        if (is_string($doc)) {
+            preg_match('/@var\s*([\S]+)/i', $doc, $match);
+            if (!empty($match[1]) && $this->isKnownType($match[1])) {
+                return $match[1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    private function isKnownType(string $type): bool
+    {
+        return in_array($type, self::NATIVE_TYPES, true);
     }
 }
