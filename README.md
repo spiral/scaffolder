@@ -97,20 +97,21 @@ return [
 ];
 
 //...config class
+class MyConfig{
+    //successful singularize name
+    public function param(string $param): string {
+        return $this->config['params'][$param];
+    }
 
-//successful singularize name
-public function param(string $param): string {
-    return $this->config['params'][$param];
-}
+    //successful singularize name but having a conflict
+    public function valueBy(int $value): string {
+        return $this->config['values'][$value];
+    }
 
-//successful singularize name but having a conflict
-public function valueBy(int $value): string {
-    return $this->config['values'][$value];
-}
-
-//unsuccessful singularize name
-public function parameterBy(string $parameter): string {
-    return $this->config['parameter'][$parameter];
+    //unsuccessful singularize name
+    public function parameterBy(string $parameter): string {
+        return $this->config['parameter'][$parameter];
+    }
 }
 ```
 
@@ -128,7 +129,9 @@ You can optionally specify controller actions using `action (a)` option (multipl
 $ php app.php create:filter <name>
 ```
 `<Name>Filter` class will be created.
-You can optionally specify filter schema using `field (f)` option (multiple values allowed).<br/>
+Using option `entity (e)` you can pass an `EntityClass` and the filter command will fetch the all the given
+class properties into the filter and try to define each property's type based on its type declaration (if php74),
+default value or a PhpDoc. Otherwise you can optionally specify filter schema using `field (f)` option (multiple values allowed).<br/>
 Full field format is `name:type(source:origin)`. `type`, `origin` and `source:origin` are optional and can be omitted, defaults are:
 * type=string
 * source=data
