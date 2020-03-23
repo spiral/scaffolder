@@ -33,9 +33,7 @@ class JobHandlerDeclaration extends ClassDeclaration implements DependedInterfac
      */
     public function getDependencies(): array
     {
-        return [
-            JobHandler::class => null
-        ];
+        return [JobHandler::class => null];
     }
 
     /**

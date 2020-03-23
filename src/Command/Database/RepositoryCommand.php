@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class RepositoryCommand extends AbstractCommand
 {
-    protected const ELEMENT = 'repository';
+    public const ELEMENT = 'repository';
 
     protected const NAME        = 'create:repository';
     protected const DESCRIPTION = 'Create repository declaration';

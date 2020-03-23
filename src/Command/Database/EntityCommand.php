@@ -14,6 +14,7 @@ namespace Spiral\Scaffolder\Command\Database;
 use Spiral\Console\Console;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Scaffolder\Command\AbstractCommand;
+use Spiral\Scaffolder\Config\ScaffolderConfig;
 use Spiral\Scaffolder\Declaration\Database\Entity\AnnotatedDeclaration;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -94,10 +95,11 @@ class EntityCommand extends AbstractCommand
     /**
      * Create entity declaration.
      *
-     * @param Console $console
+     * @param Console          $console
+     * @param ScaffolderConfig $config
      * @throws Throwable
      */
-    public function perform(Console $console): void
+    public function perform(Console $console, ScaffolderConfig $config): void
     {
         $accessibility = (string)$this->option('accessibility');
         $this->validateAccessibility($accessibility);
@@ -107,7 +109,9 @@ class EntityCommand extends AbstractCommand
 
         $repository = trimPostfix((string)$this->argument('name'), 'repository');
         if ($this->option('repository')) {
-            $declaration->setRepository($repository);
+            $repositoryClass = $config->className(RepositoryCommand::ELEMENT, $repository);
+            $repositoryNamespace = $config->classNamespace(RepositoryCommand::ELEMENT, $repository);
+            $declaration->setRepository("$repositoryNamespace\\$repositoryClass");
         }
 
         $declaration->setRole((string)$this->option('role'));
@@ -133,7 +137,7 @@ class EntityCommand extends AbstractCommand
 
         if ($this->option('repository')) {
             $console->run('create:repository', [
-                'name' => !empty($repository) ? $repository : $this->argument('name')
+                'name' => $repository ?? $this->argument('name')
             ]);
         }
     }

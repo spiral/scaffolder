@@ -33,9 +33,7 @@ class BootloaderDeclaration extends ClassDeclaration implements DependedInterfac
      */
     public function getDependencies(): array
     {
-        return [
-            Bootloader::class => null
-        ];
+        return [Bootloader::class => null];
     }
 
     /**

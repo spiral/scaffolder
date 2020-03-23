@@ -19,6 +19,11 @@ use Spiral\Scaffolder\Exception\ScaffolderException;
 
 class AnnotatedDeclaration extends AbstractEntityDeclaration
 {
+    /** @var array */
+    private $dependencies = [
+        'Cycle\Annotated\Annotation' => 'Cycle'
+    ];
+
     /**
      * {@inheritDoc}
      */
@@ -31,11 +36,20 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
     }
 
     /**
+     * @param string $repository
+     */
+    public function setRepository(string $repository): void
+    {
+        $this->addDependency($repository);
+        parent::setRepository(mb_substr($repository, mb_strrpos($repository, '\\') + 1));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies(): array
     {
-        return ['Cycle\Annotated\Annotation' => 'Cycle'];
+        return $this->dependencies;
     }
 
     public function declareSchema(): void
@@ -44,7 +58,7 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
         $attributes = ['role', 'mapper', 'repository', 'table', 'database'];
         foreach ($attributes as $attribute) {
             if (!empty($this->$attribute)) {
-                $entities[] = "$attribute = \"{$this->$attribute}\"";
+                $entities[] = "$attribute=\"{$this->$attribute}\"";
             }
         }
 
@@ -127,5 +141,14 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
             default:
                 throw new ScaffolderException("Unknown inflection, got `$inflection`");
         }
+    }
+
+    /**
+     * @param string      $name
+     * @param string|null $alias
+     */
+    private function addDependency(string $name, string $alias = null): void
+    {
+        $this->dependencies[$name] = $alias;
     }
 }
