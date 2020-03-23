@@ -4,4 +4,4 @@ Spiral, scaffolder module
 [![Build Status](https://travis-ci.org/spiral/scaffolder.svg?branch=master)](https://travis-ci.org/spiral/scaffolder)
 [![Codecov](https://codecov.io/gh/spiral/scaffolder/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/scaffolder/)
 
-<b>[Documentation](http://spiral.dev/cookbook-scaffolding)</b> | [Framework Bundle](https://github.com/spiral/spiral)
+<b>[Documentation](https://spiral.dev/docs/cookbook-scaffolding)</b> | [Framework Bundle](https://github.com/spiral/spiral)
