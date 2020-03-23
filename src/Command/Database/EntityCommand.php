@@ -111,7 +111,7 @@ class EntityCommand extends AbstractCommand
         if ($this->option('repository')) {
             $repositoryClass = $config->className(RepositoryCommand::ELEMENT, $repository);
             $repositoryNamespace = $config->classNamespace(RepositoryCommand::ELEMENT, $repository);
-            $declaration->setRepository("$repositoryNamespace\\$repositoryClass");
+            $declaration->setRepository("\\$repositoryNamespace\\$repositoryClass");
         }
 
         $declaration->setRole((string)$this->option('role'));

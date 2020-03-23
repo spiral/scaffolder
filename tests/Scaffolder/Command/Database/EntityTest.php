@@ -228,11 +228,9 @@ class EntityTest extends AbstractCommandTest
 
         if ($exists) {
             $reflection = new ReflectionClass($className);
-            $repositoryReflection = new ReflectionClass($repositoryClassName);
-
             $source = $this->files()->read($reflection->getFileName());
-            $this->assertStringContainsString('use ' . ltrim($repositoryClassName, '\\'), $source);
-            $this->assertStringContainsString("repository=\"{$repositoryReflection->getShortName()}\"", $source);
+
+            $this->assertStringContainsString("repository=\"$repositoryClassName\"", $source);
         }
 
         $this->deleteDeclaration($className);
