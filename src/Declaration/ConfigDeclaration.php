@@ -137,9 +137,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 
         $file = new FileDeclaration();
         $file->setDirectives('strict_types=1');
-
-        $namespace = trim($this->config->classNamespace('config', $this->getName()), '\\');
-        $file->setComment("@see \\$namespace\\{$this->getName()}");
+        $file->setComment($this->phpDocSeeReference());
         $file->addElement(new Source(['', 'return [];']));
         $file->render();
 
@@ -149,6 +147,16 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
             FilesInterface::READONLY,
             true
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function phpDocSeeReference(): string
+    {
+        $namespace = trim($this->config->classNamespace('config', $this->getName()), '\\');
+
+        return "@see \\$namespace\\{$this->getName()}";
     }
 
     /**
