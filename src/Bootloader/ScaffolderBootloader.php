@@ -17,8 +17,9 @@ use ReflectionClass;
 use ReflectionException;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\KernelInterface;
-use Spiral\Bootloader\TokenizerBootloader;
+use Spiral\Bootloader\ConsoleBootloader;
 use Spiral\Config\ConfiguratorInterface;
+use Spiral\Scaffolder\Command;
 use Spiral\Scaffolder\Declaration;
 
 class ScaffolderBootloader extends Bootloader
@@ -46,10 +47,21 @@ class ScaffolderBootloader extends Bootloader
     }
 
     /**
-     * @param TokenizerBootloader $tokenizer
+     * @param ConsoleBootloader $console
      */
-    public function boot(TokenizerBootloader $tokenizer): void
+    public function boot(ConsoleBootloader $console): void
     {
+        $console->addCommand(Command\Database\EntityCommand::class);
+        $console->addCommand(Command\Database\RepositoryCommand::class);
+        $console->addCommand(Command\BootloaderCommand::class);
+        $console->addCommand(Command\CommandCommand::class);
+        $console->addCommand(Command\ConfigCommand::class);
+        $console->addCommand(Command\ControllerCommand::class);
+        $console->addCommand(Command\FilterCommand::class);
+        $console->addCommand(Command\JobHandlerCommand::class);
+        $console->addCommand(Command\MiddlewareCommand::class);
+        $console->addCommand(Command\MigrationCommand::class);
+
         try {
             $defaultNamespace = (new ReflectionClass($this->kernel))->getNamespaceName();
         } catch (ReflectionException $e) {
@@ -200,7 +212,5 @@ class ScaffolderBootloader extends Bootloader
                 ],
             ],
         ]);
-
-        $tokenizer->addDirectory(directory('vendor') . 'spiral/scaffolder/src/Command');
     }
 }

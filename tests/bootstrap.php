@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework. Scaffolder
  *
@@ -6,7 +7,7 @@
  * @author  Anton Titov (Wolfy-J)
  * @author  Valentin V (vvval)
  */
-// phpcs:ignoreFile
+
 declare(strict_types=1);
 
 error_reporting(E_ALL | E_STRICT);
