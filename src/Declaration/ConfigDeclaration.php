@@ -20,6 +20,7 @@ use Spiral\Reactor\DependedInterface;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Partial\Source;
+use Spiral\Scaffolder\Config\ScaffolderConfig;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 
 use function Spiral\Scaffolder\defineArrayType;
@@ -27,6 +28,9 @@ use function Spiral\Scaffolder\isAssociativeArray;
 
 class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 {
+    /** @var ScaffolderConfig */
+    private $config;
+
     /** @var FilesInterface */
     private $files;
 
@@ -49,6 +53,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     private $directory;
 
     /**
+     * @param ScaffolderConfig                  $config
      * @param FilesInterface                    $files
      * @param SlugifyInterface                  $slugify
      * @param ConfigDeclaration\TypeAnnotations $typeAnnotations
@@ -60,6 +65,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
      * @param string                            $directory
      */
     public function __construct(
+        ScaffolderConfig $config,
         FilesInterface $files,
         SlugifyInterface $slugify,
         ConfigDeclaration\TypeAnnotations $typeAnnotations,
@@ -72,6 +78,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
     ) {
         parent::__construct($name, 'InjectableConfig', [], $comment);
 
+        $this->config = $config;
         $this->files = $files;
         $this->slugify = $slugify;
         $this->typeAnnotations = $typeAnnotations;
@@ -130,6 +137,9 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
 
         $file = new FileDeclaration();
         $file->setDirectives('strict_types=1');
+
+        $namespace = trim($this->config->classNamespace('config', $this->getName()), '\\');
+        $file->setComment("@see \\$namespace\\{$this->getName()}");
         $file->addElement(new Source(['', 'return [];']));
         $file->render();
 
