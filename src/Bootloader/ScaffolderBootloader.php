@@ -107,7 +107,7 @@ class ScaffolderBootloader extends Bootloader
                     'postfix'   => 'Config',
                     'class'     => Declaration\ConfigDeclaration::class,
                     'options'   => [
-                        'directory' => directory('app') . 'config/',
+                        'directory' => directory('config'),
                     ]
                 ],
                 'controller' => [
