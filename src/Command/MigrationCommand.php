@@ -36,10 +36,10 @@ class MigrationCommand extends AbstractCommand
             'Table to be created table'
         ],
         [
-            'column',
-            'col',
+            'field',
+            'f',
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-            'Create column in a format "name:type"'
+            'Create field in a format "name:type"'
         ],
         [
             'comment',
@@ -61,17 +61,17 @@ class MigrationCommand extends AbstractCommand
         $declaration = $this->createDeclaration();
 
         if (!empty($this->option('table'))) {
-            $columns = [];
-            foreach ($this->option('column') as $field) {
+            $fields = [];
+            foreach ($this->option('field') as $field) {
                 if (strpos($field, ':') === false) {
-                    throw new ScaffolderException("Column definition must in 'name:type' form");
+                    throw new ScaffolderException("Field definition must in 'name:type' form");
                 }
 
                 [$name, $type] = explode(':', $field);
-                $columns[$name] = $type;
+                $fields[$name] = $type;
             }
 
-            $declaration->declareCreation((string)$this->option('table'), $columns);
+            $declaration->declareCreation((string)$this->option('table'), $fields);
         }
 
         $file = new FileDeclaration($this->getNamespace());

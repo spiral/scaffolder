@@ -80,17 +80,17 @@ class MigrationTest extends AbstractCommandTest
         $this->expectException(ScaffolderException::class);
 
         $this->console()->run('create:migration', [
-            'name'     => 'sample3',
-            '--table'  => 'sample3_table',
-            '--column' => ['id',]
+            'name'    => 'sample3',
+            '--table' => 'sample3_table',
+            '--field' => ['id',]
         ]);
     }
 
     private function input(string $name, bool $withTable): array
     {
         $input = [
-            'name'     => $name,
-            '--column' => [
+            'name' => $name,
+            '-f'   => [
                 'id:primary',
                 'content:text'
             ]
