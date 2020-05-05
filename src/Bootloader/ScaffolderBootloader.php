@@ -136,8 +136,8 @@ class ScaffolderBootloader extends Bootloader
                     'class'     => Declaration\MigrationDeclaration::class
                 ],
                 'filter'     => [
-                    'namespace' => 'Filter',
-                    'postfix'   => 'Filter',
+                    'namespace' => 'Request',
+                    'postfix'   => 'Request',
                     'class'     => Declaration\FilterDeclaration::class,
                     'options'   => [
                         //Set of default filters and validate rules for various types
