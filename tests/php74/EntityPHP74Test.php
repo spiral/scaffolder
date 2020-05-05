@@ -24,7 +24,7 @@ class EntityPHP74Test extends AbstractCommandTest
     public function testFromEntity(): void
     {
         $line = __LINE__;
-        $className = "\\TestApp\\Filter\\Sample{$line}Filter";
+        $className = "\\TestApp\\Request\\Sample{$line}Request";
         $output = $this->console()->run('create:filter', [
             'name'     => 'sample' . $line,
             '--entity' => SourceEntity74::class
