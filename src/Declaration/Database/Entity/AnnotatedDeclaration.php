@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration\Database\Entity;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\Rules\English\InflectorFactory;
 use Spiral\Reactor\Partial\Property;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Scaffolder\Declaration\Database\AbstractEntityDeclaration;
@@ -118,14 +118,36 @@ class AnnotatedDeclaration extends AbstractEntityDeclaration
         switch ($inflection) {
             case 'tableize':
             case 't':
-                return Inflector::tableize($value);
+                return $this->tableize($value);
 
             case 'camelize':
             case 'c':
-                return Inflector::camelize($value);
+                return $this->camelize($value);
 
             default:
                 throw new ScaffolderException("Unknown inflection, got `$inflection`");
         }
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function tableize(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->tableize($name);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function camelize(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->camelize($name);
     }
 }

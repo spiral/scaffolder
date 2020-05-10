@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Config;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\Rules\English\InflectorFactory;
 use Spiral\Core\InjectableConfig;
 use Spiral\Scaffolder\Exception\ScaffolderException;
 
@@ -56,7 +56,7 @@ class ScaffolderConfig extends InjectableConfig
     {
         ['name' => $name] = $this->parseName($name);
 
-        return Inflector::classify($name) . $this->elementPostfix($element);
+        return $this->classify($name) . $this->elementPostfix($element);
     }
 
     /**
@@ -70,7 +70,7 @@ class ScaffolderConfig extends InjectableConfig
         ['namespace' => $namespace] = $this->parseName($name);
 
         if (!empty($namespace)) {
-            $localNamespace .= '\\' . Inflector::classify($namespace);
+            $localNamespace .= '\\' . $this->classify($namespace);
         }
 
         if (empty($this->baseNamespace())) {
@@ -202,5 +202,16 @@ class ScaffolderConfig extends InjectableConfig
         }
 
         return $joinedPath;
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function classify(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->classify($name);
     }
 }
