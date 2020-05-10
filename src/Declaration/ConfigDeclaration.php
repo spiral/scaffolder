@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Spiral\Scaffolder\Declaration;
 
 use Cocur\Slugify\SlugifyInterface;
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\Rules\English\InflectorFactory;
 use Spiral\Core\InjectableConfig;
 use Spiral\Files\FilesInterface;
 use Spiral\Reactor\ClassDeclaration;
@@ -211,7 +211,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
             return null;
         }
 
-        $singularKey = Inflector::singularize($key);
+        $singularKey = $this->singularize($key);
         $name = $this->makeGetterName($singularKey);
         if (in_array($name, $methodNames, true)) {
             $name = $this->makeGetterName($singularKey, 'get', 'by');
@@ -265,7 +265,7 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
         }
 
         $name = $this->slugify->slugify($name, ['lowercase' => false]);
-        $chunks[] = count($chunks) !== 0 ? Inflector::classify($name) : $name;
+        $chunks[] = count($chunks) !== 0 ? $this->classify($name) : $name;
         if (!empty($postfix)) {
             $chunks[] = ucfirst($postfix);
         }
@@ -284,5 +284,27 @@ class ConfigDeclaration extends ClassDeclaration implements DependedInterface
         $this->constant('CONFIG')->setPublic()->setValue($configName);
         $this->property('config')->setProtected()->setDefaultValue($defaults)
             ->setComment('@internal For internal usage. Will be hydrated in the constructor.');
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function classify(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->classify($name);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function singularize(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->singularize($name);
     }
 }

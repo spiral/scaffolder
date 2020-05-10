@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration\Database;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\Rules\English\InflectorFactory;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DependedInterface;
 use Spiral\Reactor\Partial\Property;
@@ -133,13 +133,24 @@ abstract class AbstractEntityDeclaration extends ClassDeclaration implements Dep
      */
     private function declareAccessors(string $field, string $type): void
     {
-        $setter = $this->method('set' . Inflector::classify($field));
+        $setter = $this->method('set' . $this->classify($field));
         $setter->setPublic();
         $setter->parameter('value')->setType($type);
         $setter->setSource("\$this->$field = \$value;");
 
-        $getter = $this->method('get' . Inflector::classify($field));
+        $getter = $this->method('get' . $this->classify($field));
         $getter->setPublic();
         $getter->setSource("return \$this->$field;");
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function classify(string $name): string
+    {
+        return ( new InflectorFactory() )
+            ->build()
+            ->classify($name);
     }
 }
