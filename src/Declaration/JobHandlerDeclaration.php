@@ -1,44 +1,22 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Declaration;
 
-use Spiral\Jobs\JobHandler;
-use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\DependedInterface;
+use Spiral\Queue\JobHandler;
 
-class JobHandlerDeclaration extends ClassDeclaration implements DependedInterface
+class JobHandlerDeclaration extends AbstractDeclaration
 {
-    public function __construct(string $name, string $comment = '')
-    {
-        parent::__construct($name, 'JobHandler', [], $comment);
+    public const TYPE = 'jobHandler';
 
-        $this->declareStructure();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDependencies(): array
+    public function declare(): void
     {
-        return [JobHandler::class => null];
-    }
+        $this->class->setExtends(JobHandler::class);
 
-    /**
-     * Declare constants and boot method.
-     */
-    private function declareStructure(): void
-    {
-        $method = $this->method('invoke');
-        $method->setPublic();
-        $method->setReturn('void');
+        $this->class
+            ->addMethod('invoke')
+            ->setPublic()
+            ->setReturnType('void');
     }
 }

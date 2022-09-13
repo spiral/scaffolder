@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Anton Titov (Wolfy-J)
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
@@ -18,8 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ControllerCommand extends AbstractCommand
 {
-    protected const ELEMENT = 'controller';
-
     protected const NAME        = 'create:controller';
     protected const DESCRIPTION = 'Create controller declaration';
     protected const ARGUMENTS   = [
@@ -49,10 +39,9 @@ class ControllerCommand extends AbstractCommand
     /**
      * Create controller declaration.
      */
-    public function perform(): void
+    public function perform(): int
     {
-        /** @var ControllerDeclaration $declaration */
-        $declaration = $this->createDeclaration();
+        $declaration = $this->createDeclaration(ControllerDeclaration::class);
 
         foreach ($this->option('action') as $action) {
             $declaration->addAction($action);
@@ -63,5 +52,7 @@ class ControllerCommand extends AbstractCommand
         }
 
         $this->writeDeclaration($declaration);
+
+        return self::SUCCESS;
     }
 }

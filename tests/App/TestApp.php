@@ -1,18 +1,10 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\App;
 
 use Spiral\Boot;
-use Spiral\Migrations;
 use Spiral\Scaffolder;
 use Throwable;
 
@@ -50,7 +42,6 @@ class TestApp extends Boot\AbstractKernel
      */
     protected function bootstrap(): void
     {
-        $this->container->bind(Migrations\RepositoryInterface::class, Migrations\FileRepository::class);
     }
 
     /**
@@ -72,7 +63,8 @@ class TestApp extends Boot\AbstractKernel
         return array_merge([
             'vendor'  => $directories['root'] . '/vendor/',
             'runtime' => $directories['root'] . '/runtime/',
-            'config'  => $directories['app'] . '/config/'
+            'config'  => $directories['app'] . '/config/',
+            'resources' => $directories['root'] . '/resources/',
         ], $directories);
     }
 }

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Anton Titov (Wolfy-J)
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
@@ -43,8 +35,12 @@ class CommandTest extends AbstractCommandTest
         $this->assertTrue(class_exists($className));
 
         $reflection = new ReflectionClass($className);
+        $content = $this->files()->read($reflection->getFileName());
+        $classNameParts = \explode('\\', $className);
 
-        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
+        $this->assertStringContainsString('strict_types=1', $content);
+        $this->assertStringContainsString('{project-name}', $content);
+        $this->assertStringContainsString('@author {author-name}', $content);
         $this->assertTrue($reflection->hasMethod('perform'));
         $this->assertTrue($reflection->hasConstant('NAME'));
         $this->assertTrue($reflection->hasConstant('DESCRIPTION'));
@@ -52,6 +48,7 @@ class CommandTest extends AbstractCommandTest
         $this->assertTrue($reflection->hasConstant('OPTIONS'));
         $this->assertSame($alias ?? $name, $reflection->getConstant('NAME'));
         $this->assertSame('My sample command description', $reflection->getConstant('DESCRIPTION'));
+        $this->assertSame($classNameParts[\array_key_last($classNameParts)], $reflection->getShortName());
 
         $this->deleteDeclaration($className);
     }
@@ -60,6 +57,7 @@ class CommandTest extends AbstractCommandTest
     {
         return [
             ['\\Spiral\\Tests\\Scaffolder\\App\\Command\\SampleCommand', 'sample', null],
+            ['\\Spiral\\Tests\\Scaffolder\\App\\Command\\SomeCommand', 'SomeCommand', null],
             ['\\Spiral\\Tests\\Scaffolder\\App\\Command\\SampleAliasCommand', 'sampleAlias', 'my-sample-command-alias'],
         ];
     }

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder;
@@ -28,8 +21,8 @@ abstract class BaseTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->app = TestApp::init([
+        $this->app = TestApp::create([
             'root' => __DIR__ . '/App',
-        ], null, false);
+        ], false)->run();
     }
 }

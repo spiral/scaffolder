@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Anton Titov (Wolfy-J)
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
@@ -16,122 +8,64 @@ use Psr\Container\ContainerInterface;
 use Spiral\Console\Command;
 use Spiral\Core\FactoryInterface;
 use Spiral\Files\FilesInterface;
-use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\FileDeclaration;
+use Spiral\Reactor\Writer;
 use Spiral\Scaffolder\Config\ScaffolderConfig;
+use Spiral\Scaffolder\Declaration\DeclarationInterface;
 
 abstract class AbstractCommand extends Command
 {
-    /**
-     * Element to be managed.
-     */
-    protected const ELEMENT = '';
-
-    /**
-     * @var ScaffolderConfig
-     */
-    protected $config;
-
-    /**
-     * @var FilesInterface
-     */
-    protected $files;
-
-    /** @var FactoryInterface */
-    private $factory;
-
     public function __construct(
-        ScaffolderConfig $config,
-        FilesInterface $files,
+        protected ScaffolderConfig $config,
+        protected FilesInterface $files,
         ContainerInterface $container,
-        FactoryInterface $factory
+        private readonly FactoryInterface $factory
     ) {
-        $this->config = $config;
-        $this->files = $files;
-        $this->factory = $factory;
         $this->setContainer($container);
 
         parent::__construct();
     }
 
-    protected function createDeclaration(array $parameters = []): ClassDeclaration
+    /**
+     * @template TClass of DeclarationInterface
+     *
+     * @param class-string<TClass> $class
+     * @return TClass
+     */
+    protected function createDeclaration(string $class): DeclarationInterface
     {
         return $this->factory->make(
-            $this->declarationClass(static::ELEMENT),
+            $class,
             [
-                'name'    => $this->getClass(),
-                'comment' => (string)$this->option('comment'),
-            ] + $parameters + $this->config->declarationOptions(static::ELEMENT)
-        );
-    }
-
-    protected function declarationClass(string $element): string
-    {
-        return $this->config->declarationClass($element);
-    }
-
-    /**
-     * Get class name of element being rendered.
-     */
-    protected function getClass(): string
-    {
-        return $this->config->className(
-            static::ELEMENT,
-            (string)$this->argument('name')
+                'name'    => (string) $this->argument('name'),
+                'comment' => $this->option('comment'),
+            ] + $this->config->declarationOptions($class::TYPE)
         );
     }
 
     /**
      * Write declaration into file.
-     *
-     * @param string           $type If null static::ELEMENT to be used.
      */
-    protected function writeDeclaration(ClassDeclaration $declaration, string $type = null): void
+    protected function writeDeclaration(DeclarationInterface $declaration): void
     {
-        $type = $type ?? static::ELEMENT;
-
-        $filename = $this->config->classFilename($type, (string)$this->argument('name'));
+        $filename = $this->config->classFilename($declaration::TYPE, (string) $this->argument('name'));
         $filename = $this->files->normalizePath($filename);
+        $className = $declaration->getClass()->getName();
 
         if ($this->files->exists($filename)) {
             $this->writeln(
-                "<fg=red>Unable to create '<comment>{$declaration->getName()}</comment>' declaration, "
-                . "file '<comment>{$filename}</comment>' already exists.</fg=red>"
+                \sprintf("<fg=red>Unable to create '<comment>%s</comment>' declaration, ", $className)
+                . \sprintf("file '<comment>%s</comment>' already exists.</fg=red>", $filename)
             );
 
             return;
         }
 
         //File declaration
-        $file = new FileDeclaration(
-            $this->config->classNamespace($type, (string)$this->argument('name'))
-        );
-
-        $file->setDirectives('strict_types=1');
-        $file->setComment($this->config->headerLines());
-        $file->addElement($declaration);
-
-        $this->files->write(
-            $filename,
-            $file->render(),
-            FilesInterface::READONLY,
-            true
-        );
+        (new Writer($this->files))->write($filename, $declaration->getFile());
 
         $this->writeln(
-            "Declaration of '<info>{$declaration->getName()}</info>' "
-            . "has been successfully written into '<comment>{$filename}</comment>'."
-        );
-    }
-
-    /**
-     * Get namespace of element being rendered.
-     */
-    protected function getNamespace(): string
-    {
-        return $this->config->classNamespace(
-            static::ELEMENT,
-            (string)$this->argument('name')
+            \sprintf("Declaration of '<info>%s</info>' ", $className)
+            . \sprintf("has been successfully written into '<comment>%s</comment>'.", $filename)
         );
     }
 }

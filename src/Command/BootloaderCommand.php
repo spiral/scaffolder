@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
@@ -17,8 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class BootloaderCommand extends AbstractCommand
 {
-    protected const ELEMENT = 'bootloader';
-
     protected const NAME        = 'create:bootloader';
     protected const DESCRIPTION = 'Create bootloader declaration';
     protected const ARGUMENTS   = [
@@ -36,11 +27,12 @@ class BootloaderCommand extends AbstractCommand
     /**
      * Create bootloader declaration.
      */
-    public function perform(): void
+    public function perform(): int
     {
-        /** @var BootloaderDeclaration $declaration */
-        $declaration = $this->createDeclaration();
+        $declaration = $this->createDeclaration(BootloaderDeclaration::class);
 
         $this->writeDeclaration($declaration);
+
+        return self::SUCCESS;
     }
 }

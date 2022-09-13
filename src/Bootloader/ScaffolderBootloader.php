@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Bootloader;
@@ -30,37 +23,24 @@ class ScaffolderBootloader extends Bootloader
         SlugifyInterface::class => Slugify::class,
     ];
 
-    /** @var ConfiguratorInterface */
-    private $config;
-
-    /** @var KernelInterface */
-    private $kernel;
-
-    /**
-     * ScaffolderBootloader constructor.
-     */
-    public function __construct(ConfiguratorInterface $config, KernelInterface $kernel)
-    {
-        $this->config = $config;
-        $this->kernel = $kernel;
+    public function __construct(
+        private readonly ConfiguratorInterface $config,
+        private readonly KernelInterface $kernel
+    ) {
     }
 
-    public function boot(ConsoleBootloader $console): void
+    public function init(ConsoleBootloader $console): void
     {
-        $console->addCommand(Command\Database\EntityCommand::class, true);
-        $console->addCommand(Command\Database\RepositoryCommand::class, true);
         $console->addCommand(Command\BootloaderCommand::class);
         $console->addCommand(Command\CommandCommand::class);
         $console->addCommand(Command\ConfigCommand::class);
         $console->addCommand(Command\ControllerCommand::class);
-        $console->addCommand(Command\FilterCommand::class);
         $console->addCommand(Command\JobHandlerCommand::class);
         $console->addCommand(Command\MiddlewareCommand::class);
-        $console->addCommand(Command\MigrationCommand::class, true);
 
         try {
             $defaultNamespace = (new ReflectionClass($this->kernel))->getNamespaceName();
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             $defaultNamespace = '';
         }
 
@@ -69,11 +49,7 @@ class ScaffolderBootloader extends Bootloader
              * This is set of comment lines to be applied to every scaffolded file, you can use env() function
              * to make it developer specific or set one universal pattern per project.
              */
-            'header'       => [
-                '{project-name}',
-                '',
-                '@author {author-name}',
-            ],
+            'header'       => [],
 
             /*
              * Base directory for generated classes, class will be automatically localed into sub directory
@@ -93,12 +69,12 @@ class ScaffolderBootloader extends Bootloader
              * This is set of default settings to be used for your scaffolding commands.
              */
             'declarations' => [
-                'bootloader' => [
+                Declaration\BootloaderDeclaration::TYPE => [
                     'namespace' => 'Bootloader',
                     'postfix'   => 'Bootloader',
                     'class'     => Declaration\BootloaderDeclaration::class,
                 ],
-                'config'     => [
+                Declaration\ConfigDeclaration::TYPE => [
                     'namespace' => 'Config',
                     'postfix'   => 'Config',
                     'class'     => Declaration\ConfigDeclaration::class,
@@ -106,105 +82,25 @@ class ScaffolderBootloader extends Bootloader
                         'directory' => directory('config'),
                     ],
                 ],
-                'controller' => [
+                Declaration\ControllerDeclaration::TYPE => [
                     'namespace' => 'Controller',
                     'postfix'   => 'Controller',
                     'class'     => Declaration\ControllerDeclaration::class,
                 ],
-                'middleware' => [
+                Declaration\MiddlewareDeclaration::TYPE => [
                     'namespace' => 'Middleware',
                     'postfix'   => '',
                     'class'     => Declaration\MiddlewareDeclaration::class,
                 ],
-                'command'    => [
+                Declaration\CommandDeclaration::TYPE => [
                     'namespace' => 'Command',
                     'postfix'   => 'Command',
                     'class'     => Declaration\CommandDeclaration::class,
                 ],
-                'jobHandler' => [
+                Declaration\JobHandlerDeclaration::TYPE => [
                     'namespace' => 'Job',
                     'postfix'   => 'Job',
                     'class'     => Declaration\JobHandlerDeclaration::class,
-                ],
-                'migration'  => [
-                    'namespace' => '',
-                    'postfix'   => 'Migration',
-                    'class'     => Declaration\MigrationDeclaration::class,
-                ],
-                'filter'     => [
-                    'namespace' => 'Request',
-                    'postfix'   => 'Request',
-                    'class'     => Declaration\FilterDeclaration::class,
-                    'options'   => [
-                        //Set of default filters and validate rules for various types
-                        'mapping' => [
-                            'int'     => [
-                                'source'    => 'data',
-                                'setter'    => 'intval',
-                                'validates' => ['notEmpty', 'integer'],
-                            ],
-                            'integer' => [
-                                'source'    => 'data',
-                                'setter'    => 'intval',
-                                'validates' => ['notEmpty', 'integer'],
-                            ],
-                            'float'   => [
-                                'source'    => 'data',
-                                'setter'    => 'floatval',
-                                'validates' => ['notEmpty', 'float'],
-                            ],
-                            'double'  => [
-                                'source'    => 'data',
-                                'setter'    => 'floatval',
-                                'validates' => ['notEmpty', 'float'],
-                            ],
-                            'string'  => [
-                                'source'    => 'data',
-                                'setter'    => 'strval',
-                                'validates' => ['notEmpty', 'string'],
-                            ],
-                            'bool'    => [
-                                'source'    => 'data',
-                                'setter'    => 'boolval',
-                                'validates' => ['notEmpty', 'boolean'],
-                            ],
-                            'boolean' => [
-                                'source'    => 'data',
-                                'setter'    => 'boolval',
-                                'validates' => ['notEmpty', 'boolean'],
-                            ],
-                            'email'   => [
-                                'source'    => 'data',
-                                'setter'    => 'strval',
-                                'validates' => ['notEmpty', 'string', 'email'],
-                            ],
-                            'file'    => [
-                                'source'    => 'file',
-                                'validates' => ['file::uploaded'],
-                            ],
-                            'image'   => [
-                                'source'    => 'file',
-                                'validates' => ['image::uploaded', 'image::valid'],
-                            ],
-                            null      => [
-                                'source'    => 'data',
-                                'setter'    => 'strval',
-                                'validates' => ['notEmpty', 'string'],
-                            ],
-                        ],
-                    ],
-                ],
-                'entity'     => [
-                    'namespace' => 'Database',
-                    'postfix'   => '',
-                    'options'   => [
-                        'annotated' => Declaration\Database\Entity\AnnotatedDeclaration::class,
-                    ],
-                ],
-                'repository' => [
-                    'namespace' => 'Repository',
-                    'postfix'   => 'Repository',
-                    'class'     => Declaration\Database\RepositoryDeclaration::class,
                 ],
             ],
         ]);
@@ -215,6 +111,9 @@ class ScaffolderBootloader extends Bootloader
      */
     public function addDeclaration(string $name, array $declaration): void
     {
-        $this->config->modify(ScaffolderConfig::CONFIG, new Append('declarations', $name, $declaration));
+        $this->config->modify(
+            ScaffolderConfig::CONFIG,
+            new Append('declarations', $name, $declaration)
+        );
     }
 }

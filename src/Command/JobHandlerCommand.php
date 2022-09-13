@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
@@ -17,8 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class JobHandlerCommand extends AbstractCommand
 {
-    protected const ELEMENT = 'jobHandler';
-
     protected const NAME        = 'create:jobHandler';
     protected const DESCRIPTION = 'Create job handler declaration';
     protected const ARGUMENTS   = [
@@ -36,11 +27,12 @@ class JobHandlerCommand extends AbstractCommand
     /**
      * Create jobHandler declaration.
      */
-    public function perform(): void
+    public function perform(): int
     {
-        /** @var JobHandlerDeclaration $declaration */
-        $declaration = $this->createDeclaration();
+        $declaration = $this->createDeclaration(JobHandlerDeclaration::class);
 
         $this->writeDeclaration($declaration);
+
+        return self::SUCCESS;
     }
 }

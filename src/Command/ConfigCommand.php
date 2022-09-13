@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Scaffolder\Command;
@@ -17,8 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ConfigCommand extends AbstractCommand
 {
-    protected const ELEMENT = 'config';
-
     protected const NAME        = 'create:config';
     protected const DESCRIPTION = 'Create config declaration';
     protected const ARGUMENTS   = [
@@ -47,12 +38,17 @@ class ConfigCommand extends AbstractCommand
     /**
      * Create config declaration.
      */
-    public function perform(): void
+    public function perform(): int
     {
-        /** @var ConfigDeclaration $declaration */
-        $declaration = $this->createDeclaration(['configName' => $this->argument('name')]);
-        $declaration->create((bool)$this->option('reverse'));
+        $declaration = $this->createDeclaration(ConfigDeclaration::class);
+
+        $declaration->create(
+            (bool) $this->option('reverse'),
+            (string) $this->argument('name')
+        );
 
         $this->writeDeclaration($declaration);
+
+        return self::SUCCESS;
     }
 }

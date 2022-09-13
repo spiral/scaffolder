@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Spiral Framework. Scaffolder
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
@@ -40,8 +33,11 @@ class ConfigTest extends AbstractCommandTest
         $this->assertTrue(class_exists(self::CLASS_NAME));
 
         $reflection = new ReflectionClass(self::CLASS_NAME);
+        $content = $this->files()->read($reflection->getFileName());
 
-        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
+        $this->assertStringContainsString('strict_types=1', $content);
+        $this->assertStringContainsString('{project-name}', $content);
+        $this->assertStringContainsString('@author {author-name}', $content);
         $this->assertStringContainsString('Sample Config', $reflection->getDocComment());
 
         $this->assertTrue($reflection->hasConstant('CONFIG'));
