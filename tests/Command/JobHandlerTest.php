@@ -74,7 +74,7 @@ class JobHandlerTest extends AbstractCommandTestCase
 
         $output = $result->getOutput()->fetch();
 
-        $this->assertStringEqualsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<OUTPUT
             Declaration of 'SampleJob' has been successfully written into 'Job/SampleJob.php'.
 

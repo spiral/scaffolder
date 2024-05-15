@@ -7,7 +7,6 @@ namespace Spiral\Tests\Scaffolder\Command;
 use ReflectionClass;
 use ReflectionException;
 use Spiral\Core\CoreInterface;
-use Spiral\Interceptors\HandlerInterface;
 use Throwable;
 
 final class BootloaderTest extends AbstractCommandTestCase
@@ -98,7 +97,7 @@ final class BootloaderTest extends AbstractCommandTestCase
         $this->assertTrue($reflection->hasConstant('SINGLETONS'));
 
         $this->assertEquals([
-            HandlerInterface::class => ['Spiral\Tests\Scaffolder\App\Bootloader\SampleDomainBootloader', 'domainCore'],
+            CoreInterface::class => ['Spiral\Tests\Scaffolder\App\Bootloader\SampleDomainBootloader', 'domainCore'],
         ], $reflection->getConstant('SINGLETONS'));
     }
 
@@ -113,7 +112,7 @@ final class BootloaderTest extends AbstractCommandTestCase
 
         $output = $result->getOutput()->fetch();
 
-        $this->assertStringEqualsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<OUTPUT
             Declaration of 'SampleBootloader' has been successfully written into 'Bootloader/SampleBootloader.php'.
 

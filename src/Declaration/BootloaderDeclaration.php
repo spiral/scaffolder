@@ -9,7 +9,7 @@ use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\BootloadManager\Methods;
 use Spiral\Boot\KernelInterface;
 use Spiral\Bootloader\DomainBootloader;
-use Spiral\Interceptors\HandlerInterface;
+use Spiral\Core\CoreInterface;
 use Spiral\Scaffolder\Config\ScaffolderConfig;
 
 class BootloaderDeclaration extends AbstractDeclaration implements HasInstructions
@@ -45,9 +45,9 @@ class BootloaderDeclaration extends AbstractDeclaration implements HasInstructio
 
         if ($this->isDomain) {
             $this->class->addConstant('INTERCEPTORS', [])->setProtected();
-            $this->namespace->addUse(HandlerInterface::class);
+            $this->namespace->addUse(CoreInterface::class);
             $this->class->getConstant('SINGLETONS')->setValue([
-                new Literal('HandlerInterface::class => [self::class, \'domainCore\']'),
+                new Literal('CoreInterface::class => [self::class, \'domainCore\']'),
             ]);
         }
 

@@ -116,7 +116,7 @@ final class FilterCommandTest extends AbstractCommandTestCase
 
         $output = $result->getOutput()->fetch();
 
-        $this->assertStringEqualsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<OUTPUT
             Declaration of 'SampleFilter' has been successfully written into 'Filter/SampleFilter.php'.
 
