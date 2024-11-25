@@ -115,7 +115,9 @@ class ScaffolderConfigTest extends BaseTestCase
         $this->assertSame(BootloaderDeclaration::class, $ref->invoke($config, BootloaderDeclaration::TYPE, 'class'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('declarationDirectoryDataProvider')]
+    /**
+     * @dataProvider declarationDirectoryDataProvider
+     */
     public function testDeclarationDirectory(array $config, string $expected): void
     {
         $config = new ScaffolderConfig($config);
@@ -123,7 +125,9 @@ class ScaffolderConfigTest extends BaseTestCase
         $this->assertSame($expected, $config->declarationDirectory('some'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('classFilenameDataProvider')]
+    /**
+     * @dataProvider classFilenameDataProvider
+     */
     public function testClassFilename(array $config, string $expected, string $namespace): void
     {
         $config = new ScaffolderConfig($config);
