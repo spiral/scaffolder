@@ -18,7 +18,7 @@ abstract class BaseTestCase extends TestCase
     /**
      * @throws Throwable
      */
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->app = TestApp::create([
             'root' => __DIR__ . '/App',

@@ -25,22 +25,22 @@ class ControllerTest extends AbstractCommandTestCase
         ]);
 
         clearstatcache();
-        self::assertTrue(class_exists($class));
+        $this->assertTrue(class_exists($class));
 
         $reflection = new ReflectionClass($class);
         $content = $this->files()->read($reflection->getFileName());
 
-        self::assertStringContainsString('strict_types=1', $content);
-        self::assertStringContainsString('{project-name}', $content);
-        self::assertStringContainsString('@author {author-name}', $content);
-        self::assertStringContainsString('Sample Controller', $reflection->getDocComment());
-        self::assertTrue($reflection->hasMethod('index'));
-        self::assertTrue($reflection->hasMethod('save'));
+        $this->assertStringContainsString('strict_types=1', $content);
+        $this->assertStringContainsString('{project-name}', $content);
+        $this->assertStringContainsString('@author {author-name}', $content);
+        $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
+        $this->assertTrue($reflection->hasMethod('index'));
+        $this->assertTrue($reflection->hasMethod('save'));
 
         $traits = $reflection->getTraitNames();
 
-        self::assertEmpty($traits);
-        self::assertNotContains(PrototypeTrait::class, $traits);
+        $this->assertEmpty($traits);
+        $this->assertNotContains(PrototypeTrait::class, $traits);
     }
 
     /**
@@ -56,13 +56,16 @@ class ControllerTest extends AbstractCommandTestCase
         ]);
 
         clearstatcache();
-        self::assertTrue(class_exists($class));
+        $this->assertTrue(class_exists($class));
 
         $reflection = new ReflectionClass($class);
         $content = $this->files()->read($reflection->getFileName());
 
-        self::assertStringContainsString('App/Custom/Controller/SampleController.php', \str_replace('\\', '/', $reflection->getFileName()));
-        self::assertStringContainsString('App\Custom\Controller', $content);
+        $this->assertStringContainsString(
+            'App/Custom/Controller/SampleController.php',
+            \str_replace('\\', '/', $reflection->getFileName())
+        );
+        $this->assertStringContainsString('App\Custom\Controller', $content);
     }
 
     /**
@@ -78,13 +81,13 @@ class ControllerTest extends AbstractCommandTestCase
         ]);
 
         clearstatcache();
-        self::assertTrue(class_exists($class));
+        $this->assertTrue(class_exists($class));
 
         $reflection = new ReflectionClass($class);
         $traits = $reflection->getTraitNames();
 
-        self::assertNotEmpty($traits);
-        self::assertContains(PrototypeTrait::class, $traits);
+        $this->assertNotEmpty($traits);
+        $this->assertContains(PrototypeTrait::class, $traits);
     }
 
     public function testShowInstructionAfterInstallation(): void
@@ -97,12 +100,15 @@ class ControllerTest extends AbstractCommandTestCase
 
         $output = $result->getOutput()->fetch();
 
-        self::assertStringEqualsStringIgnoringLineEndings(<<<OUTPUT
+        $this->assertStringEqualsStringIgnoringLineEndings(
+            <<<OUTPUT
             Declaration of 'SampleController' has been successfully written into 'Custom/Controller/SampleController.php'.
 
             Next steps:
             1. Read more about Controllers in the documentation: https://spiral.dev/docs/http-routing
 
-            OUTPUT, $output);
+            OUTPUT,
+            $output
+        );
     }
 }

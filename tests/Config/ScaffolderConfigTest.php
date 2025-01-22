@@ -22,7 +22,10 @@ class ScaffolderConfigTest extends BaseTestCase
         /** @var ScaffolderConfig $config */
         $config = $this->app->get(ScaffolderConfig::class);
 
-        self::assertSame('Spiral\\Tests\\Scaffolder\\App', (new \ReflectionMethod($config, 'baseNamespace'))->invoke($config, 'changing-namespace'));
+        $this->assertSame(
+            'Spiral\\Tests\\Scaffolder\\App',
+            (new \ReflectionMethod($config, 'baseNamespace'))->invoke($config, 'changing-namespace')
+        );
     }
 
     public function testChangingBaseNamespace(): void
@@ -38,9 +41,9 @@ class ScaffolderConfigTest extends BaseTestCase
         $config = $this->app->get(ScaffolderConfig::class);
 
         $ref = new \ReflectionMethod($config, 'baseNamespace');
-        self::assertSame('', $ref->invoke($config, 'null-namespace'));
-        self::assertSame('', $ref->invoke($config, 'empty-namespace'));
-        self::assertSame('Test', $ref->invoke($config, 'overridden-namespace'));
+        $this->assertSame('', $ref->invoke($config, 'null-namespace'));
+        $this->assertSame('', $ref->invoke($config, 'empty-namespace'));
+        $this->assertSame('Test', $ref->invoke($config, 'overridden-namespace'));
     }
 
     public function testUndefinedDeclarationException(): void
@@ -79,9 +82,9 @@ class ScaffolderConfigTest extends BaseTestCase
         $config = $this->app->get(ScaffolderConfig::class);
         $ref = new \ReflectionMethod($config, 'getOption');
 
-        self::assertSame('ChangedNamespace', $ref->invoke($config, BootloaderDeclaration::TYPE, 'namespace'));
-        self::assertSame('CustomPostfix', $ref->invoke($config, BootloaderDeclaration::TYPE, 'postfix'));
-        self::assertSame('OtherClass', $ref->invoke($config, BootloaderDeclaration::TYPE, 'class'));
+        $this->assertSame('ChangedNamespace', $ref->invoke($config, BootloaderDeclaration::TYPE, 'namespace'));
+        $this->assertSame('CustomPostfix', $ref->invoke($config, BootloaderDeclaration::TYPE, 'postfix'));
+        $this->assertSame('OtherClass', $ref->invoke($config, BootloaderDeclaration::TYPE, 'class'));
     }
 
     public function testPartialOverrideDefaultDeclaration(): void
@@ -107,25 +110,29 @@ class ScaffolderConfigTest extends BaseTestCase
         $config = $this->app->get(ScaffolderConfig::class);
         $ref = new \ReflectionMethod($config, 'getOption');
 
-        self::assertSame('ChangedNamespace', $ref->invoke($config, BootloaderDeclaration::TYPE, 'namespace'));
-        self::assertSame('Bootloader', $ref->invoke($config, BootloaderDeclaration::TYPE, 'postfix'));
-        self::assertSame(BootloaderDeclaration::class, $ref->invoke($config, BootloaderDeclaration::TYPE, 'class'));
+        $this->assertSame('ChangedNamespace', $ref->invoke($config, BootloaderDeclaration::TYPE, 'namespace'));
+        $this->assertSame('Bootloader', $ref->invoke($config, BootloaderDeclaration::TYPE, 'postfix'));
+        $this->assertSame(BootloaderDeclaration::class, $ref->invoke($config, BootloaderDeclaration::TYPE, 'class'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('declarationDirectoryDataProvider')]
+    /**
+     * @dataProvider declarationDirectoryDataProvider
+     */
     public function testDeclarationDirectory(array $config, string $expected): void
     {
         $config = new ScaffolderConfig($config);
 
-        self::assertSame($expected, $config->declarationDirectory('some'));
+        $this->assertSame($expected, $config->declarationDirectory('some'));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('classFilenameDataProvider')]
+    /**
+     * @dataProvider classFilenameDataProvider
+     */
     public function testClassFilename(array $config, string $expected, string $namespace): void
     {
         $config = new ScaffolderConfig($config);
 
-        self::assertSame($expected, $config->classFilename('foo', 'Test', $namespace));
+        $this->assertSame($expected, $config->classFilename('foo', 'Test', $namespace));
     }
 
     public static function declarationDirectoryDataProvider(): \Traversable
