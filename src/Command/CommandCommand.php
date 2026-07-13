@@ -29,9 +29,6 @@ class CommandCommand extends AbstractCommand
     #[Option(description: 'Optional, specify a custom namespace')]
     private ?string $namespace = null;
 
-    #[Option(name: 'aliases', description: 'Command aliases')]
-    private array $aliases = [];
-
     #[Option(name: 'argument', shortcut: 'a', description: 'Command arguments')]
     private array $arguments = [];
 
@@ -42,8 +39,7 @@ class CommandCommand extends AbstractCommand
     {
         $declaration = $this->createDeclaration(CommandDeclaration::class, [
             'description' => $this->description,
-            'alias' => $this->alias ?? \strtolower((string) \preg_replace('/(?<!^)[A-Z]/', ':$0', $this->name)),
-            'aliases' => $this->aliases,
+            'alias' => $this->alias ?? \strtolower(\preg_replace('/(?<!^)[A-Z]/', ':$0', $this->name)),
         ]);
 
         foreach ($this->arguments as $argument) {

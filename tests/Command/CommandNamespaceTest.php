@@ -32,7 +32,7 @@ final class CommandNamespaceTest extends AbstractCommandTestCase
             'name' => 'foo',
         ]);
 
-        self::assertSame(Command::SUCCESS, $output->getCode());
+        $this->assertSame(Command::SUCCESS, $output->getCode());
     }
 
     public function testCommandWithNamespaceOption(): void
@@ -53,10 +53,10 @@ final class CommandNamespaceTest extends AbstractCommandTestCase
 
         $output = $this->console()->run('create:command-with-namespace', [
             'name' => 'foo',
-            '--namespace' => 'App\Command',
+            '--namespace' => 'App\Command'
         ]);
 
-        self::assertSame(Command::SUCCESS, $output->getCode());
+        $this->assertSame(Command::SUCCESS, $output->getCode());
     }
 
     public function testCommandWithCommentOption(): void
@@ -77,9 +77,9 @@ final class CommandNamespaceTest extends AbstractCommandTestCase
 
         $output = $this->console()->run('create:command-with-namespace', [
             'name' => 'foo',
-            '--comment' => 'Some command',
+            '--comment' => 'Some command'
         ]);
 
-        self::assertSame(Command::SUCCESS, $output->getCode());
+        $this->assertSame(Command::SUCCESS, $output->getCode());
     }
 }

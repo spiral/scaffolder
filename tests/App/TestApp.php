@@ -8,6 +8,7 @@ use Spiral\Boot;
 use Spiral\Core\Container;
 use Spiral\Scaffolder;
 use Spiral\Validation\Bootloader\ValidationBootloader;
+use Throwable;
 
 class TestApp extends Boot\AbstractKernel
 {
@@ -17,8 +18,9 @@ class TestApp extends Boot\AbstractKernel
     ];
 
     /**
+     * @param string $target
      * @return mixed|object|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function get(string $target)
     {
@@ -31,7 +33,9 @@ class TestApp extends Boot\AbstractKernel
     }
 
     /**
-     * @throws \Throwable
+     * @param string $directory
+     * @return string
+     * @throws Throwable
      */
     public function directory(string $directory): string
     {
@@ -41,10 +45,18 @@ class TestApp extends Boot\AbstractKernel
         return $directories->get($directory);
     }
 
-    protected function bootstrap(): void {}
+    /**
+     * {@inheritDoc}
+     */
+    protected function bootstrap(): void
+    {
+    }
 
     /**
      * Normalizes directory list and adds all required aliases.
+     *
+     * @param array $directories
+     * @return array
      */
     protected function mapDirectories(array $directories): array
     {
@@ -56,7 +68,7 @@ class TestApp extends Boot\AbstractKernel
             $directories['app'] = $directories['root'] . '/';
         }
 
-        return \array_merge([
+        return array_merge([
             'vendor'  => $directories['root'] . '/vendor/',
             'runtime' => $directories['root'] . '/runtime/',
             'config'  => $directories['app'] . '/config/',

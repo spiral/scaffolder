@@ -12,6 +12,7 @@ class TypeAnnotations
         'double'  => 'float',
         'NULL'    => 'null',
     ];
+
     private const REAL_ANNOTATION_TYPES = [
         'bool'     => 'bool',
         'int'      => 'int',

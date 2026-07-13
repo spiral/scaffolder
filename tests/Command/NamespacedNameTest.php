@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Spiral\Tests\Scaffolder\Command;
 
-final class NamespacedNameTest extends AbstractCommandTestCase
+use ReflectionClass;
+use ReflectionException;
+use Throwable;
+
+class NamespacedNameTest extends AbstractCommandTestCase
 {
     private const CLASS_NAME = '\\Spiral\\Tests\\Scaffolder\\App\\Controller\\Namespaced\\SampleController';
 
     /**
-     * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws ReflectionException
+     * @throws Throwable
      */
     public function testScaffold(): void
     {
@@ -21,14 +25,14 @@ final class NamespacedNameTest extends AbstractCommandTestCase
             '-a' => ['index', 'save'],
         ]);
 
-        \clearstatcache();
-        self::assertTrue(\class_exists(self::CLASS_NAME));
+        clearstatcache();
+        $this->assertTrue(class_exists(self::CLASS_NAME));
 
-        $reflection = new \ReflectionClass(self::CLASS_NAME);
+        $reflection = new ReflectionClass(self::CLASS_NAME);
 
-        self::assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
-        self::assertStringContainsString('Sample Controller', (string) $reflection->getDocComment());
-        self::assertTrue($reflection->hasMethod('index'));
-        self::assertTrue($reflection->hasMethod('save'));
+        $this->assertStringContainsString('strict_types=1', $this->files()->read($reflection->getFileName()));
+        $this->assertStringContainsString('Sample Controller', $reflection->getDocComment());
+        $this->assertTrue($reflection->hasMethod('index'));
+        $this->assertTrue($reflection->hasMethod('save'));
     }
 }

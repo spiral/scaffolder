@@ -9,8 +9,14 @@ use PHPUnit\Framework\TestCase;
 
 use function Spiral\Scaffolder\defineArrayType;
 
-final class FunctionsTest extends TestCase
+class FunctionsTest extends TestCase
 {
+    #[DataProvider('defineProvider')]
+    public function testDefineArrayType(?string $expected, array $array, ?string $failureType): void
+    {
+        $this->assertEquals($expected, defineArrayType($array, $failureType));
+    }
+
     public static function defineProvider(): \Traversable
     {
         //valid
@@ -21,11 +27,5 @@ final class FunctionsTest extends TestCase
         yield [null, [1, '2', 3], null];
         yield [null, [null, 'null'], null];
         yield ['mixed', [null, 'null'], 'mixed'];
-    }
-
-    #[DataProvider('defineProvider')]
-    public function testDefineArrayType(?string $expected, array $array, ?string $failureType): void
-    {
-        self::assertEquals($expected, defineArrayType($array, $failureType));
     }
 }
