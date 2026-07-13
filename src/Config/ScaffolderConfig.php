@@ -76,7 +76,7 @@ class ScaffolderConfig extends InjectableConfig
      */
     public function classNamespace(string $element, string $name = ''): string
     {
-        $localNamespace = \trim($this->getOption($element, 'namespace', ''), '\\');
+        $localNamespace = \trim((string) $this->getOption($element, 'namespace', ''), '\\');
         ['namespace' => $namespace] = $this->parseName($name);
 
         if (!empty($namespace)) {
@@ -187,7 +187,7 @@ class ScaffolderConfig extends InjectableConfig
     {
         $name = \str_replace('/', '\\', $name);
 
-        if (str_contains($name, '\\')) {
+        if (\str_contains($name, '\\')) {
             $names = \explode('\\', $name);
             $class = \array_pop($names);
 
@@ -206,10 +206,10 @@ class ScaffolderConfig extends InjectableConfig
         $declaration = $this->getDeclaration($element);
 
         if (\array_key_exists('baseNamespace', $declaration)) {
-            return \trim((string)$this->getOption($element, 'baseNamespace', ''), '\\');
+            return \trim((string) $this->getOption($element, 'baseNamespace', ''), '\\');
         }
 
-        return \trim($this->config['namespace'], '\\');
+        return \trim((string) $this->config['namespace'], '\\');
     }
 
     private function joinPathChunks(array $chunks, string $joint): string
@@ -221,7 +221,7 @@ class ScaffolderConfig extends InjectableConfig
                 $firstChunkIterated = true;
                 $joinedPath = $chunk;
             } else {
-                $joinedPath = \rtrim($joinedPath, $joint) . $joint . \ltrim($chunk, $joint);
+                $joinedPath = \rtrim((string) $joinedPath, $joint) . $joint . \ltrim((string) $chunk, $joint);
             }
         }
 

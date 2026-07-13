@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 final class CommandWithoutNamespace extends AbstractCommand
 {
     protected const NAME = 'create:command-without-namespace';
-
     protected const ARGUMENTS   = [
         ['name', InputArgument::REQUIRED, 'Command name'],
         ['alias', InputArgument::OPTIONAL, 'Command id/alias'],
@@ -19,7 +18,7 @@ final class CommandWithoutNamespace extends AbstractCommand
 
     public function __invoke(): int
     {
-        $declaration = $this->createDeclaration(CommandDeclaration::class);
+        $this->createDeclaration(CommandDeclaration::class);
 
         return self::SUCCESS;
     }

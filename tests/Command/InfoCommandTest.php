@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Command;
-
-use Spiral\Tests\Scaffolder\Command\AbstractCommandTestCase;
+namespace Spiral\Tests\Scaffolder\Command;
 
 final class InfoCommandTest extends AbstractCommandTestCase
 {
@@ -24,7 +22,7 @@ final class InfoCommandTest extends AbstractCommandTestCase
         ];
 
         foreach ($strings as $string) {
-            $this->assertStringContainsString($string, $result);
+            self::assertStringContainsString($string, (string) $result);
         }
     }
 }
