@@ -9,7 +9,7 @@ use Spiral\Core\Container;
 use Spiral\Scaffolder;
 use Spiral\Validation\Bootloader\ValidationBootloader;
 
-final class TestApp extends Boot\AbstractKernel
+class TestApp extends Boot\AbstractKernel
 {
     protected const LOAD = [
         Scaffolder\Bootloader\ScaffolderBootloader::class,
